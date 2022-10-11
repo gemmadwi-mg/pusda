@@ -1,73 +1,110 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Masuk</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Coderthemes" name="author" />
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        <!-- CSRF Token -->
+         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <!-- Favicon -->
+         <link rel="shortcut icon" href="{{asset('/assets/images/Logo.png')}}">
+		<!-- App css -->
+		<link href="{{asset('/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+		<link href="{{asset('/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+		<link href="{{asset('/assets/css/bootstrap-dark.min.css')}}" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+		<link href="{{asset('/assets/css/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+		<!-- icons -->
+		<link href="{{asset('/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+    </head>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+    <body class="loading bg-dark authentication-bg-pattern">
 
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+        <div class="account-pages mt-5 mb-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card bg-pattern">
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                            <div class="card-body p-4">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                                <div class="text-center w-75 m-auto">
+                                    <div class="auth-logo">
+                                        <a href="/" class="logo logo-dark text-center">
+                                            <span class="logo-lg">
+                                                <img src="{{asset('/assets/images/Logo.png')}}" alt="logos" height="100">
+                                            </span>
+                                        </a>
 
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
+                                        <a href="/" class="logo logo-light text-center">
+                                            <span class="logo-lg">
+                                                <img src="{{asset('/assets/images/Logo.png')}}" alt="logos" height="100">
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <h3>Selamat Datang Kembali</h3>
+                                    <p class="text-muted mb-4 mt-3">Masukkan alamat email dan kata sandi Anda..</p>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
+                                <form  action="{{ route('login') }}" method="POST" autocomplete="on">
+                                    @csrf
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
+                                    <div class="form-group mb-3">
+                                        <label for="emailaddress">Email</label>
+                                        <input  type="email" class="form-control @error('email') is-invalid @enderror"
+                                        placeholder="Masukkan Email Anda" name="email" value="{{ old('email') }}"  required="" autocomplete="on" >
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label for="password">Password</label>
+                                        <div class="input-group input-group-merge">
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                                            placeholder="Masukkan Password Anda" name="password" required="">
+                                            @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                             @enderror
+                                            <div class="input-group-append" data-password="false">
+                                                <div class="input-group-text">
+                                                    <span class="password-eye"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-0 text-center">
+                                        <button class="btn btn-warning btn-block" type="submit"> Masuk </button>
+                                    </div>
+
+                                </form>
+
+                            </div> <!-- end card-body -->
                         </div>
-                    </form>
+                        <!-- end card -->
+                    </div> <!-- end col -->
                 </div>
+                <!-- end row -->
             </div>
+            <!-- end container -->
         </div>
-    </div>
-</div>
-@endsection
+        <!-- end page -->
+    </body>
+    <!-- Vendor js -->
+    <script src="{{asset('/assets/js/vendor.min.js')}}"></script>
+
+    <!-- App js -->
+    <script src="{{asset('/assets/js/app.min.js')}}"></script>
+</html>

@@ -22,10 +22,6 @@
 
 ## ON PROGRESS
 - [x] Creating Tables and Creating Relationships
-- [x] Import Assets View
-- [x] Manajement Component View Base
-- [x] Base Login View
-- [x] Base Layout View
 - [x] Setup Dashboard view by role
 - [x] Setup Dashboard controller by role
 
@@ -36,4 +32,7 @@
 - [x] Install Package Laratrust
 - [x] Config Role and Sender
 - [x] Migratation Database to mysql
-
+- [x] Import Assets View
+- [x] Manajement Component View Base
+- [x] Base Login View
+- [x] Base Layout View
