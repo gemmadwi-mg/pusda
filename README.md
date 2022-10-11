@@ -2,32 +2,31 @@
 
 
 ## TODO
-- [ ] Install Package UI V3
-- [ ] Install Package Auth Login base
-- [ ] Install Package Laratrust
-- [ ] Config Role and Sender
-- [ ] Migratation Database to mysql
-- [ ] Creating Tables and Creating Relationships
-- [ ] Import Assets View
-- [ ] Manajement Component View Base
-- [ ] Base Login View
-- [ ] Base Layout View
-- [ ] Setup Dashboard view by role
-- [ ] Setup Dashboard controller by role
-- [ ] Setup Controller Base
-- [ ] Setup Controller API/Admin
-- [ ] Setup Controller API/Users
-- [ ] Setup Documentasi API with Swegger 
-- [ ] CRUD  Rest API controller API
+- [x] Install Package UI V3
+- [x] Install Package Auth Login base
+- [x] Install Package Laratrust
+- [x] Config Role and Sender
+- [x] Migratation Database to mysql
+- [x] Creating Tables and Creating Relationships
+- [x] Import Assets View
+- [x] Manajement Component View Base
+- [x] Base Login View
+- [x] Base Layout View
+- [x] Setup Dashboard view by role
+- [x] Setup Dashboard controller by role
+- [x] Setup Controller Base
+- [x] Setup Controller API/Admin
+- [x] Setup Controller API/Users
+- [x] Setup Documentasi API with Swegger 
+- [x] CRUD  Rest API controller API
 
 ## ON PROGRESS
-- [ ] Install Package UI V3
-- [ ] Install Package Auth Login base
-- [ ] Install Package Laratrust
-- [ ] Config Role and Sender
-- [ ] Migratation Database to mysql
+- [x] Config Role and Sender
+- [x] Migratation Database to mysql
 
 
 ## DONE
-
+- [x] Install Package UI V3
+- [x] Install Package Auth Login base
+- [x] Install Package Laratrust
 
