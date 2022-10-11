@@ -21,12 +21,19 @@
 - [x] CRUD  Rest API controller API
 
 ## ON PROGRESS
-- [x] Config Role and Sender
-- [x] Migratation Database to mysql
+- [x] Creating Tables and Creating Relationships
+- [x] Import Assets View
+- [x] Manajement Component View Base
+- [x] Base Login View
+- [x] Base Layout View
+- [x] Setup Dashboard view by role
+- [x] Setup Dashboard controller by role
 
 
 ## DONE
 - [x] Install Package UI V3
 - [x] Install Package Auth Login base
 - [x] Install Package Laratrust
+- [x] Config Role and Sender
+- [x] Migratation Database to mysql
 

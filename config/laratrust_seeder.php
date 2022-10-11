@@ -12,21 +12,31 @@ return [
     'truncate_tables' => true,
 
     'roles_structure' => [
-        'superadministrator' => [
+        'admin' => [
             'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u'
+            // 'payments' => 'c,r,u,d',
+            // 'profile' => 'r,u'
         ],
-        'administrator' => [
+        'upt_psda_kediri' => [
             'users' => 'c,r,u,d',
-            'profile' => 'r,u'
+            // 'profile' => 'r,u'
         ],
-        'user' => [
-            'profile' => 'r,u',
+        'upt_psda_lumajang' => [
+            'users' => 'c,r,u,d',
         ],
-        'role_name' => [
-            'module_1_name' => 'c,r,u,d',
-        ]
+        'upt_psda_bondowoso' => [
+            'users' => 'c,r,u,d',
+        ],
+        'upt_psda_pasuruan' => [
+            'users' => 'c,r,u,d',
+        ],
+        'upt_psda_bojonegoro' => [
+            'users' => 'c,r,u,d',
+        ],
+        'upt_psda_pamekasan' => [
+            'users' => 'c,r,u,d',
+        ],
+
     ],
 
     'permissions_map' => [
