@@ -22,8 +22,7 @@
 
 ## ON PROGRESS
 - [x] Creating Tables and Creating Relationships
-- [x] Setup Dashboard view by role
-- [x] Setup Dashboard controller by role
+
 
 
 ## DONE
@@ -36,3 +35,5 @@
 - [x] Manajement Component View Base
 - [x] Base Login View
 - [x] Base Layout View
+- [x] Setup Dashboard view by role
+- [x] Setup Dashboard controller by role

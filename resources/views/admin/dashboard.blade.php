@@ -22,7 +22,7 @@
                                         <li class="breadcrumb-item active">@yield('title')</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title"><i data-feather="home"></i>  @yield('title'),Hai {{Auth::user()->name}} </h4>
+                                <h4 class="page-title"><i data-feather="home"></i>  @yield('title'),Hi {{Auth::user()->name}} </h4>
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                                                     <th>Date</th>
                                                     <th>Time</th>
                                                     <th>Status</th>
-                                                    <th>Opsi</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody >

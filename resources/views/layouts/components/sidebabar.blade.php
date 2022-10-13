@@ -9,13 +9,13 @@
              <li class="menu-title">Menu</li>
 
              <li>
-                 <a href="#">
+                 <a href="{{route('dashboard')}}">
                      <i data-feather="home"></i>
                      <span> Dashboard </span>
                  </a>
              </li>
 
-             <li>
+             {{-- <li>
                  <a href="#">
                      <i data-feather="users"></i>
                      @php
@@ -24,115 +24,31 @@
                      <span class="badge badge-success badge-pill float-right">{{ $countmember }}</span>
                      <span> Users </span>
                  </a>
-             </li>
+             </li> --}}
 
              <li>
                 <a href="#sidebarUPTKediri" data-toggle="collapse">
-                    <i data-feather="airplay"></i>
+                    <i data-feather="database"></i>
                     <span class="badge badge-success badge-pill float-right">4</span>
-                    <span> UPT Kediri </span>
+                    <span> Asset </span>
                 </a>
                 <div class="collapse" id="sidebarUPTKediri">
                     <ul class="nav-second-level">
                         <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
+                            <a href="#"> Tanah </a>
                         </li>
                     </ul>
                 </div>
             </li>
 
-             <li>
-                <a href="#sidebarUPTLumajang" data-toggle="collapse">
-                    <i data-feather="airplay"></i>
-                    <span class="badge badge-success badge-pill float-right">4</span>
-                    <span> UPT Lumajang </span>
+            <li>
+                <a href="#">
+                    <i data-feather="filter"></i>
+                    <span> Report </span>
                 </a>
-                <div class="collapse" id="sidebarUPTLumajang">
-                    <ul class="nav-second-level">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                    </ul>
-                </div>
             </li>
 
-             <li>
-                <a href="#sidebarUPTBondowoso" data-toggle="collapse">
-                    <i data-feather="airplay"></i>
-                    <span class="badge badge-success badge-pill float-right">4</span>
-                    <span> UPT Bondowoso </span>
-                </a>
-                <div class="collapse" id="sidebarUPTBondowoso">
-                    <ul class="nav-second-level">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
 
-             <li>
-                <a href="#sidebarUPTPasuruan" data-toggle="collapse">
-                    <i data-feather="airplay"></i>
-                    <span class="badge badge-success badge-pill float-right">4</span>
-                    <span> UPT Pasuruan </span>
-                </a>
-                <div class="collapse" id="sidebarUPTPasuruan">
-                    <ul class="nav-second-level">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-             <li>
-                <a href="#sidebarUPTbojonegoro" data-toggle="collapse">
-                    <i data-feather="airplay"></i>
-                    <span class="badge badge-success badge-pill float-right">4</span>
-                    <span> UPT Bojonegoro </span>
-                </a>
-                <div class="collapse" id="sidebarUPTbojonegoro">
-                    <ul class="nav-second-level">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-             <li>
-                <a href="#sidebarUPTpamekasan" data-toggle="collapse">
-                    <i data-feather="airplay"></i>
-                    <span class="badge badge-success badge-pill float-right">4</span>
-                    <span> UPT Pamekasan </span>
-                </a>
-                <div class="collapse" id="sidebarUPTpamekasan">
-                    <ul class="nav-second-level">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
 
          </ul>
      </div>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,12 @@ Route::get('/', function () {
 
 Auth::routes([
     'register' => false,
-    'home' => false
+    'home' => false,
+    'password.confirm' => false,
+    'password.email' => false,
+    'password.request' => false,
+    'password.reset' => false,
+    'password.update' => false
 ]);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -30,6 +36,8 @@ Auth::routes([
 Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function() {
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('changes-password', [DashboardController::class, 'changePassword'])->name('change.password');
 
+    Route::resource('/profil',ProfileController::class)->except('show','create','store','destroy');
 
 });

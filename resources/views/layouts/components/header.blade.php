@@ -20,9 +20,13 @@
             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 
                 <!-- item-->
-                <a href=" {{route('profil.index')}} " class="dropdown-item notify-item">
+                <a href="{{route('profil.index')}}" class="dropdown-item notify-item">
                     <i class="fe-user"></i>
                     <span>Profil</span>
+                </a>
+                <a href="{{route('change.password')}}" class="dropdown-item notify-item">
+                    <i class="fe-lock"></i>
+                    <span>Change Password</span>
                 </a>
 
                 <div class="dropdown-divider"></div>
@@ -47,7 +51,7 @@
     <div class="logo-box">
         <a href="#" class="logo logo-dark text-center" target="_blank">
             <span class="logo-sm">
-                    <img src="{{asset('/assets/images/logo-nav.png')}}" alt="" height="50">
+                    <img src="{{asset('/assets/images/Logo.png')}}" alt="" height="50">
                     <!-- <span class="logo-lg-text-light">UBold</span> -->
             </span>
             <span class="logo-lg">
@@ -58,7 +62,7 @@
 
         <a href="#" class="logo logo-light text-center" target="_blank">
             <span class="logo-sm">
-                    <img src="{{asset('/assets/images/logo-nav.png')}}" alt="" height="50">
+                    <img src="{{asset('/assets/images/Logo.png')}}" alt="" height="50">
                 </span>
             <span class="logo-lg">
                     <img src="{{asset('/assets/images/logo-nav.png')}}" alt="" height="50">

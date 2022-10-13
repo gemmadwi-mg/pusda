@@ -14,9 +14,7 @@ class DashboardController extends Controller
 
         if(Auth::user()->hasRole('admin')){
             $data['data'] = User::orderBy('id','DESC')->paginate(4);
-            return view('admin.dashboard',[
-                'data' => $data
-            ]);
+            return view('admin.dashboard',$data);
         }
 
         elseif(Auth::user()->hasRole('upt_psda_kediri')){
@@ -39,5 +37,9 @@ class DashboardController extends Controller
             return 'Hello Guest';
         }
 
+    }
+
+    public function changePassword(){
+        return view('profile.password.reset');
     }
 }

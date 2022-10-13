@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Masuk</title>
+        <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -49,8 +49,8 @@
                                             </span>
                                         </a>
                                     </div>
-                                    <h3>Selamat Datang Kembali</h3>
-                                    <p class="text-muted mb-4 mt-3">Masukkan alamat email dan kata sandi Anda..</p>
+                                    <h3>Welcome back</h3>
+                                    <p class="text-muted mb-4 mt-3">Enter your email address and password</p>
                                 </div>
 
                                 <form  action="{{ route('login') }}" method="POST" autocomplete="on">
@@ -59,7 +59,7 @@
                                     <div class="form-group mb-3">
                                         <label for="emailaddress">Email</label>
                                         <input  type="email" class="form-control @error('email') is-invalid @enderror"
-                                        placeholder="Masukkan Email Anda" name="email" value="{{ old('email') }}"  required="" autocomplete="on" >
+                                        placeholder="Enter your Email" name="email" value="{{ old('email') }}"  required="" autocomplete="on" >
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -71,7 +71,7 @@
                                         <label for="password">Password</label>
                                         <div class="input-group input-group-merge">
                                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                                            placeholder="Masukkan Password Anda" name="password" required="">
+                                            placeholder="Enter your Password" name="password" required="">
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -86,7 +86,7 @@
                                     </div>
 
                                     <div class="form-group mb-0 text-center">
-                                        <button class="btn btn-warning btn-block" type="submit"> Masuk </button>
+                                        <button class="btn btn-warning btn-block" type="submit"> Login </button>
                                     </div>
 
                                 </form>
