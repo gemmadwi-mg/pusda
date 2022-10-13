@@ -81,16 +81,6 @@
                                                 </div>
                                             </div>
 
-
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label for="inputEmail4" class="col-form-label">Photo</label>
-                                                    <input  type="file" class="form-control"
-                                                    name="photo" >
-                                                </div>
-                                        </div>
-                                        <!-- end card-body -->
-
                                         <!-- start card-footer -->
                                         <div class="card-footer">
                                             <button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>

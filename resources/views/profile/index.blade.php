@@ -32,10 +32,18 @@
                         <div class="row">
                             <div class="col-lg-4 col-xl-4">
                                 <div class="card-box text-center">
-                                    <img src="{{asset('assets/images/user-circle.png')}}" class="rounded-circle avatar-lg img-thumbnail"
-                                        alt="profile-image">
+                                    @if (Auth::user()->photo)
+                                    <img src="{{asset('photos')}}/{{Auth::user()->photo}}" class="rounded-circle avatar-lg img-thumbnail" alt="{{Auth::user()->slug}}">
+                                    @else
+                                    <img src="{{asset('assets/images/user-circle.png')}}" class="rounded-circle avatar-lg img-thumbnail" alt="Profile">
+
+                                    @endif
                                     <h4 class="mb-0">  {{Auth::user()->name}} </h4>
                                     <p class="text-muted">Administator</p>
+
+                                    <a href="{{route('upload.photo', ['id' => Auth::user()->slug])}}" class="btn btn-outline-info waves-effect waves-light mt-1" >
+                                        <i class="mdi mdi-file-upload mr-1"></i>Upload Photo
+                                    </a>
                                 </div> <!-- end card-box -->
                             </div> <!-- end col-->
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -71,7 +73,26 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:240',
+            'email' => 'required|email|unique:users,email,'.$id,
+        ]);
+
+        try {
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->slug = Str::slug($request->get('name'));
+            $user->email  = $request->email;
+            $user->update();
+            $user->attachRole($request->role_id);
+
+            Alert::success('Success', 'Your data has been successfully updated');
+            return redirect()->route('profil.index');
+
+           }catch (\Throwable $e) {
+            Alert::error('Error','Failed to update your data',['error' => $e->getMessage()]);
+        }
+        return redirect()->back();
     }
 
     /**

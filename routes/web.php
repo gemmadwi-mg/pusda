@@ -37,6 +37,10 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('changes-password', [DashboardController::class, 'changePassword'])->name('change.password');
+    Route::post('changes-password', [DashboardController::class, 'changePasswordPost'])->name('changepassword.post');
+
+    Route::get('/upload-photo/{id}', [DashboardController::class, 'vieUpload'])->name('upload.photo');
+    Route::post('/upload-photo/{id}', [DashboardController::class, 'vieUploadPost'])->name('uploadphoto.post');
 
     Route::resource('/profil',ProfileController::class)->except('show','create','store','destroy');
 

@@ -10,7 +10,11 @@
         <li class="dropdown notification-list topbar-dropdown">
             <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
                data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                    @if (Auth::user()->photo)
+                    <img src="{{asset('photos')}}/{{Auth::user()->photo}}" class="rounded-circle avatar-lg img-thumbnail" alt="{{Auth::user()->slug}}">
+                    @else
                     <img src="{{asset('assets/images/user-circle-nav.png')}}" alt="user-image" class="rounded-circle">
+                    @endif
                     <span class="pro-user-name ml-1">
                             {{Auth::user()->name}}
                             <i class="mdi mdi-chevron-down"></i>
