@@ -35,7 +35,7 @@
                 <div class="collapse" id="sidebarUPTKediri">
                     <ul class="nav-second-level">
                         <li>
-                            <a href="#"> Tanah </a>
+                            <a href="{{route('soil.index')}}"> Soil </a>
                         </li>
                     </ul>
                 </div>

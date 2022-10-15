@@ -41,21 +41,17 @@
                                     <h4 class="mb-0">  {{Auth::user()->name}} </h4>
                                     <p class="text-muted">Administator</p>
 
-                                    <a href="{{route('upload.photo', ['id' => Auth::user()->slug])}}" class="btn btn-outline-info waves-effect waves-light mt-1" >
-                                        <i class="mdi mdi-file-upload mr-1"></i>Upload Photo
+                                    <a href="{{route('upload.photo', ['id' => Auth::user()->slug])}}" class="font-18 text-dark mt-1 mr-2" title="Upload Photo">
+                                        <i class="mdi mdi-file-upload mdi-24-px"></i>
                                     </a>
+
+                                    <a href="{{route('profil.edit', ['profil' => Auth::user()->slug])}}" class="font-18 text-warning mt-1" title="Edit" >
+                                        <i class="mdi mdi-pencil mdi-24-px"></i></a>
                                 </div> <!-- end card-box -->
                             </div> <!-- end col-->
 
                             <div class="col-lg-8 col-xl-8">
                                 <div class="card-box">
-                                    <ul class="nav nav-pills navtab-bg nav-justified">
-                                        <li class="nav-item">
-                                            <a href="#settings" data-toggle="tab" aria-expanded="true"  class="nav-link active">
-                                                INFO
-                                            </a>
-                                        </li>
-                                    </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane show active" id="settings">
                                             <form>
@@ -77,9 +73,7 @@
                                                     </div> <!-- end col -->
                                                 </div> <!-- end row -->
                                                 <div class="text-right">
-                                                    <a href="{{route('profil.edit', ['profil' => Auth::user()->slug])}}" class="btn btn-outline-warning waves-effect waves-light mt-2" >
-                                                        <i class="mdi mdi-content-save"></i> Edit
-                                                    </a>
+
                                                 </div>
                                             </form>
                                         </div>

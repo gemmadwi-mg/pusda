@@ -14,15 +14,15 @@
 - [x] Base Layout View
 - [x] Setup Dashboard view by role
 - [x] Setup Dashboard controller by role
-- [x] Setup Controller Base
+
 - [x] Setup Controller API/Admin
 - [x] Setup Controller API/Users
 - [x] Setup Documentasi API with Swegger 
 - [x] CRUD  Rest API controller API
 
 ## ON PROGRESS
-- [x] Creating Tables and Creating Relationships
 
+- [x] Setup Controller Base
 
 
 ## DONE
@@ -37,3 +37,4 @@
 - [x] Base Layout View
 - [x] Setup Dashboard view by role
 - [x] Setup Dashboard controller by role
+- [x] Creating Tables and Creating Relationships

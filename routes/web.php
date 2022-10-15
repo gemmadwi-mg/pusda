@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ParentsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -43,5 +44,11 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::post('/upload-photo/{id}', [DashboardController::class, 'vieUploadPost'])->name('uploadphoto.post');
 
     Route::resource('/profil',ProfileController::class)->except('show','create','store','destroy');
+
+    Route::resource('/assets/soil',ParentsController::class);
+
+    // Route::post('/assets/soil', [ParentsController::class, 'store'])->name('soil.store');
+    // Route::get('/assets/soil/create', [ParentsController::class, 'create'])->name('soil.create');
+    // Route::get('/assets/soil', [ParentsController::class, 'index'])->name('soil.index');
 
 });
