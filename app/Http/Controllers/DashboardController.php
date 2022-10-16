@@ -21,23 +21,23 @@ class DashboardController extends Controller
         }
 
         elseif(Auth::user()->hasRole('upt_psda_kediri')){
-            return 'hello Member';
+           return view('upt.dashboard');
         }
 
         elseif(Auth::user()->hasRole('upt_psda_lumajang')){
-            return 'Hello Guest';
+            return view('upt.dashboard');
         }
         elseif(Auth::user()->hasRole('upt_psda_bondowoso')){
-            return 'Hello Guest';
+            return view('upt.dashboard');
         }
         elseif(Auth::user()->hasRole('upt_psda_pasuruan')){
-            return 'Hello Guest';
+            return view('upt.dashboard');
         }
         elseif(Auth::user()->hasRole('upt_psda_bojonegoro')){
-            return 'Hello Guest';
+            return view('upt.dashboard');
         }
         elseif(Auth::user()->hasRole('upt_psda_pamekasan')){
-            return 'Hello Guest';
+            return view('upt.dashboard');
         }
 
     }

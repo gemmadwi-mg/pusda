@@ -21,4 +21,12 @@ class Parents extends Model
         'date',
         'large'
     ];
+
+
+    public function users()
+    {
+        return $this->hasOne(User::class,'id','auhtor');
+    }
+
+
 }

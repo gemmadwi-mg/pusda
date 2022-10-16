@@ -63,10 +63,24 @@
         <ul id="side-menu">
             <li class="menu-title">Menu</li>
             <li>
-                <a href="#">
+                <a href="{{route('dashboard')}}">
                     <i data-feather="home"></i>
                     <span> Dashboard </span>
                 </a>
+            </li>
+             <li>
+                <a href="#sidebarUPTKediri" data-toggle="collapse">
+                    <i data-feather="database"></i>
+                    <span class="badge badge-success badge-pill float-right">4</span>
+                    <span> Asset </span>
+                </a>
+                <div class="collapse" id="sidebarUPTKediri">
+                    <ul class="nav-second-level">
+                        <li>
+                            <a href="{{route('kediri.index')}}"> Soil </a>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ParentsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Upt\UptKediriController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -47,8 +48,7 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
 
     Route::resource('/assets/soil',ParentsController::class);
 
-    // Route::post('/assets/soil', [ParentsController::class, 'store'])->name('soil.store');
-    // Route::get('/assets/soil/create', [ParentsController::class, 'create'])->name('soil.create');
-    // Route::get('/assets/soil', [ParentsController::class, 'index'])->name('soil.index');
+    // CRUD data upt kediri
+    Route::resource('/assets-soil/kediri',UptKediriController::class);
 
 });
