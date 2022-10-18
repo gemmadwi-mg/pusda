@@ -7,40 +7,47 @@ namespace App\Helpers;
  */
 class ResponseFormatter
 {
-    /**
-     * API Response
-     *
-     * @var array
-     */
-    protected static $response = [
-        'meta' => [
-            'code' => 200,
-            'status' => 'success',
-            'message' => null,
-        ],
-        'result' => null,
-    ];
-
-    /**
-     * Give success response.
-     */
-    public static function success($data = null, $message = null)
+    public static function responseValidation($errors)
     {
-        self::$response['meta']['message'] = $message;
-        self::$response['result'] = $data;
-
-        return response()->json(self::$response, self::$response['meta']['code']);
+        return response()->json([
+            'status' => false,
+            'message' => (!is_object($errors)) ? $errors : $errors->all(),
+            'data' => null
+        ], 422);
     }
 
-    /**
-     * Give error response.
-     */
-    public static function error($message = null, $code = 400)
+    public static function responseError($msg, $code, $data = null)
     {
-        self::$response['meta']['status'] = 'error';
-        self::$response['meta']['code'] = $code;
-        self::$response['meta']['message'] = $message;
+        return response()->json([
+            'status' => false,
+            'message' => $msg,
+            'data' => $data,
+        ], $code);
+    }
 
-        return response()->json(self::$response, self::$response['meta']['code']);
+    public static function responseSuccess($msg = null)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => $msg,
+        ], 200);
+    }
+
+    public static function responseSuccessWithData($msg = null, $data = null)
+    {
+        return response()->json([
+            'status' => true,
+            'message' => $msg,
+            'data' => $data
+        ], 200);
+    }
+
+    public static function responseCreated($msg = null, $data = null)
+    {
+        return response()->json([
+            'status' => false,
+            'message' => $msg,
+            'data' => $data
+        ], 201);
     }
 }
