@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthenticationController;
+use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Get User
     Route::get('user', [AuthenticationController::class, 'getUser']);
+    Route::post('/user/upload/photo/{id}',[ProfileController::class, 'upload']);
+    Route::put('/user/update/{id}',[ProfileController::class, 'update']);
+    Route::post('/user/change-password',[ProfileController::class, 'changePassword']);
+
     // logout
     Route::get('logout', [AuthenticationController::class, 'logout']);
 

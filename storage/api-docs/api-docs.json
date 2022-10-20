@@ -52,11 +52,111 @@
             }
         },
         "/api/logout": {
-            "post": {
+            "get": {
                 "tags": [
                     "Authentication"
                 ],
                 "operationId": "logout",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/user/upload/photo/{id}": {
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "operationId": "upload",
+                "parameters": [
+                    {
+                        "name": "photo",
+                        "in": "query",
+                        "description": "photo",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/user/update/{id}": {
+            "put": {
+                "tags": [
+                    "Profile"
+                ],
+                "operationId": "userupdate",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/user/change-password": {
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "description": "Password minimum 8 character",
+                "operationId": "userupdatepass",
+                "parameters": [
+                    {
+                        "name": "current_passsowrd",
+                        "in": "query",
+                        "description": "current_passsowrd",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "password_confirmation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "default": {
                         "description": "successful operation"

@@ -20,7 +20,7 @@
 
 ## ON PROGRESS
 - [x] API Export And Import
-- [x] API CRUD Profile User
+
 
 ## DONE
 - [x] Install Package UI V3
@@ -42,3 +42,4 @@
 - [x] CRUD  Rest API controller API
 - [x] CRUD  Rest API controller API
 - [x] API Auth
+- [x] API CRUD Profile User

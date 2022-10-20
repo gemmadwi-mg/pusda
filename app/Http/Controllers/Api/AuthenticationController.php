@@ -45,7 +45,6 @@ class AuthenticationController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        //valid credential
         $validator = Validator::make($credentials, [
             'email' => 'required|email',
             'password' => 'required|string|min:8|max:50'
@@ -55,24 +54,20 @@ class AuthenticationController extends Controller
             return ResponseFormatter::responseValidation($validator->errors());
         }
 
-        // Request divalidasi
-        // buat token
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json([
                 	'success' => false,
-                	'message' => 'Login credentials are invalid.',
+                	'message' => 'Kredensial masuk tidak valid.',
                 ], 400);
             }
         } catch (JWTException $e) {
     	return $credentials;
             return response()->json([
                 	'success' => false,
-                	'message' => 'Could not create token.',
+                	'message' => 'Tidak dapat membuat token.',
                 ], 500);
         }
-
- 		//Token dibuat, kembali dengan respons sukses dan token jwt
         return response()->json([
             'success' => true,
             'token' => $token,
@@ -103,7 +98,7 @@ class AuthenticationController extends Controller
     }
 
      /**
-     * @OA\Post(
+     * @OA\Get(
      *     path="/api/logout",
      *     tags={"Authentication"},
      *     operationId="logout",
@@ -131,11 +126,11 @@ class AuthenticationController extends Controller
 		// Request divalidasi, lakukan logout
         try {
             JWTAuth::invalidate($request->token);
-            return ResponseFormatter::responseSuccess('Log out successfully!');
+            return ResponseFormatter::responseSuccess('Logout berhasil!');
         } catch (JWTException $exception) {
             return response()->json([
                 'success' => false,
-                'message' => 'Sorry, user cannot be logged out'
+                'message' => 'Maaf, pengguna tidak dapat logout'
             ], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
