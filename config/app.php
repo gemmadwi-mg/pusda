@@ -165,7 +165,9 @@ return [
         /*
          * Package Service Providers...
          */
+        'Tymon\JWTAuth\Providers\LaravelServiceProvider',
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        L5Swagger\L5SwaggerServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -230,8 +232,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
-
-
+        'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];

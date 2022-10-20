@@ -14,16 +14,13 @@
 - [x] Base Layout View
 - [x] Setup Dashboard view by role
 - [x] Setup Dashboard controller by role
-
-- [x] Setup Controller API/Admin
-- [x] Setup Controller API/Users
-- [x] Setup Documentasi API with Swegger 
-- [x] CRUD  Rest API controller API
+- [x] API Auth
+- [x] API Export And Import
+- [x] API CRUD Profile User
 
 ## ON PROGRESS
-
-- [x] Setup Controller Base
-
+- [x] API Export And Import
+- [x] API CRUD Profile User
 
 ## DONE
 - [x] Install Package UI V3
@@ -38,3 +35,10 @@
 - [x] Setup Dashboard view by role
 - [x] Setup Dashboard controller by role
 - [x] Creating Tables and Creating Relationships
+- [x] Setup Controller Base
+- [x] Setup Controller API/Admin
+- [x] Setup Controller API/Users
+- [x] Setup Documentasi API with Swegger 
+- [x] CRUD  Rest API controller API
+- [x] CRUD  Rest API controller API
+- [x] API Auth
