@@ -15,7 +15,14 @@ class CreateParentsTable extends Migration
     {
         Schema::create('parents', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('auhtor')->unsigned();
+            $table->string('certificate_number')->unique();
+            $table->string('certificate_date');
+            $table->enum('utilization_type',['pinjam_pakai','pakai_sendiri','sewa_retibusi']);
+            $table->string('address');
+            $table->string('large');
             $table->timestamps();
+            $table->foreign('auhtor')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
