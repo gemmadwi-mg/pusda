@@ -179,4 +179,23 @@ class ProfileController extends Controller
         ],400);
         }
     }
+
+
+     /**
+     * @OA\Get(
+     *     path="/api/user/all",
+     *     tags={"Admin"},
+     *     operationId="Admin",
+     *     @OA\Response(
+     *         response="default",
+     *         description="successful operation"
+     *     )
+     * )
+     */
+    public function userAll(){
+
+        $user = User::with('roles')->orderBy('id', 'desc')->paginate(10);
+        return response()->json($user, 200);
+
+    }
 }

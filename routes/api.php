@@ -38,6 +38,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // logout
     Route::get('logout', [AuthenticationController::class, 'logout']);
 
+    // Get User All for admin
+    Route::get('/user/all', [ProfileController::class, 'userAll']);
+
     // parent
     Route::group(['prefix' => 'parent'], function () {
         Route::post('/create', [ParentController::class, 'createParent']);

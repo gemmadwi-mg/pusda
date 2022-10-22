@@ -736,6 +736,19 @@
                     }
                 }
             }
+        },
+        "/api/user/all": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "operationId": "Admin",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
         }
     }
 }
