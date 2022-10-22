@@ -18,4 +18,14 @@ class Parents extends Model
         'large'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'auhtor', 'id');
+    }
+
+    public function childers ()
+    {
+        return $this->hasMany(Childer::class);
+    }
+
 }

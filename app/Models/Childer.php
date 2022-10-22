@@ -24,4 +24,17 @@ class Childer extends Model
         'application_letter',
         'agreement_letter',
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(Parents::class);
+    }
+
+    public function payments ()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+
+
 }

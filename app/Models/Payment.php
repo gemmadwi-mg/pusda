@@ -11,8 +11,14 @@ class Payment extends Model
     protected $table = 'payments';
     protected $fillable = [
         'childrens_id',
-         'year',
-         'proof_of_payment',
-         'payment_amount',
-        ];
+        'year',
+        'proof_of_payment',
+        'payment_amount',
+    ];
+
+    public function childer()
+    {
+        return $this->belongsTo(Childer::class, 'childrens_id', 'id');
+    }
+
 }
