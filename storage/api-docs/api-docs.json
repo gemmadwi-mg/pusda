@@ -354,6 +354,54 @@
                 }
             }
         },
+        "/import/file/parent": {
+            "post": {
+                "tags": [
+                    "Import"
+                ],
+                "operationId": "importParent",
+                "parameters": [
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "file",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/import/file/childer": {
+            "post": {
+                "tags": [
+                    "Import"
+                ],
+                "operationId": "importChilder",
+                "parameters": [
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "file",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/api/parent": {
             "get": {
                 "tags": [

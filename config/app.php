@@ -168,6 +168,7 @@ return [
         'Tymon\JWTAuth\Providers\LaravelServiceProvider',
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         L5Swagger\L5SwaggerServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -234,6 +235,7 @@ return [
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

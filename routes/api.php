@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ParentController;
 use App\Http\Controllers\Api\ChilderController;
+use App\Http\Controllers\Api\ImportExportData;
 use App\Http\Controllers\Api\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Get User All for admin
     Route::get('/user/all', [ProfileController::class, 'userAll']);
+
+    //  Import File
+    Route::post('/import/file/parent', [ImportExportData::class, 'storeImportParent']);
+    Route::post('/import/file/childer', [ImportExportData::class, 'storeImportClidern']);
 
     // parent
     Route::group(['prefix' => 'parent'], function () {
