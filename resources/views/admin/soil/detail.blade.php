@@ -24,28 +24,20 @@
                                         <li class="breadcrumb-item active">@yield('title')</li>
                                     </ol>
                                 </div>
-                                <h4 class="page-title"/>
+                                <h4 class="page-title">
+                                    <div class="text-lg-left">
+                                        <a href="{{ route('soil.index') }}" class="btn btn-sm btn-danger" title="Back"><div class="fas fa-reply"></div></a>
+                                    </div>
+                                </h4>
                             </div>
                         </div>
                     </div>
                     <!-- end page title -->
 
                     <div class="row">
-                        <div class="col-lg-4 col-xl-4">
-                            <div class="card-box text-center">
-                                <img src="{{asset('assets/images/user-circle.png')}}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
 
-                                <h4 class="mb-0">Geneva McKnight</h4>
-                                <p class="text-muted">@webdesigner</p>
 
-                                <div class="text-left mt-3">
-
-                                </div>
-                            </div> <!-- end card-box -->
-
-                        </div> <!-- end col-->
-
-                        <div class="col-lg-8 col-xl-8">
+                        <div class="col-md-12">
                             <div class="card-box">
                                 <ul class="nav nav-pills navtab-bg nav-justified">
                                     <li class="nav-item">
@@ -67,14 +59,42 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="firstname">First Name</label>
-                                                        <input type="text" class="form-control" id="firstname" placeholder="Enter first name">
+                                                        <label for="firstname">Author</label>
+                                                        <input type="text" class="form-control" readonly value="{{Auth::user()->name}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="lastname">Last Name</label>
-                                                        <input type="text" class="form-control" id="lastname" placeholder="Enter last name">
+                                                        <label for="lastname">Author Email</label>
+                                                        <input type="text" class="form-control" readonly value="{{Auth::user()->email}}">
+                                                    </div>
+                                                </div> <!-- end col -->
+                                            </div> <!-- end row -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="firstname">Certificate Number</label>
+                                                        <input type="text" class="form-control" readonly value="{{$parent->certificate_number}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="lastname">Certificate Date</label>
+                                                        <input type="text" class="form-control" readonly value="{{$parent->certificate_date}}">
+                                                    </div>
+                                                </div> <!-- end col -->
+                                            </div> <!-- end row -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="firstname">Utilization Type</label>
+                                                        <input type="text" class="form-control" readonly value="{{$parent->utilization_type}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="lastname">Large</label>
+                                                        <input type="text" class="form-control" readonly value="{{$parent->large}}">
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
@@ -82,28 +102,13 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label for="userbio">Bio</label>
-                                                        <textarea class="form-control" id="userbio" rows="4" placeholder="Write something..."></textarea>
+                                                        <label for="userbio">Address</label>
+                                                        <textarea class="form-control" id="userbio" rows="4" readonly>{{$parent->address}}</textarea>
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
 
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="useremail">Email Address</label>
-                                                        <input type="email" class="form-control" id="useremail" placeholder="Enter email">
-                                                        <span class="form-text text-muted"><small>If you want to change email please <a href="javascript: void(0);">click</a> here.</small></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="userpassword">Password</label>
-                                                        <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
-                                                        <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span>
-                                                    </div>
-                                                </div> <!-- end col -->
-                                            </div> <!-- end row -->
+
 
 
                                         </form>
@@ -115,60 +120,70 @@
                                         <h5 class="mb-3 mt-4 text-uppercase"><i class="mdi mdi-cards-variant mr-1"></i>
                                             List Children </h5>
                                         <div class="table-responsive">
+                                            <div class="dropdown float-left">
+                                                <form action="{{route('importanak.post')}}" method="post" enctype="multipart/form-data">
+                                                    @csrf
+                                                     <div class="input-group mb-3">
+                                                        <input type="file" name="file" required="" onfocus="file" accept=".xls,.xlsx"
+                                                        class="form-control @error('file') is-invalid @enderror" placeholder="Recipient's username"
+                                                        aria-label="Recipient's username" aria-describedby="button-addon2">
+                                                        <button class="btn btn-primary" type="submit" id="button-addon2" required>IMPORT</button>
+                                                        @error('file')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                         @enderror
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="dropdown float-right">
+                                                <a href="#" title="Create" class=" font-18 btn btn-xs btn-light">
+                                                    <i class="mdi mdi-plus"></i>
+                                                </a>
+                                            </div>
                                             <table class="table table-borderless mb-0">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Project Name</th>
-                                                        <th>Start Date</th>
-                                                        <th>Due Date</th>
-                                                        <th>Status</th>
-                                                        <th>Clients</th>
+                                                        <th>Rental Retribution</th>
+                                                        <th>Utilization Engagement Type</th>
+                                                        <th>Utilization Engagement Name</th>
+                                                        <th>Allotment</th>
+                                                        <th>Coordinate</th>
+                                                        <th>Large</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @forelse ($childer as $no => $c )
                                                     <tr>
-                                                        <td>1</td>
-                                                        <td>App design and development</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>10/15/2018</td>
-                                                        <td><span class="badge badge-info">Work in Progress</span></td>
-                                                        <td>Halette Boivin</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Coffee detail page - Main Page</td>
-                                                        <td>21/07/2016</td>
-                                                        <td>12/05/2018</td>
-                                                        <td><span class="badge badge-success">Pending</span></td>
-                                                        <td>Durandana Jolicoeur</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Poster illustation design</td>
-                                                        <td>18/03/2018</td>
-                                                        <td>28/09/2018</td>
-                                                        <td><span class="badge badge-pink">Done</span></td>
-                                                        <td>Lucas Sabourin</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>Drinking bottle graphics</td>
-                                                        <td>02/10/2017</td>
-                                                        <td>07/05/2018</td>
-                                                        <td><span class="badge badge-blue">Work in Progress</span></td>
-                                                        <td>Donatien Brunelle</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>Landing page design - Home</td>
-                                                        <td>17/01/2017</td>
-                                                        <td>25/05/2021</td>
-                                                        <td><span class="badge badge-warning">Coming soon</span></td>
-                                                        <td>Karel Auberjo</td>
+                                                        <td>{{ $no + $childer->firstItem() }}</td>
+                                                        <td> {{$c->rental_retribution}} </td>
+                                                        <td>{{$c->utilization_engagement_type}}</td>
+                                                        <td>{{$c->utilization_engagement_name}}</td>
+                                                        <td> {{$c->allotment_of_use}} </td>
+                                                        <td>{{$c->coordinate}}</td>
+                                                        <td>{{$c->large}}</td>
+
+                                                        <td class="text-center">
+                                                                <a href="" title="Detail" class="btn btn-xs btn-light">
+                                                                    <i class="mdi mdi-eye text-info"></i>
+                                                                </a>
+                                                                <a href="" title="Edit" class="btn btn-xs btn-light">
+                                                                    <i class="mdi mdi-pencil text-warning"></i>
+                                                                </a>
+
+                                                                <a href="#" title="Import Data Excel" class="btn btn-xs btn-light">
+                                                                    <i class="mdi mdi-file-import text-success"></i>
+                                                                </a>
+                                                        </td>
+
                                                     </tr>
 
                                                 </tbody>
+                                                @empty
+                                                <td colspan="8" class="table-active text-center bg-dark text-white">No Data Yet</td>
+                                                @endforelse
                                             </table>
                                         </div>
 

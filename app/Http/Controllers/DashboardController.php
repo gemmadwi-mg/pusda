@@ -115,10 +115,10 @@ class DashboardController extends Controller
 
         try {
             Excel::import(new ParentsImport, request()->file('file'));
-            Alert::success('Success', 'Data Berhasil di Import');
+            Alert::success('Success', 'Data Parent Import has been Successful');
             return redirect()->back();
         }catch (\Throwable $th) {
-            Alert::error('Error','Opsss! Data Gagal di Import :(', ['error' => $th->getMessage()]);
+            Alert::error('Error','Opsss! Import Failed Data :(', ['error' => $th->getMessage()]);
         } return redirect()->back();
     }
 
@@ -131,10 +131,10 @@ class DashboardController extends Controller
 
         try {
             Excel::import(new ChildernImport, request()->file('file'));
-            Alert::success('Success', 'Data Berhasil di Import');
+            Alert::success('Success', 'Data Childern Import has been Successful');
             return redirect()->back();
         }catch (\Throwable $th) {
-            Alert::error('Error','Opsss! Data Gagal di Import :(', ['error' => $th->getMessage()]);
+            Alert::error('Error','Opsss! Import Failed Data :(', ['error' => $th->getMessage()]);
         } return redirect()->back();
     }
 

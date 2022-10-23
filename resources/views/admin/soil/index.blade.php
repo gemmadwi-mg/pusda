@@ -33,9 +33,6 @@
                         <div class="col-xl-12 " >
                             <div class="row">
                                 <div class="col-md-6">
-                                    <a href="{{route('soil.create')}}" title="Import Data Excel" class=" font-18 btn btn-xs btn-light mr-2">
-                                        <i class="mdi mdi-file-import text-success"></i>
-                                    </a>
                                     <a href="{{route('soil.create')}}" title="Create" class=" font-18 btn btn-xs btn-light">
                                         <i class="mdi mdi-plus"></i>
                                     </a>
@@ -82,7 +79,14 @@
                                                         <h5 class="m-0 font-weight-normal"> {{$n->certificate_date}} </h5>
                                                     </td>
                                                     <td>  {!! Str::limit($n->address, 20, ' ...') !!} </td>
-                                                    <td> {{$n->utilization_type}} </td>
+                                                    @if ($n->utilization_type === "pinjam_pakai")
+                                                    <td> Pinjam Pakai </td>
+                                                    @elseif ($n->utilization_type === "pakai_sendiri")
+                                                    <td> Pinjam Sendiri </td>
+                                                    @elseif ($n->utilization_type === "sewa_retibusi")
+                                                    <td> Sewa Retibusi </td>
+                                                    @endif
+
                                                     <td>{{$n->large}} </td>
                                                     <td class="text-center">
                                                         <a href="{{route('soil.show', ['soil' => $n->id])}}" title="Detail" class="btn btn-xs btn-light">
@@ -95,6 +99,9 @@
                                                             data-toggle="modal" data-target="#hapus_event_{{ $n->id }}">
                                                             <i class="mdi mdi-trash-can text-danger"></i>
                                                         </button>
+                                                        <a href="#" title="Import Data Excel" class="btn btn-xs btn-light">
+                                                            <i class="mdi mdi-file-import text-success"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
 

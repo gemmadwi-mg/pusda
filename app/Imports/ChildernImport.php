@@ -26,10 +26,12 @@ class ChildernImport implements ToModel
             'allotment_of_use'  => $row[4],
             'coordinate'  => $row[5],
             'large'  => $row[6],
-            'validity_period_of'  => $row[7],
-            'validity_period_until'  => $row[8],
+            'validity_period_of'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[7]),
+            'validity_period_until'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[8]),
             'engagement_number'  => $row[9],
             'engagement_date'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10]),
+            'application_letter'=> $row[11],
+            'agreement_letter'=> $row[12],
         ]);
     }
 }

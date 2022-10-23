@@ -56,24 +56,24 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4" class="col-form-label">Name Goods</label>
+                                                <label for="inputEmail4" class="col-form-label">Certificate Number</label>
                                                 <input type="hidden" name="auhtor" value="{{Auth::user()->id}}">
                                                 <input type="hidden" name="no_reg" value="1000A2" >
-                                                <input  type="text" class="form-control @error('name_goods') is-invalid @enderror"
-                                                name="name_goods"  value="{{ old('name_goods') }}" required autocomplete="on"
+                                                <input  type="text" class="form-control @error('certificate_number') is-invalid @enderror"
+                                                name="certificate_number"  value="{{ old('certificate_number') }}" required autocomplete="on"
                                                 autofocus placeholder="Type">
-                                                @error('name_goods')
+                                                @error('certificate_number')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4" class="col-form-label">No</label>
-                                                <input  type="number" class="form-control @error('no') is-invalid @enderror"
-                                                name="no"  value="{{ old('no') }}" required autocomplete="on"
+                                                <label for="inputEmail4" class="col-form-label">Certificate Date</label>
+                                                <input  type="date" class="form-control @error('certificate_date') is-invalid @enderror"
+                                                name="certificate_date"  value="{{ old('certificate_date') }}" required autocomplete="on"
                                                 autofocus placeholder="Type">
-                                                @error('no')
+                                                @error('certificate_date')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -83,11 +83,14 @@
 
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail4" class="col-form-label">Date</label>
-                                                <input  type="date" class="form-control @error('date') is-invalid @enderror"
-                                                name="date"  value="{{ old('date') }}" required autocomplete="on"
-                                                autofocus placeholder="Type">
-                                                @error('date')
+                                                <label for="inputEmail4" class="col-form-label">Utilization Type</label>
+                                                <select name="utilization_type" class="form-control @error('utilization_type') is-invalid @enderror" required autocomplete="on">
+                                                    <option selected>--Selected---</option>
+                                                    <option value="pinjam_pakai">Pinjam Pakai</option>
+                                                    <option value="pakai_sendiri">Pakai Sendiri</option>
+                                                    <option value="sewa_retibusi">Sewa Retibusi</option>
+                                                </select>
+                                                @error('utilization_type')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -107,51 +110,17 @@
                                         </div>
 
                                         <div class="form-row">
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-12">
                                                 <label for="inputEmail4" class="col-form-label">Address</label>
-                                                <textarea name="address" class="form-control @error('address') is-invalid @enderror" placeholder="Type"  rows="1">{{old('address')}}</textarea>
+                                                <textarea name="address" class="form-control @error('address') is-invalid @enderror" placeholder="Type"  rows="4">{{old('address')}}</textarea>
                                                 @error('address')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4" class="col-form-label">Village</label>
-                                                <input  type="text" class="form-control @error('village') is-invalid @enderror"
-                                                name="village"  value="{{ old('village') }}" required autocomplete="on"
-                                                autofocus placeholder="Type">
-                                                @error('village')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
                                         </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4" class="col-form-label">Kecamatan</label>
-                                                <input  type="text" class="form-control @error('kec') is-invalid @enderror"
-                                                name="kec"  value="{{ old('kec') }}" required autocomplete="on"
-                                                autofocus placeholder="Type">
-                                                @error('kec')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4" class="col-form-label">Kabupaten/City</label>
-                                                <input  type="text" class="form-control @error('kab_city') is-invalid @enderror"
-                                                name="kab_city"  value="{{ old('kab_city') }}" required autocomplete="on"
-                                                autofocus placeholder="Type">
-                                                @error('kab_city')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
+
 
                                         <!-- start card-footer -->
                                         <div class="card-footer">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Childer;
 use App\Models\Parents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,14 +43,10 @@ class ParentsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'no_reg' => 'required|string|unique:parents,no_reg',
-            'name_goods' => 'required|string',
+            'certificate_number' => 'required|string|unique:parents,certificate_number',
+            'certificate_date' => 'required|string',
+            'utilization_type' => 'required|string',
             'address' => 'required|string',
-            'village' => 'required|string',
-            'kec' => 'required|string',
-            'kab_city' => 'required|string',
-            'no' => 'required|string|unique:parents,no',
-            'date' => 'required|string',
             'large' => 'required|string',
         ]);
 
@@ -57,15 +54,11 @@ class ParentsController extends Controller
 
         try {
             $parents = new Parents;
-            $parents->no_reg = $request->no_reg;
+            $parents->certificate_number = $request->certificate_number;
             $parents->auhtor  = $request->auhtor;
-            $parents->name_goods = $request->name_goods;
+            $parents->certificate_date = $request->certificate_date;
             $parents->address = $request->address;
-            $parents->village = $request->village;
-            $parents->kec = $request->kec;
-            $parents->kab_city = $request->kab_city;
-            $parents->no = $request->no;
-            $parents->date = $request->date;
+            $parents->utilization_type = $request->utilization_type;
             $parents->large = $request->large;
             $parents->save();
 
@@ -87,7 +80,10 @@ class ParentsController extends Controller
     public function show($id)
     {
         $parent = Parents::where('id',$id)->first();
-        return view('admin.soil.detail',compact('parent'));
+        $childer = Childer::orderBy('id','desc')
+        ->where('parent_id',$parent->id)
+        ->paginate(10);
+        return view('admin.soil.detail',compact('parent','childer'));
     }
 
     /**
@@ -112,41 +108,29 @@ class ParentsController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'no_reg' => 'required|string|unique:parents,no_reg,'.$id,
-            'name_goods' => 'required|string',
+            'certificate_number' => 'required|string|unique:parents,certificate_number,'.$id,
+            'certificate_date' => 'required|string',
+            'utilization_type' => 'required|string',
             'address' => 'required|string',
-            'village' => 'required|string',
-            'kec' => 'required|string',
-            'kab_city' => 'required|string',
-            'no' => 'required|string|unique:parents,no,'.$id,
-            'date' => 'required|string',
             'large' => 'required|string',
         ]);
     // dd($request->all());
 
         try {
 
-            $no_reg = $request->input('no_reg');
+            $certificate_number = $request->input('certificate_number');
+            $certificate_date = $request->input('certificate_date');
+            $utilization_type = $request->input('utilization_type');
             $auhtor = $request->input('auhtor');
-            $name_goods = $request->input('name_goods');
             $address = $request->input('address');
-            $village = $request->input('village');
-            $kec = $request->input('kec');
-            $kab_city = $request->input('kab_city');
-            $no = $request->input('no');
-            $date = $request->input('date');
             $large = $request->input('large');
 
             $parents = Parents::find($id);
-            $parents->no_reg = $no_reg;
+            $parents->certificate_number = $certificate_number;
             $parents->auhtor  = $auhtor;
-            $parents->name_goods = $name_goods;
+            $parents->certificate_date = $certificate_date;
+            $parents->utilization_type = $utilization_type;
             $parents->address = $address;
-            $parents->village = $village;
-            $parents->kec = $kec;
-            $parents->kab_city = $kab_city;
-            $parents->no = $no;
-            $parents->date = $date;
             $parents->large = $large;
             $parents->update();
 
