@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Parents;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ParentsController extends Controller
@@ -16,8 +17,10 @@ class ParentsController extends Controller
      */
     public function index()
     {
-        $data['data'] = Parents::orderBy('id','desc')->paginate(10);
-        return view('admin.soil.index',$data);
+        $data = Parents::orderBy('id','desc')
+        ->where('auhtor',Auth::user()->id)
+        ->paginate(10);
+        return view('admin.soil.index',compact('data'));
     }
 
     /**
@@ -83,7 +86,7 @@ class ParentsController extends Controller
      */
     public function show($id)
     {
-        $parent = Parents::where('no_reg',$id)->first();
+        $parent = Parents::where('id',$id)->first();
         return view('admin.soil.detail',compact('parent'));
     }
 
@@ -95,7 +98,7 @@ class ParentsController extends Controller
      */
     public function edit($id)
     {
-        $parent = Parents::where('no_reg',$id)->first();
+        $parent = Parents::where('id',$id)->first();
         return view('admin.soil.edit',compact('parent'));
     }
 
@@ -164,6 +167,14 @@ class ParentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $export = Parents::find($id);
+            $export->delete();
+            Alert::success('Success', 'Data Induk Berhasil Dihapus');
+            return redirect()->back();
+        }catch (\Throwable $th) {
+            Alert::error('Failed','Opsss... Gagal Dihapus', ['error' => $th->getMessage()]);
+        }
+        return redirect()->back();
     }
 }

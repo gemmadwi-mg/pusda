@@ -41,6 +41,9 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::get('changes-password', [DashboardController::class, 'changePassword'])->name('change.password');
     Route::post('changes-password', [DashboardController::class, 'changePasswordPost'])->name('changepassword.post');
 
+    Route::post('/import/post/induk', [DashboardController::class, 'storeImportParent'])->name('importinduk.post');
+    Route::post('/import/post/anak', [DashboardController::class, 'storeImportClidern'])->name('importanak.post');
+
     Route::get('/upload-photo/{id}', [DashboardController::class, 'vieUpload'])->name('upload.photo');
     Route::post('/upload-photo/{id}', [DashboardController::class, 'vieUploadPost'])->name('uploadphoto.post');
 

@@ -29,7 +29,7 @@ class ChildernImport implements ToModel
             'validity_period_of'  => $row[7],
             'validity_period_until'  => $row[8],
             'engagement_number'  => $row[9],
-            'engagement_date'  => $row[10],
+            'engagement_date'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[10]),
         ]);
     }
 }

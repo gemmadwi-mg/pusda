@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Imports\ChildernImport;
+use App\Imports\ParentsImport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class DashboardController extends Controller
@@ -102,4 +105,37 @@ class DashboardController extends Controller
         }
 
     }
+
+    public function storeImportParent(Request $request) {
+
+        // validasi
+		$this->validate($request, [
+			'file' => 'required|mimes:xlsx'
+		]);
+
+        try {
+            Excel::import(new ParentsImport, request()->file('file'));
+            Alert::success('Success', 'Data Berhasil di Import');
+            return redirect()->back();
+        }catch (\Throwable $th) {
+            Alert::error('Error','Opsss! Data Gagal di Import :(', ['error' => $th->getMessage()]);
+        } return redirect()->back();
+    }
+
+    public function storeImportClidern(Request $request) {
+
+        // validasi
+		$this->validate($request, [
+			'file' => 'required|mimes:xlsx'
+		]);
+
+        try {
+            Excel::import(new ChildernImport, request()->file('file'));
+            Alert::success('Success', 'Data Berhasil di Import');
+            return redirect()->back();
+        }catch (\Throwable $th) {
+            Alert::error('Error','Opsss! Data Gagal di Import :(', ['error' => $th->getMessage()]);
+        } return redirect()->back();
+    }
+
 }

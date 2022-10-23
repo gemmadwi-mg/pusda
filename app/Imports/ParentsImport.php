@@ -21,7 +21,7 @@ class ParentsImport implements ToModel
         return new Parents([
             'auhtor'  => $row[0],
             'certificate_number' => $row[1],
-            'certificate_date'=> $row[2],
+            'certificate_date'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[2]),
             'utilization_type'=> $row[3],
             'address'=> $row[4],
             'large'=> $row[5]
