@@ -32,7 +32,7 @@ class Childer extends Model
 
     public function payments ()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class,'childrens_id');
     }
 
 

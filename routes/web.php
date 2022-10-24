@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\childersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ParentsController;
 use App\Http\Controllers\ProfileController;
@@ -50,6 +51,14 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::resource('/profil',ProfileController::class)->except('show','create','store','destroy');
 
     Route::resource('/assets/soil',ParentsController::class);
+
+    //Childern
+    Route::get('/assets/soil/childern/create/{id}', [childersController::class, 'create'])->name('childern.create');
+    Route::post('/assets/soil/childern/post', [childersController::class, 'store'])->name('childern.store');
+    Route::get('/assets/soil/childern/detail/{id}', [childersController::class, 'show'])->name('childern.show');
+    Route::get('/assets/soil/childern/edit/{id}', [childersController::class, 'edit'])->name('childern.edit');
+    Route::put('/assets/soil/childern/update/{id}', [childersController::class, 'update'])->name('childern.update');
+    Route::delete('/assets/soil/childern/delete/{id}', [childersController::class, 'destroy'])->name('childern.destroy');
 
     // CRUD data upt kediri
     Route::resource('/assets-soil/kediri',UptKediriController::class);

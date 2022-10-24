@@ -137,7 +137,7 @@
                                                 </form>
                                             </div>
                                             <div class="dropdown float-right">
-                                                <a href="#" title="Create" class=" font-18 btn btn-xs btn-light">
+                                                <a href="{{route('childern.create', ['id' => $parent->id])}}" title="Create" class=" font-18 btn btn-xs btn-light">
                                                     <i class="mdi mdi-plus"></i>
                                                 </a>
                                             </div>
@@ -166,10 +166,10 @@
                                                         <td>{{$c->large}}</td>
 
                                                         <td class="text-center">
-                                                                <a href="" title="Detail" class="btn btn-xs btn-light">
+                                                                <a href="{{route('childern.show', ['id' => $c->id])}}" title="Detail" class="btn btn-xs btn-light">
                                                                     <i class="mdi mdi-eye text-info"></i>
                                                                 </a>
-                                                                <a href="" title="Edit" class="btn btn-xs btn-light">
+                                                                <a href="{{route('childern.edit', ['id' => $c->id])}}" title="Edit" class="btn btn-xs btn-light">
                                                                     <i class="mdi mdi-pencil text-warning"></i>
                                                                 </a>
 
