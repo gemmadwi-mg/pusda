@@ -186,8 +186,8 @@
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4" class="col-form-label">Application Letter</label>
                                                 <input  type="file" class="form-control @error('application_letter') is-invalid @enderror"
-                                                name="application_letter"  value="{{ old('application_letter',$chil->application_letter) }}" required autocomplete="on"
-                                                autofocus placeholder="Type" accept=".pdf">
+                                                name="application_letter"  value="{{ old('application_letter',$chil->application_letter) }}"  accept=".pdf">
+                                                <label class="text-muted mt-1">{{$chil->application_letter}}</label>
                                                 @error('application_letter')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -197,48 +197,9 @@
                                             <div class="form-group col-md-6">
                                                 <label for="inputEmail4" class="col-form-label">Agreement Letter</label>
                                                 <input  type="file" class="form-control @error('agreement_letter') is-invalid @enderror"
-                                                name="agreement_letter"  value="{{ old('agreement_letter',$chil->agreement_letter) }}" required autocomplete="on"
-                                                autofocus placeholder="Type" accept=".pdf">
+                                                name="agreement_letter"  value="{{ old('agreement_letter',$chil->agreement_letter) }}" accept=".pdf">
+                                                <label class="text-muted mt-1">{{$chil->agreement_letter}}</label>
                                                 @error('agreement_letter')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <h4 class="text-light text-dark mt-2"> Payment</h4>
-
-                                        <div class="form-row">
-                                            <div class="form-group col-md-2">
-                                                <label for="inputEmail4" class="col-form-label">Year</label>
-                                                <input type="hidden" name="childrens_id" value="{{old('childrens_id')}}">
-                                                <input  type="text" class="form-control @error('year') is-invalid @enderror"
-                                                name="year"  value="{{ old('year') }}" required autocomplete="on"
-                                                autofocus placeholder="Type">
-                                                @error('year')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4" class="col-form-label">Payment Amount</label>
-                                                <input  type="number" class="form-control @error('payment_amount') is-invalid @enderror"
-                                                name="payment_amount"  value="{{ old('payment_amount') }}" required autocomplete="on"
-                                                autofocus placeholder="Type">
-                                                @error('payment_amount')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group col-md-4">
-                                                <label for="inputEmail4" class="col-form-label">Proof Of Payment</label>
-                                                <input  type="file" class="form-control @error('proof_of_payment') is-invalid @enderror"
-                                                name="proof_of_payment"  value="{{ old('proof_of_payment') }}" required autocomplete="on"
-                                                autofocus placeholder="Type" accept=".pdf">
-                                                @error('proof_of_payment')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>

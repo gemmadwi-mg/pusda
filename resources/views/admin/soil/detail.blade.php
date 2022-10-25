@@ -151,7 +151,7 @@
                                                         <th>Allotment</th>
                                                         <th>Coordinate</th>
                                                         <th>Large</th>
-                                                        <th>Action</th>
+                                                        <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -173,8 +173,8 @@
                                                                     <i class="mdi mdi-pencil text-warning"></i>
                                                                 </a>
 
-                                                                <a href="#" title="Import Data Excel" class="btn btn-xs btn-light">
-                                                                    <i class="mdi mdi-file-import text-success"></i>
+                                                                <a href="{{route('payment.create', ['id' => $c->id])}}" title="Add Payment" class="btn btn-xs btn-light">
+                                                                    <i class="mdi mdi-plus text-success"></i>
                                                                 </a>
                                                         </td>
 

@@ -92,22 +92,6 @@ class childersController extends Controller
             $request->application_letter->move(public_path('documents/applicationletter'), $fileletterapplicName);
             $request->agreement_letter->move(public_path('documents/agreementletter'), $fileagreementLetterName);
 
-            $payment = new Payment();
-            $payment->childrens_id = $request->childrens_id;
-            $payment->year = $request->year;
-            $payment->payment_amount = $request->payment_amount;
-
-             //  proof_of_payment
-             $filepaymentName = time().'.'.$request->proof_of_payment->extension();
-             $path = public_path('documents/proofofpayment');
-             if(!empty($payment->proof_of_payment) && file_exists($path.'/'.$payment->proof_of_payment)) :
-                 unlink($path.'/'.$payment->proof_of_payment);
-             endif;
-             $payment->proof_of_payment = $filepaymentName;
-
-             $clid->payments()->save($payment);
-             $request->proof_of_payment->move(public_path('documents/proofofpayment'), $filepaymentName);
-
             Alert::success('Success', 'Your data has been successfully created');
             return redirect()->back();
 
@@ -161,13 +145,12 @@ class childersController extends Controller
             'validity_period_until'=> 'required|string',
             'engagement_number'=> 'required|string',
             'engagement_date'=> 'required|string',
-            'application_letter'=> 'required|mimes:pdf',
-            'agreement_letter'=> 'required|mimes:pdf',
 
         ]);
 
-        try {
 
+
+            $parent_id = $request->input('parent_id');
             $rental_retribution = $request->input('rental_retribution');
             $utilization_engagement_type = $request->input('utilization_engagement_type');
             $utilization_engagement_name = $request->input('utilization_engagement_name');
@@ -180,17 +163,49 @@ class childersController extends Controller
             $engagement_date = $request->input('engagement_date');
 
 
-            $chil = Childer::find($id);
+            $clid = Childer::find($id);
 
-            $chil->update();
+                $fileletterapplicName = time().'.'.$request->application_letter->extension();
+
+                $path = public_path('documents/applicationletter');
+
+                if(!empty($clid->application_letter) && file_exists($path.'/'.$clid->application_letter)) :
+                    unlink($path.'/'.$clid->application_letter);
+                endif;
+
+                $clid->application_letter = $fileletterapplicName;
+
+                $fileagreementLetterName = time().'.'.$request->agreement_letter->extension();
+
+                $path = public_path('documents/agreementletter');
+
+                if(!empty($clid->agreement_letter) && file_exists($path.'/'.$clid->agreement_letter)) :
+                    unlink($path.'/'.$clid->agreement_letter);
+                endif;
+
+                $clid->agreement_letter = $fileagreementLetterName;
+
+                $clid->parent_id = $parent_id;
+                $clid->rental_retribution = $rental_retribution;
+                $clid->utilization_engagement_type = $utilization_engagement_type;
+                $clid->utilization_engagement_name = $utilization_engagement_name;
+                $clid->allotment_of_use = $allotment_of_use;
+                $clid->coordinate = $coordinate;
+                $clid->large = $large;
+                $clid->validity_period_of = $validity_period_of;
+                $clid->validity_period_until = $validity_period_until;
+                $clid->engagement_number = $engagement_number;
+                $clid->engagement_date = $engagement_date;
+
+            $clid->update();
+
+            $request->application_letter->move(public_path('documents/applicationletter'), $fileletterapplicName);
+            $request->agreement_letter->move(public_path('documents/agreementletter'), $fileagreementLetterName);
 
             Alert::success('Success', 'Your data has been successfully updated');
             return redirect()->route('soil.index');
 
-           }catch (\Throwable $e) {
-            Alert::error('Error','Failed to created your data',['error' => $e->getMessage()]);
-        }
-        return redirect()->back();
+
     }
 
     /**
@@ -203,11 +218,11 @@ class childersController extends Controller
     {
         try{
             $chil = Childer::find($id);
-            $chil->payments()->delete($chil);
-            Alert::success('Success', 'Data Induk Berhasil Dihapus');
+            $chil->delete();
+            Alert::success('Success', 'Your data has been successfully delete');
             return redirect()->back();
         }catch (\Throwable $th) {
-            Alert::error('Failed','Opsss... Gagal Dihapus', ['error' => $th->getMessage()]);
+            Alert::error('Failed','Opsss... Failed to created your data', ['error' => $th->getMessage()]);
         }
         return redirect()->back();
     }

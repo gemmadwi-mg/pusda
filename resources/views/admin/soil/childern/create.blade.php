@@ -206,7 +206,7 @@
                                             </div>
                                         </div>
 
-                                        <h4 class="text-light text-dark mt-2"> Payment</h4>
+                                        {{-- <h4 class="text-light text-dark mt-2"> Payment</h4>
 
                                         <div class="form-row">
                                             <div class="form-group col-md-2">
@@ -243,7 +243,7 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <!-- start card-footer -->
                                         <div class="card-footer">

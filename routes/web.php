@@ -3,6 +3,7 @@
 use App\Http\Controllers\childersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ParentsController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Upt\UptKediriController;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +60,10 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::get('/assets/soil/childern/edit/{id}', [childersController::class, 'edit'])->name('childern.edit');
     Route::put('/assets/soil/childern/update/{id}', [childersController::class, 'update'])->name('childern.update');
     Route::delete('/assets/soil/childern/delete/{id}', [childersController::class, 'destroy'])->name('childern.destroy');
+
+    // Payment
+    Route::get('/assets/soil/childern/payment/create/{id}', [PaymentController::class, 'create'])->name('payment.create');
+    Route::post('/assets/soil/childern/payment/post', [PaymentController::class, 'store'])->name('payment.store');
 
     // CRUD data upt kediri
     Route::resource('/assets-soil/kediri',UptKediriController::class);
