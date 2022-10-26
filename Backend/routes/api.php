@@ -27,6 +27,14 @@ use Illuminate\Support\Facades\Route;
 // authentication
 Route::post('login', [AuthenticationController::class, 'login']);
 
+// parent
+Route::group(['prefix' => 'parent'], function () {
+    Route::post('/create', [ParentController::class, 'createParent']);
+    Route::get('/', [ParentController::class, 'getAll']);
+    Route::put('/update/{id}', [ParentController::class, 'updateParent']);
+    Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
+});
+
 
 Route::group(['middleware' => ['jwt.verify']], function () {
 
@@ -46,13 +54,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/import/file/parent', [ImportExportData::class, 'storeImportParent']);
     Route::post('/import/file/childer', [ImportExportData::class, 'storeImportClidern']);
 
-    // parent
-    Route::group(['prefix' => 'parent'], function () {
-        Route::post('/create', [ParentController::class, 'createParent']);
-        Route::get('/', [ParentController::class, 'getAll']);
-        Route::put('/update/{id}', [ParentController::class, 'updateParent']);
-        Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
-    });
+    
 
     // childer
     Route::group(['prefix' => 'childer'], function () {
