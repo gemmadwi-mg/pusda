@@ -224,7 +224,7 @@ class ChilderController extends Controller
             if ($data) :
                 return ResponseFormatter::responseCreated('Berhasil membuat childer', $data);
             else :
-                return ResponseFormatter::responseError('Childer not created', 400);
+                return ResponseFormatter::responseError('Childer tidak berhasil dibuat', 400);
             endif;
         } catch (Exception $error) {
             return ResponseFormatter::responseError($error->getMessage(), 400);
