@@ -222,7 +222,7 @@ class ChilderController extends Controller
             $data = Childer::where('id', $childer->id)->with(['parent'])->get();
 
             if ($data) :
-                return ResponseFormatter::responseCreated('Successfully created new childer!', $data);
+                return ResponseFormatter::responseCreated('Berhasil membuat childer', $data);
             else :
                 return ResponseFormatter::responseError('Childer not created', 400);
             endif;
