@@ -16,8 +16,8 @@ class CreateChildersTable extends Migration
         Schema::create('childers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('parent_id')->unsigned();
-            $table->string('rental_retribution');
-            $table->enum('utilization_engagement_type',['sewa_sip_bmd','retribusi ']);
+            $table->integer('rental_retribution');
+            $table->enum('utilization_engagement_type',['sewa_sip_bmd','retribusi'])->nullable();
             $table->string('utilization_engagement_name');
             $table->string('allotment_of_use');
             $table->string('coordinate');

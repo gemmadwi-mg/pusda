@@ -219,7 +219,6 @@ class ChilderController extends Controller
         $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'application_letter', 'agreement_letter'), [
             'parent_id' => 'required',
             'rental_retribution' => 'required',
-            'utilization_engagement_type' => 'required',
             'utilization_engagement_name' => 'required',
             'allotment_of_use' => 'required',
             'coordinate' => 'required',

@@ -69,6 +69,7 @@ class ParentController extends Controller
             ->orWhere('utilization_type', 'LIKE', '%' . $other . '%')
             ->orWhere('address', 'LIKE', '%' . $other . '%')
             ->orWhere('large', 'LIKE', '%' . $other . '%')
+            ->orWhere('asset_value', 'LIKE', '%' . $other . '%')
             ->get();
         if (count($result)) {
             return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
@@ -139,6 +140,15 @@ class ParentController extends Controller
      *              type="string"
      *          )
      *     ),
+     *     @OA\Parameter(
+     *          name="asset_value",
+     *          description="large",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
      *     @OA\Response(
      *         response="default",
      *         description="successful operation"
@@ -147,12 +157,13 @@ class ParentController extends Controller
      */
     public function createParent(Request $request)
     {
-        $validation = Validator::make($request->only('certificate_number', 'certificate_date', 'utilization_type', 'address', 'large'), [
+        $validation = Validator::make($request->only('certificate_number', 'certificate_date', 'utilization_type', 'address', 'large', 'asset_value'), [
             'certificate_number' => 'required|integer',
             'certificate_date' => 'required',
             'utilization_type' => 'required',
             'address' => 'required',
             'large' => 'required',
+            'asset_value' => 'required'
         ]);
 
         if ($validation->fails()) :
@@ -167,14 +178,15 @@ class ParentController extends Controller
                 'utilization_type' => $request->utilization_type,
                 'address' => $request->address,
                 'large' => $request->large,
+                'asset_value' => $request->asset_value, 
             ]);
 
             $data = Parents::where('id', $parent->id)->with(['user'])->get();
 
             if ($data) :
-                return ResponseFormatter::responseCreated('Successfully created new parent!', $data);
+                return ResponseFormatter::responseCreated('Berhasil membuat tanah induk', $data);
             else :
-                return ResponseFormatter::responseError('Note not created', 400);
+                return ResponseFormatter::responseError('Tanah induk gagal dibuat', 400);
             endif;
         } catch (Exception $error) {
             return ResponseFormatter::responseError($error->getMessage(), 400);
@@ -231,6 +243,15 @@ class ParentController extends Controller
      *              type="string"
      *          )
      *     ),
+     *     @OA\Parameter(
+     *          name="asset_value",
+     *          description="large",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
      *     @OA\Response(
      *         response="default",
      *         description="successful operation"
@@ -239,12 +260,13 @@ class ParentController extends Controller
      */
     public function updateParent(Request $request, $id)
     {
-        $validation = Validator::make($request->only('auhtor', 'certificate_number', 'certificate_date', 'utilization_type', 'address', 'large'), [
+        $validation = Validator::make($request->only('auhtor', 'certificate_number', 'certificate_date', 'utilization_type', 'address', 'large', 'asset_value'), [
             'certificate_number' => 'required|integer',
             'certificate_date' => 'required',
             'utilization_type' => 'required',
             'address' => 'required',
             'large' => 'required',
+            'asset_value' => 'required',
         ]);
 
         if ($validation->fails()) :
@@ -259,13 +281,14 @@ class ParentController extends Controller
                 'utilization_type' => $request->utilization_type,
                 'address' => $request->address,
                 'large' => $request->large,
+                'asset_value' => $request->asset_value
             ]);
             $parent->save();
 
             if ($parent) :
-                return ResponseFormatter::responseSuccessWithData('Successfully update parent', $parent);
+                return ResponseFormatter::responseSuccessWithData('Sukses update tanah induk', $parent);
             else :
-                return ResponseFormatter::responseError('Parent not updated', 400);
+                return ResponseFormatter::responseError('Tanah induk gagal di update', 400);
             endif;
         } catch (Exception $error) {
             return ResponseFormatter::responseError($error->getMessage(), 400);
@@ -291,6 +314,6 @@ class ParentController extends Controller
             'auhtor' => Auth::user()->id
         ]);
         $parent->delete();
-        return ResponseFormatter::responseSuccess('Successfully deleting parent');
+        return ResponseFormatter::responseSuccess('Sukses hapus tanah induk');
     }
 }

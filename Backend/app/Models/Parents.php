@@ -15,7 +15,8 @@ class Parents extends Model
         'certificate_date',
         'utilization_type',
         'address',
-        'large'
+        'large',
+        'asset_value'
     ];
 
     public function user()
@@ -26,11 +27,6 @@ class Parents extends Model
     public function childers ()
     {
         return $this->hasMany(Childer::class);
-    }
-
-    public function childerPayments()
-    {
-        return $this->hasOneThrough(Payment::class,Childer::class, 'parent_id', 'childrens_id', 'id', 'id');
     }
 
 }

@@ -108,7 +108,7 @@ class PaymentController extends Controller
         try {
 
             if ($request->hasFile('proof_of_payment')) {
-                $file = $request->file('proof_of_payment')->store('public/documents');
+                $file = $request->file('proof_of_payment')->store('public/documents/proofofpayment');
             }
 
             $payment = Payment::create([

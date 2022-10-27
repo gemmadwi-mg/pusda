@@ -76,5 +76,5 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     });
 
     // dashboard
-    Route::get('dashboard', [DashboardController::class, 'getAll']);
+    Route::get('/dashboard/{year}', [DashboardController::class, 'getAll']);
 });
