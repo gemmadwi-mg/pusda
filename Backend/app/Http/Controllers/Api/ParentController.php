@@ -42,6 +42,41 @@ class ParentController extends Controller
         return ResponseFormatter::responseSuccessWithData('Successfully retrieve all parents', $parents);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/parent/search/{keyword}",
+     *     tags={"Parents"},
+     *     operationId="parentsSearch",
+     *     @OA\Parameter(
+     *          name="other",
+     *          description="other",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="successful operation"
+     *     )
+     * )
+     */
+    public function search($other)
+    {
+        $result = Parents::where('certificate_number', 'LIKE', '%' . $other . '%')
+            ->orWhere('certificate_date', 'LIKE', '%' . $other . '%')
+            ->orWhere('utilization_type', 'LIKE', '%' . $other . '%')
+            ->orWhere('address', 'LIKE', '%' . $other . '%')
+            ->orWhere('large', 'LIKE', '%' . $other . '%')
+            ->get();
+        if (count($result)) {
+            return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
+        } else {
+            return response()->json(['Result' => 'No Data not found'], 404);
+        }
+    }
+
 
 
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ParentController;
 use App\Http\Controllers\Api\ChilderController;
 use App\Http\Controllers\Api\ImportExportData;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,13 +28,7 @@ use Illuminate\Support\Facades\Route;
 // authentication
 Route::post('login', [AuthenticationController::class, 'login']);
 
-// parent
-Route::group(['prefix' => 'parent'], function () {
-    Route::post('/create', [ParentController::class, 'createParent']);
-    Route::get('/', [ParentController::class, 'getAll']);
-    Route::put('/update/{id}', [ParentController::class, 'updateParent']);
-    Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
-});
+
 
 
 Route::group(['middleware' => ['jwt.verify']], function () {
@@ -54,10 +49,18 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::post('/import/file/parent', [ImportExportData::class, 'storeImportParent']);
     Route::post('/import/file/childer', [ImportExportData::class, 'storeImportClidern']);
 
-    
+    // parent
+    Route::group(['prefix' => 'parent'], function () {
+        Route::get('/search/{keyword}', [ParentController::class, 'search']);
+        Route::post('/create', [ParentController::class, 'createParent']);
+        Route::get('/', [ParentController::class, 'getAll']);
+        Route::put('/update/{id}', [ParentController::class, 'updateParent']);
+        Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
+    });
 
     // childer
     Route::group(['prefix' => 'childer'], function () {
+        Route::get('/search/{keyword}', [ChilderController::class, 'search']);
         Route::post('/create', [ChilderController::class, 'createChilder']);
         Route::get('/', [ChilderController::class, 'getAll']);
         Route::put('/update/{id}', [ChilderController::class, 'updateChilder']);
@@ -71,4 +74,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::put('/update/{id}', [PaymentController::class, 'updatePayment']);
         Route::delete('/delete/{id}', [PaymentController::class, 'deletePayment']);
     });
+
+    // dashboard
+    Route::get('dashboard', [DashboardController::class, 'getAll']);
 });

@@ -42,6 +42,47 @@ class ChilderController extends Controller
         return ResponseFormatter::responseSuccessWithData('Successfully retrieve all childs', $childs);
     }
 
+    /**
+     * @OA\Get(
+     *     path="/api/childer/search/{keyword}",
+     *     tags={"Childers"},
+     *     operationId="childersSearch",
+     *     @OA\Parameter(
+     *          name="other",
+     *          description="other",
+     *          required=true,
+     *          in="query",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="successful operation"
+     *     )
+     * )
+     */
+    public function search($other)
+    {
+            $result = Childer::where('rental_retribution', 'LIKE', '%'. $other. '%')
+                    ->orWhere('utilization_engagement_type', 'LIKE', '%'. $other. '%')
+                    ->orWhere('utilization_engagement_name', 'LIKE', '%'. $other. '%')
+                    ->orWhere('allotment_of_use', 'LIKE', '%'. $other. '%')
+                    ->orWhere('coordinate', 'LIKE', '%'. $other. '%')
+                    ->orWhere('large', 'LIKE', '%'. $other. '%')
+                    ->orWhere('validity_period_of', 'LIKE', '%'. $other. '%')
+                    ->orWhere('validity_period_until', 'LIKE', '%'. $other. '%')
+                    ->orWhere('engagement_number', 'LIKE', '%'. $other. '%')
+                    ->orWhere('engagement_date', 'LIKE', '%'. $other. '%')
+                    ->get();
+            if(count($result)){
+            return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
+            }else{
+            return ResponseFormatter::responseError('Data tidak ditemukan', 400);;
+        }
+
+    }
+
 
 
 
@@ -197,10 +238,10 @@ class ChilderController extends Controller
 
         try {
             if ($request->hasFile('application_letter')) {
-                $file_application = $request->file('application_letter')->store('public/documents');
+                $file_application = $request->file('application_letter')->store('public/documents/applicationletter');
             }
             if ($request->hasFile('agreement_letter')) {
-                $file_agreement = $request->file('agreement_letter')->store('public/documents');
+                $file_agreement = $request->file('agreement_letter')->store('public/documents/agreementletter');
             }
 
             $childer = Childer::create([

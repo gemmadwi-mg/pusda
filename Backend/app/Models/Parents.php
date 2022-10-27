@@ -28,4 +28,9 @@ class Parents extends Model
         return $this->hasMany(Childer::class);
     }
 
+    public function childerPayments()
+    {
+        return $this->hasOneThrough(Payment::class,Childer::class, 'parent_id', 'childrens_id', 'id', 'id');
+    }
+
 }
