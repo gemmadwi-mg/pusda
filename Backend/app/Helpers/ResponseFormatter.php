@@ -10,7 +10,7 @@ class ResponseFormatter
     public static function responseValidation($errors)
     {
         return response()->json([
-            'status' => true,
+            'status' => false,
             'message' => (!is_object($errors)) ? $errors : $errors->all(),
             'data' => null
         ], 422);
@@ -19,7 +19,7 @@ class ResponseFormatter
     public static function responseError($msg, $code, $data = null)
     {
         return response()->json([
-            'status' => true,
+            'status' => false,
             'message' => $msg,
             'data' => $data,
         ], $code);

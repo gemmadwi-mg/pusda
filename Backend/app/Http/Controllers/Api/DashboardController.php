@@ -52,6 +52,18 @@ class DashboardController extends Controller
     // }
     public function getAll(Request $request, $year)
     {
+        $total_tanah_induk_query = Parents::where('auhtor','=', Auth::user()->id)->count();
+
+        $total_induk_query = DB::table('parents')
+        ->join('childers', function ($join) {
+            $join->on('childers.parent_id', '=', 'parents.id');
+        })
+        // ->join('payments', function ($join) {
+        //     $join->on('childers.id', '=', 'payments.childrens_id');
+        // })
+        // ->select(DB::raw('sum(payments.payment_amount+childers.rental_retribution) AS total'))
+        // ->where('payments.year', '=', $year)
+        ->get();
         
         $total_tanah_pinjam_pakai_query = Parents::
         where('utilization_type', '=', 'pinjam_pakai')
@@ -111,6 +123,7 @@ class DashboardController extends Controller
             'success' => true,
             'message' => 'Sukses',
             'data' => [ 
+                "total_induk_query" => $total_induk_query,
                 "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri_query,
                 "total_pakai_sendiri" => $total_pakai_sendiri_query,
                 "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai_query,
