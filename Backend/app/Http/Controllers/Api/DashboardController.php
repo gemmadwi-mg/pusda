@@ -121,6 +121,17 @@ class DashboardController extends Controller
         ->where('payments.year', '=', $year)
         ->sum('payments.payment_amount');
 
+        $total_pad = DB::table('parents')
+        ->join('childers', function ($join) {
+            $join->on('parents.id', '=', 'childers.parent_id');
+        })
+        ->join('payments', function ($join) {
+            $join->on('childers.id', '=', 'payments.childrens_id');
+        })
+        ->select(DB::raw('sum(payments.payment_amount+childers.rental_retribution) AS maintotal3'))
+        ->where('payments.year', '=', $year)
+        ->first();
+
         return response()->json([
             'success' => true,
             'message' => 'Sukses',
@@ -132,7 +143,8 @@ class DashboardController extends Controller
                 "total_tanah_retribusi" => $total_tanah_retribusi_query,
                 'total_retribusi' => $jumlah_reribusi,
                 "total_tanah_sewa_sip_bmd" => $total_sewa_retribusi_query,
-                'total_sewa' => $data_sewa
+                'total_sewa' => $data_sewa,
+                "total_pad" => $total_pad
             ]
         ]);
     }
