@@ -26,7 +26,7 @@ class Parents extends Model
 
     public function childers ()
     {
-        return $this->hasMany(Childer::class);
+        return $this->hasMany(Childer::class, 'parent_id');
     }
 
 }
