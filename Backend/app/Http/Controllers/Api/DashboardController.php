@@ -17,26 +17,6 @@ use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
-    // protected $user;
-    // public function __construct()
-    // {
-    //     $this->user = JWTAuth::parseToken()->authenticate();
-    // }
-
-
-    /**
-     * @OA\Get(
-     *     path="/api/parent",
-     *     tags={"Parents"},
-     *     operationId="parents",
-     *     @OA\Response(
-     *         response="default",
-     *         description="successful operation"
-     *     )
-     * )
-     */
-
-
     // public function getAll(Request $request, $year)
     // {
     //     $total_induk_query = Parents::where('auhtor','=', Auth::user()->id)->count();
