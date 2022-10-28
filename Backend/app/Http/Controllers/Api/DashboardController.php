@@ -77,11 +77,6 @@ class DashboardController extends Controller
         where('utilization_type', '=', 'pinjam_pakai')
         ->count();
 
-        // $total_pinjam_pakai_query = Parents::rightJoin('childers', 'parents.id', '=', 'childers.parent_id')
-        // ->where('utilization_type', '=', 'pinjam_pakai')
-        // // ->sum('childers.rental_retribution');
-        // ->select('parents.*', 'childers.*')
-        // ->get();
         $total_pinjam_pakai_query = DB::table('parents')
         ->join('childers', function ($join) {
             $join->on('parents.id', '=', 'childers.parent_id')
@@ -128,7 +123,7 @@ class DashboardController extends Controller
         ->join('payments', function ($join) {
             $join->on('childers.id', '=', 'payments.childrens_id');
         })
-        ->select(DB::raw('sum(payments.payment_amount+childers.rental_retribution) AS maintotal3'))
+        ->select(DB::raw('sum(payments.payment_amount+childers.rental_retribution) AS total'))
         ->where('payments.year', '=', $year)
         ->first();
 
