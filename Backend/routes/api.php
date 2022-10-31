@@ -73,6 +73,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::group(['prefix' => 'payment'], function () {
         Route::post('/create', [PaymentController::class, 'createPayment']);
         Route::get('/', [PaymentController::class, 'getAll']);
+        Route::get('/{id}', [PaymentController::class, 'getById']);
         Route::put('/update/{id}', [PaymentController::class, 'updatePayment']);
         Route::delete('/delete/{id}', [PaymentController::class, 'deletePayment']);
     });
