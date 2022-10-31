@@ -35,11 +35,23 @@ class ParentController extends Controller
 
     public function getAll(Request $request)
     {
-        $parent_query = Parents::with(['user']);
+        $parent_query = Parents::with(['user'])
+        ->where('auhtor',Auth::user()->id)
+        ->paginate(10);
 
-        $parents = $parent_query->get();
+        return ResponseFormatter::responseSuccessWithData('Successfully retrieve all parents', $parent_query);
+    }
 
-        return ResponseFormatter::responseSuccessWithData('Successfully retrieve all parents', $parents);
+    public function getById(Request $request, $id)
+    {
+        $parent_query = Parents::with(['user'])
+        ->where('id',$id)
+        ->where('auhtor',Auth::user()->id)
+        ->first();
+
+        $parents = $parent_query;
+
+        return ResponseFormatter::responseSuccessWithData('Berhasil', $parents);
     }
 
     /**

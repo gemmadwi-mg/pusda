@@ -54,6 +54,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('/search/{keyword}', [ParentController::class, 'search']);
         Route::post('/create', [ParentController::class, 'createParent']);
         Route::get('/', [ParentController::class, 'getAll']);
+        Route::get('/{id}', [ParentController::class, 'getById']);
         Route::put('/update/{id}', [ParentController::class, 'updateParent']);
         Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
     });
@@ -63,6 +64,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('/search/{keyword}', [ChilderController::class, 'search']);
         Route::post('/create', [ChilderController::class, 'createChilder']);
         Route::get('/', [ChilderController::class, 'getAll']);
+        Route::get('/{id}', [ChilderController::class, 'getById']);
         Route::put('/update/{id}', [ChilderController::class, 'updateChilder']);
         Route::delete('/delete/{id}', [ChilderController::class, 'deleteChilder']);
     });

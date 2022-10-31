@@ -35,11 +35,20 @@ class ChilderController extends Controller
 
     public function getAll(Request $request)
     {
-        $child_query = Childer::with(['parent']);
+        $child_query = Childer::with(['parent'])
+        ->paginate(10);
 
-        $childs = $child_query->get();
+        return ResponseFormatter::responseSuccessWithData('Successfully retrieve all childs', $child_query);
+    }
 
-        return ResponseFormatter::responseSuccessWithData('Successfully retrieve all childs', $childs);
+    public function getById(Request $request, $id)
+    {
+        $parent_query = Childer::with(['Parent'])
+        ->where('id',$id)
+        ->first();
+
+
+        return ResponseFormatter::responseSuccessWithData('Berhasil', $parent_query);
     }
 
     /**

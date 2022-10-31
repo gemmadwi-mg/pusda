@@ -123,6 +123,7 @@ class DashboardController extends Controller
             'success' => true,
             'message' => 'Sukses',
             'data' => [ 
+                'auhtor' => Auth::user()->id,
                 "total_induk_query" => $total_induk_query,
                 "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri_query,
                 "total_pakai_sendiri" => $total_pakai_sendiri_query,
