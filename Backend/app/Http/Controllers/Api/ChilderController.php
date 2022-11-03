@@ -35,12 +35,26 @@ class ChilderController extends Controller
 
     public function getAll(Request $request)
     {
-        $child_query = Childer::with(['parent']);
+        $child_query = Childer::with(['parent'])
+        ->get();
 
-        $childs = $child_query->get();
-
-        return ResponseFormatter::responseSuccessWithData('Successfully retrieve all childs', $childs);
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
     }
+
+
+    public function getById(Request $request, $id)
+    {
+        $child_query = Childer::with(['Parent']);
+
+        $child = $child_query->find($id);
+
+        if ($child) {
+            return ResponseFormatter::responseSuccessWithData('Tanah bagian ditemukan', $child);
+        }
+
+        return ResponseFormatter::responseError("Tanah bagian tidak ditemukan", 400);
+    }
+
 
     /**
      * @OA\Get(
@@ -430,7 +444,12 @@ class ChilderController extends Controller
             }
 
 
-            $childer = Childer::findOrFail($id);
+            $childer = Childer::find($id);
+
+            if (!$childer) {
+                throw new Exception('Tanah bagian tidak ditemukan');
+            }
+
             $childer->update([
                 'parent_id' => $request->parent_id,
                 'rental_retribution' => $request->rental_retribution,
@@ -449,9 +468,9 @@ class ChilderController extends Controller
             $childer->save();
 
             if ($childer) :
-                return ResponseFormatter::responseSuccessWithData('Successfully update childer', $childer);
+                return ResponseFormatter::responseSuccessWithData('Sukses update tanah bagian', $childer);
             else :
-                return ResponseFormatter::responseError('Childer not updated', 400);
+                return ResponseFormatter::responseError('Tanah bagian gagal di update', 400);
             endif;
         } catch (Exception $error) {
             return ResponseFormatter::responseError($error->getMessage(), 400);

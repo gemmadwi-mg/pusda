@@ -31,15 +31,35 @@ class ParentController extends Controller
      *     )
      * )
      */
+    public function getParentUser(Request $request)
+    {
+        $parent_query = Parents::all();
+
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parent_query);
+    }
 
 
     public function getAll(Request $request)
     {
-        $parent_query = Parents::with(['user']);
+        $parent_query = Parents::with(['user'])
+            ->where('auhtor', Auth::user()->id)
+            ->orWhere('auhtor', '=', 1)
+            ->paginate(10);
 
-        $parents = $parent_query->get();
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan data tanah induk', $parent_query);
+    }
 
-        return ResponseFormatter::responseSuccessWithData('Successfully retrieve all parents', $parents);
+    public function getById(Request $request, $id)
+    {
+        $parent_query = Parents::with(['user'])->where('auhtor', Auth::user()->id);
+
+        $parent = $parent_query->find($id);
+
+        if ($parent) {
+            return ResponseFormatter::responseSuccessWithData('Tanah induk ditemukan', $parent);
+        }
+
+        return ResponseFormatter::responseError("Tanah induk tidak ditemukan", 400);
     }
 
     /**
@@ -64,7 +84,9 @@ class ParentController extends Controller
      */
     public function search($other)
     {
-        $result = Parents::where('certificate_number', 'LIKE', '%' . $other . '%')
+        $result = Parents::with(['user'])
+            ->where('auhtor', '=', Auth::user()->id)
+            ->orwhere('certificate_number', 'LIKE', '%' . $other . '%')
             ->orWhere('certificate_date', 'LIKE', '%' . $other . '%')
             ->orWhere('utilization_type', 'LIKE', '%' . $other . '%')
             ->orWhere('address', 'LIKE', '%' . $other . '%')
@@ -74,7 +96,7 @@ class ParentController extends Controller
         if (count($result)) {
             return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
         } else {
-            return response()->json(['Result' => 'No Data not found'], 404);
+            return response()->json(['Result' => 'Data tidak ditemukan'], 404);
         }
     }
 
@@ -178,7 +200,7 @@ class ParentController extends Controller
                 'utilization_type' => $request->utilization_type,
                 'address' => $request->address,
                 'large' => $request->large,
-                'asset_value' => $request->asset_value, 
+                'asset_value' => $request->asset_value,
             ]);
 
             $data = Parents::where('id', $parent->id)->with(['user'])->get();
@@ -274,7 +296,12 @@ class ParentController extends Controller
         endif;
 
         try {
-            $parent = Parents::findOrFail($id);
+            $parent = Parents::find($id);
+
+            if (!$parent) {
+                throw new Exception('Tanah induk tidak ditemukan');
+            }
+
             $parent->update([
                 'certificate_number' => $request->certificate_number,
                 'certificate_date' => $request->certificate_date,
@@ -309,11 +336,18 @@ class ParentController extends Controller
 
     public function deleteParent($id)
     {
-        $parent = Parents::where([
-            'id' => $id,
-            'auhtor' => Auth::user()->id
-        ]);
-        $parent->delete();
-        return ResponseFormatter::responseSuccess('Sukses hapus tanah induk');
+        try {
+            $parent = Parents::find($id);
+
+            if (!$parent) {
+                throw new Exception('Tanah induk tidak ditemukan');
+            }
+
+            $parent->delete();
+
+            return ResponseFormatter::responseSuccess('Sukses hapus tanah induk');
+        } catch (Exception $error) {
+            return ResponseFormatter::responseError($error->getMessage(), 400);
+        }
     }
 }

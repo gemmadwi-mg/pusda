@@ -54,7 +54,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('/search/{keyword}', [ParentController::class, 'search']);
         Route::post('/create', [ParentController::class, 'createParent']);
         Route::get('/', [ParentController::class, 'getAll']);
-        Route::put('/update/{id}', [ParentController::class, 'updateParent']);
+        Route::get('/all', [ParentController::class, 'getParentUser']);
+        Route::get('/{id}', [ParentController::class, 'getById']);
+        Route::post('/update/{id}', [ParentController::class, 'updateParent']);
         Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
     });
 
@@ -63,7 +65,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('/search/{keyword}', [ChilderController::class, 'search']);
         Route::post('/create', [ChilderController::class, 'createChilder']);
         Route::get('/', [ChilderController::class, 'getAll']);
-        Route::put('/update/{id}', [ChilderController::class, 'updateChilder']);
+        Route::get('/{id}', [ChilderController::class, 'getById']);
+        Route::post('/update/{id}', [ChilderController::class, 'updateChilder']);
         Route::delete('/delete/{id}', [ChilderController::class, 'deleteChilder']);
     });
 
@@ -71,10 +74,13 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::group(['prefix' => 'payment'], function () {
         Route::post('/create', [PaymentController::class, 'createPayment']);
         Route::get('/', [PaymentController::class, 'getAll']);
-        Route::put('/update/{id}', [PaymentController::class, 'updatePayment']);
+        Route::get('/{id}', [PaymentController::class, 'getById']);
+        Route::post('/update/{id}', [PaymentController::class, 'updatePayment']);
         Route::delete('/delete/{id}', [PaymentController::class, 'deletePayment']);
     });
 
     // dashboard
     Route::get('/dashboard/{year}', [DashboardController::class, 'getAll']);
+    Route::get('/dashboard/all/{year}', [DashboardController::class, 'getAllUser']);
+   
 });

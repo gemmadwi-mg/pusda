@@ -17,84 +17,97 @@ use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
-    // public function getAll(Request $request, $year)
-    // {
-    //     $total_induk_query = Parents::where('auhtor','=', Auth::user()->id)->count();
-
-    //     $total_pinjam_pakai__query = Parents::where('utilization_type', '=', 'pinjam_pakai')
-    //     ->where('auhtor','=', Auth::user()->id)
-    //     ->count();
-
-    //     $total_pakai_sendiri_query = Parents::where('utilization_type', '=', 'pakai_sendiri')
-    //     ->where('auhtor','=', Auth::user()->id)
-    //     ->count();
-
-    //     $total_sewa_retribusi_query = Parents::where('utilization_type', '=', 'sewa_retibusi')
-    //     ->where('auhtor','=', Auth::user()->id)
-    //     ->count();
-
-    //     $sewa_query = Childer::with(['payments'])
-    //     ->where('payments->year', $year)
-    //     // ->where('payments.year' ,'=', $year)
-    //     ->get();
-
-    //     return response()->json([
-    //         'success'=>true, 
-    //         'message'=>'string', 
-    //         'data'=> [
-    //             "total_tanah_induk" => $total_induk_query,
-    //             "total_pinjam_pakai" => $total_pinjam_pakai__query,
-    //             "total_pakai_sendiri" => $total_pakai_sendiri_query,
-    //             "total_sewa_retribusi" => $total_sewa_retribusi_query,
-    //             "total_sewa" => $sewa_query,
-    //         ]
-    //     ]);
-    // }
     public function getAll(Request $request, $year)
     {
-        
-        $total_tanah_pinjam_pakai_query = Parents::
-        where('utilization_type', '=', 'pinjam_pakai')
-        ->count();
+        $query =  DB::table('parents')
+        ->where('auhtor','=', Auth::user()->id)
+        ->whereYear('certificate_date', '=', $year);
 
-        $total_pinjam_pakai_query = DB::table('parents')
+        $query_rupiah = DB::table('parents')
         ->join('childers', function ($join) {
-            $join->on('parents.id', '=', 'childers.parent_id')
-                 ->where('utilization_type', '=', 'pinjam_pakai');
+            $join->on('childers.parent_id', '=', 'parents.id');
         })
-        ->sum('childers.rental_retribution');
+        ->where('auhtor','=', Auth::user()->id);
 
-        $total_tanah_pakai_sendiri_query = Parents::
-        where('utilization_type', '=', 'pakai_sendiri')
+        $total_tanah = $query->count();
+
+        $total_tanah_pinjam_pakai = $query
+        ->where('utilization_type', '=', 'pinjam_pakai')
         ->count();
 
-        $total_pakai_sendiri_query = DB::table('parents')
+        $total_rupiah_tanah_pinjam_pakai = $query_rupiah
+        ->where('utilization_type', '=', 'pinjam_pakai')
+        ->whereYear('engagement_date', '=', $year)
+        ->sum('rental_retribution');
+
+        $total_tanah_pakai_sendiri = DB::table('parents')
+        ->where('auhtor','=', Auth::user()->id)
+        ->whereYear('certificate_date', '=', $year)
+        ->where('utilization_type', '=', 'pakai_sendiri')
+        ->count();
+
+        $total_rupiah_tanah_pakai_sendiri_query = DB::table('parents')
         ->join('childers', function ($join) {
-            $join->on('parents.id', '=', 'childers.parent_id')
-                 ->where('utilization_type', '=', 'pakai_sendiri');
+            $join->on('childers.parent_id', '=', 'parents.id');
         })
-        ->sum('childers.rental_retribution');
+        ->where('auhtor','=', Auth::user()->id)
+        ->where('utilization_type', '=', 'pakai_sendiri')
+        ->whereYear('engagement_date', '=', $year)
+        ->sum('rental_retribution');
 
-
-        $total_tanah_retribusi_query = Childer::join('payments', 'childers.id', '=', 'payments.childrens_id')
+        $total_tanah_retribusi_query = DB::table('parents')
+        ->join('childers', function ($join) {
+            $join->on('childers.parent_id', '=', 'parents.id');
+        })
+        // ->join('payments', function ($join) {
+        //     $join->on('childers.id', '=', 'payments.childrens_id');
+        // })
+        ->where('auhtor','=', Auth::user()->id)
+        ->where('utilization_type', '=', 'sewa_retribusi')
         ->where('utilization_engagement_type', '=', 'retribusi')
-        ->where('payments.year', '=', $year)
+        ->whereYear('certificate_date', '=', $year)
+        // ->where('year', '=', $year)
         ->count();
 
-        $total_sewa_retribusi_query = Childer::join('payments', 'childers.id', '=', 'payments.childrens_id')
+        $total_rupiah_retribusi_query = DB::table('parents')
+        ->join('childers', function ($join) {
+            $join->on('childers.parent_id', '=', 'parents.id');
+        })
+        ->join('payments', function ($join) {
+            $join->on('childers.id', '=', 'payments.childrens_id');
+        })
+        ->where('auhtor','=', Auth::user()->id)
+        ->where('utilization_engagement_type', '=', 'retribusi')
+        ->where('year', '=', $year)
+        ->sum('payment_amount');
+
+        $total_tanah_sewa_query = DB::table('parents')
+        ->join('childers', function ($join) {
+            $join->on('childers.parent_id', '=', 'parents.id');
+        })
+        // ->join('payments', function ($join) {
+        //     $join->on('childers.id', '=', 'payments.childrens_id');
+        // })
+        ->where('auhtor','=', Auth::user()->id)
+        ->where('utilization_type', '=', 'sewa_retribusi')
         ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
-        ->where('payments.year', '=', $year)
+        ->whereYear('certificate_date', '=', $year)
+        // ->where('year', '=', $year)
         ->count();
+
+        $total_rupiah_sewa_query = DB::table('parents')
+        ->join('childers', function ($join) {
+            $join->on('childers.parent_id', '=', 'parents.id');
+        })
+        ->join('payments', function ($join) {
+            $join->on('childers.id', '=', 'payments.childrens_id');
+        })
+        ->where('auhtor','=', Auth::user()->id)
+        ->where('utilization_type', '=', 'sewa_retribusi')
+        ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
+        ->where('year', '=', $year)
+        ->sum('payment_amount');
         
-        $jumlah_reribusi = Childer::join('payments', 'childers.id', '=', 'payments.childrens_id')
-        ->where('utilization_engagement_type', '=', 'retribusi')
-        ->where('payments.year', '=', $year)
-        ->sum('payments.payment_amount');
-
-        $data_sewa = Childer::join('payments', 'childers.id', '=', 'payments.childrens_id')
-        ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
-        ->where('payments.year', '=', $year)
-        ->sum('payments.payment_amount');
 
         $total_pad = DB::table('parents')
         ->join('childers', function ($join) {
@@ -111,16 +124,29 @@ class DashboardController extends Controller
             'success' => true,
             'message' => 'Sukses',
             'data' => [ 
-                "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri_query,
-                "total_pakai_sendiri" => $total_pakai_sendiri_query,
-                "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai_query,
-                "total_sewa_pinjam_pakai" => $total_pinjam_pakai_query,
+                'auhtor' => Auth::user()->id,
+                "total_tanah_query" => $total_tanah,
+                "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
+                "total_rupiah_tanah_pinjam_pakai" => $total_rupiah_tanah_pinjam_pakai,
+                "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
+                "total_rupiah_tanah_pakai_sendiri" => $total_rupiah_tanah_pakai_sendiri_query,
                 "total_tanah_retribusi" => $total_tanah_retribusi_query,
-                'total_retribusi' => $jumlah_reribusi,
-                "total_tanah_sewa_sip_bmd" => $total_sewa_retribusi_query,
-                'total_sewa' => $data_sewa,
-                "total_pad" => $total_pad
+                'total_rupiah_retribusi' => $total_rupiah_retribusi_query,
+                "total_tanah_sewa_sip_bmd" => $total_tanah_sewa_query,
+                'total_rupiah_tanah_sewa_sip_bmd' => $total_rupiah_sewa_query,
             ]
+        ]);
+    }
+
+    public function getAllUser(Request $request)
+    {
+        $data = User::with('parents')
+        ->paginate();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sukses',
+            'data' => $data
         ]);
     }
 }

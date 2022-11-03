@@ -22,10 +22,10 @@ class CreateChildersTable extends Migration
             $table->string('allotment_of_use');
             $table->string('coordinate');
             $table->string('large');
-            $table->string('validity_period_of');
-            $table->string('validity_period_until');
+            $table->date('validity_period_of');
+            $table->date('validity_period_until');
             $table->string('engagement_number');
-            $table->string('engagement_date');
+            $table->date('engagement_date');
             $table->string('application_letter');
             $table->string('agreement_letter');
             $table->timestamps();

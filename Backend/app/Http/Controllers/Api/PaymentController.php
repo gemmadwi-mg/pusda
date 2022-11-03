@@ -35,11 +35,20 @@ class PaymentController extends Controller
 
     public function getAll(Request $request)
     {
-        $parent_query = Payment::with(['childer']);
+        $parent_query = Payment::with(['childer'])
+        ->paginate(10);
 
-        $parents = $parent_query->get();
+        return ResponseFormatter::responseSuccessWithData('Successfully retrieve all parents', $parent_query);
+    }
 
-        return ResponseFormatter::responseSuccessWithData('Successfully retrieve all parents', $parents);
+    public function getById(Request $request, $id)
+    {
+        $parent_query = Payment::with(['childer'])
+        ->where('id',$id)
+        ->first();
+
+
+        return ResponseFormatter::responseSuccessWithData('Berhasil', $parent_query);
     }
 
 
