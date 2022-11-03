@@ -19,39 +19,31 @@ class DashboardController extends Controller
 {
     public function getAll(Request $request, $year)
     {
-        $total_tanah_query = DB::table('parents')
-        ->join('childers', function ($join) {
-            $join->on('childers.parent_id', '=', 'parents.id');
-        })
+        $query =  DB::table('parents')
         ->where('auhtor','=', Auth::user()->id)
-        ->whereYear('engagement_date', '=', $year)
-        ->count();
+        ->whereYear('certificate_date', '=', $year);
 
-        $total_tanah_pinjam_pakai_query = DB::table('parents')
+        $query_rupiah = DB::table('parents')
         ->join('childers', function ($join) {
             $join->on('childers.parent_id', '=', 'parents.id');
         })
-        ->where('auhtor','=', Auth::user()->id)
+        ->where('auhtor','=', Auth::user()->id);
+
+        $total_tanah = $query->count();
+
+        $total_tanah_pinjam_pakai = $query
         ->where('utilization_type', '=', 'pinjam_pakai')
-        ->whereYear('engagement_date', '=', $year)
         ->count();
 
-        $total_rupiah_tanah_pinjam_pakai_query = DB::table('parents')
-        ->join('childers', function ($join) {
-            $join->on('childers.parent_id', '=', 'parents.id');
-        })
-        ->where('auhtor','=', Auth::user()->id)
+        $total_rupiah_tanah_pinjam_pakai = $query_rupiah
         ->where('utilization_type', '=', 'pinjam_pakai')
         ->whereYear('engagement_date', '=', $year)
         ->sum('rental_retribution');
 
-        $total_tanah_pakai_sendiri_query = DB::table('parents')
-        ->join('childers', function ($join) {
-            $join->on('childers.parent_id', '=', 'parents.id');
-        })
+        $total_tanah_pakai_sendiri = DB::table('parents')
         ->where('auhtor','=', Auth::user()->id)
+        ->whereYear('certificate_date', '=', $year)
         ->where('utilization_type', '=', 'pakai_sendiri')
-        ->whereYear('engagement_date', '=', $year)
         ->count();
 
         $total_rupiah_tanah_pakai_sendiri_query = DB::table('parents')
@@ -128,15 +120,15 @@ class DashboardController extends Controller
             'message' => 'Sukses',
             'data' => [ 
                 'auhtor' => Auth::user()->id,
-                "total_tanah_query" => $total_tanah_query,
-                "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai_query,
-                "total_rupiah_tanah_pinjam_pakai_query" => $total_rupiah_tanah_pinjam_pakai_query,
-                "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri_query,
-                "total_rupiah_tanah_pakai_sendiri_query" => $total_rupiah_tanah_pakai_sendiri_query,
+                "total_tanah_query" => $total_tanah,
+                "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
+                "total_rupiah_tanah_pinjam_pakai" => $total_rupiah_tanah_pinjam_pakai,
+                "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
+                "total_rupiah_tanah_pakai_sendiri" => $total_rupiah_tanah_pakai_sendiri_query,
                 "total_tanah_retribusi" => $total_tanah_retribusi_query,
                 'total_rupiah_retribusi' => $total_rupiah_retribusi_query,
                 "total_tanah_sewa_sip_bmd" => $total_tanah_sewa_query,
-                'total_sewa' => $total_rupiah_sewa_query,
+                'total_rupiah_tanah_sewa_sip_bmd' => $total_rupiah_sewa_query,
             ]
         ]);
     }
