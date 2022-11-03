@@ -132,4 +132,16 @@ class DashboardController extends Controller
             ]
         ]);
     }
+
+    public function getAllUser(Request $request)
+    {
+        $data = User::with('parents')
+        ->paginate();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sukses',
+            'data' => $data
+        ]);
+    }
 }

@@ -31,6 +31,12 @@ class ParentController extends Controller
      *     )
      * )
      */
+    public function getParentUser(Request $request)
+    {
+        $parent_query = Parents::all();
+
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parent_query);
+    }
 
 
     public function getAll(Request $request)
