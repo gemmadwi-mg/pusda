@@ -55,7 +55,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::post('/create', [ParentController::class, 'createParent']);
         Route::get('/', [ParentController::class, 'getAll']);
         Route::get('/{id}', [ParentController::class, 'getById']);
-        Route::put('/update/{id}', [ParentController::class, 'updateParent']);
+        Route::post('/update/{id}', [ParentController::class, 'updateParent']);
         Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
     });
 
@@ -65,7 +65,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::post('/create', [ChilderController::class, 'createChilder']);
         Route::get('/', [ChilderController::class, 'getAll']);
         Route::get('/{id}', [ChilderController::class, 'getById']);
-        Route::put('/update/{id}', [ChilderController::class, 'updateChilder']);
+        Route::post('/update/{id}', [ChilderController::class, 'updateChilder']);
         Route::delete('/delete/{id}', [ChilderController::class, 'deleteChilder']);
     });
 
@@ -74,7 +74,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::post('/create', [PaymentController::class, 'createPayment']);
         Route::get('/', [PaymentController::class, 'getAll']);
         Route::get('/{id}', [PaymentController::class, 'getById']);
-        Route::put('/update/{id}', [PaymentController::class, 'updatePayment']);
+        Route::post('/update/{id}', [PaymentController::class, 'updatePayment']);
         Route::delete('/delete/{id}', [PaymentController::class, 'deletePayment']);
     });
 

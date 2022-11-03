@@ -137,7 +137,6 @@ class DashboardController extends Controller
                 'total_rupiah_retribusi' => $total_rupiah_retribusi_query,
                 "total_tanah_sewa_sip_bmd" => $total_tanah_sewa_query,
                 'total_sewa' => $total_rupiah_sewa_query,
-                "total_pad" => $total_pad
             ]
         ]);
     }

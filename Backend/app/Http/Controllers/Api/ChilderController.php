@@ -38,18 +38,23 @@ class ChilderController extends Controller
         $child_query = Childer::with(['parent'])
         ->paginate(10);
 
-        return ResponseFormatter::responseSuccessWithData('Successfully retrieve all childs', $child_query);
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
     }
+
 
     public function getById(Request $request, $id)
     {
-        $parent_query = Childer::with(['Parent'])
-        ->where('id',$id)
-        ->first();
+        $child_query = Childer::with(['Parent']);
 
+        $child = $child_query->find($id);
 
-        return ResponseFormatter::responseSuccessWithData('Berhasil', $parent_query);
+        if ($child) {
+            return ResponseFormatter::responseSuccessWithData('Tanah bagian ditemukan', $child);
+        }
+
+        return ResponseFormatter::responseError("Tanah bagian tidak ditemukan", 400);
     }
+
 
     /**
      * @OA\Get(
@@ -439,7 +444,12 @@ class ChilderController extends Controller
             }
 
 
-            $childer = Childer::findOrFail($id);
+            $childer = Childer::find($id);
+
+            if (!$childer) {
+                throw new Exception('Tanah bagian tidak ditemukan');
+            }
+
             $childer->update([
                 'parent_id' => $request->parent_id,
                 'rental_retribution' => $request->rental_retribution,
@@ -458,9 +468,9 @@ class ChilderController extends Controller
             $childer->save();
 
             if ($childer) :
-                return ResponseFormatter::responseSuccessWithData('Successfully update childer', $childer);
+                return ResponseFormatter::responseSuccessWithData('Sukses update tanah bagian', $childer);
             else :
-                return ResponseFormatter::responseError('Childer not updated', 400);
+                return ResponseFormatter::responseError('Tanah bagian gagal di update', 400);
             endif;
         } catch (Exception $error) {
             return ResponseFormatter::responseError($error->getMessage(), 400);
