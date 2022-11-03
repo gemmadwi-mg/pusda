@@ -59,12 +59,14 @@ class DashboardController extends Controller
         ->join('childers', function ($join) {
             $join->on('childers.parent_id', '=', 'parents.id');
         })
-        ->join('payments', function ($join) {
-            $join->on('childers.id', '=', 'payments.childrens_id');
-        })
+        // ->join('payments', function ($join) {
+        //     $join->on('childers.id', '=', 'payments.childrens_id');
+        // })
         ->where('auhtor','=', Auth::user()->id)
+        ->where('utilization_type', '=', 'sewa_retribusi')
         ->where('utilization_engagement_type', '=', 'retribusi')
-        ->where('year', '=', $year)
+        ->whereYear('certificate_date', '=', $year)
+        // ->where('year', '=', $year)
         ->count();
 
         $total_rupiah_retribusi_query = DB::table('parents')
@@ -83,12 +85,14 @@ class DashboardController extends Controller
         ->join('childers', function ($join) {
             $join->on('childers.parent_id', '=', 'parents.id');
         })
-        ->join('payments', function ($join) {
-            $join->on('childers.id', '=', 'payments.childrens_id');
-        })
+        // ->join('payments', function ($join) {
+        //     $join->on('childers.id', '=', 'payments.childrens_id');
+        // })
         ->where('auhtor','=', Auth::user()->id)
+        ->where('utilization_type', '=', 'sewa_retribusi')
         ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
-        ->where('year', '=', $year)
+        ->whereYear('certificate_date', '=', $year)
+        // ->where('year', '=', $year)
         ->count();
 
         $total_rupiah_sewa_query = DB::table('parents')
@@ -99,6 +103,7 @@ class DashboardController extends Controller
             $join->on('childers.id', '=', 'payments.childrens_id');
         })
         ->where('auhtor','=', Auth::user()->id)
+        ->where('utilization_type', '=', 'sewa_retribusi')
         ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
         ->where('year', '=', $year)
         ->sum('payment_amount');
