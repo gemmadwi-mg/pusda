@@ -9,11 +9,16 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Laratrust\Traits\LaratrustUserTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+
+
 
 class User extends Authenticatable implements JWTSubject
 {
     use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
+
+    use HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -70,6 +75,27 @@ class User extends Authenticatable implements JWTSubject
     public function childers()
     {
         return $this->hasManyThrough(Childer::class, Parents::class, 'auhtor', 'parent_id');
+    }
+
+    // public function payments(){
+    //     return $this->hasManyThrough(Childer::class, Parents::class, 'auhtor', 'parent_id')->join('payments','childers.id','=','payments.childrens_id');
+    //  }
+
+    public function payments() {
+        return $this->hasManyDeep(
+            Payment::class, 
+            [Parents::class, Childer::class], 
+            [
+                'auhtor',
+                'parent_id',
+                'childrens_id'
+            ],
+            [
+                'id',
+                'id',
+                'id'
+            ]
+        );
     }
 
 
