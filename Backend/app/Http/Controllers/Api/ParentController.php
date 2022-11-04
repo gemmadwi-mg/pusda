@@ -43,7 +43,6 @@ class ParentController extends Controller
     {
         $parent_query = Parents::with(['user'])
             ->where('auhtor', Auth::user()->id)
-            ->orWhere('auhtor', '=', 1)
             ->paginate(10);
 
         return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan data tanah induk', $parent_query);

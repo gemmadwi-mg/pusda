@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 
 class DashboardController extends Controller
 {
@@ -138,10 +139,37 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function getAllUser(Request $request)
+    public function getAllUser(Request $request, $year)
     {
-        $data = User::with('parents')
-        ->paginate();
+        // $data = DB::table('users')
+        // ->join('parents', function ($join) {
+        //     $join->on('parents.auhtor', '=', 'users.id');
+        // })
+        // ->groupBy('parents.auhtor')
+        
+        $data = User::
+        withCount(['parents as total_tanah_induk' => function(Builder $query) use ($year) { 
+            $query->whereYear('certificate_date', $year);
+        }, 'parents as total_tanah_pinjam_pakai' => function(Builder $query) { 
+            $query->where('utilization_type', 'pinjam_pakai'); 
+        }, 'parents as total_tanah_pakai_sendiri' => function(Builder $query) { 
+            $query->where('utilization_type', 'pakai_sendiri'); 
+        }, 'childers as total_tanah_sewa_sip_bmd' => function(Builder $query) { 
+            $query->where('utilization_engagement_type', 'sewa_sip_bmd'); 
+        }, 'childers as total_tanah_retribusi' => function(Builder $query) { 
+            $query->where('utilization_engagement_type', 'retribusi'); 
+        }, 'childers as total_rupiah_tanah_pinjam_pakai' => function($query) {
+            $query->where('utilization_type', '=', 'pinjam_pakai')->select(DB::raw('sum(rental_retribution)'));
+        }, 'childers as total_rupiah_tanah_pakai_sendiri' => function($query) {
+            $query->where('utilization_type', '=', 'pakai_sendiri')->select(DB::raw('sum(rental_retribution)'));
+        }, 'payments as total_rupiah_tanah_sewa_sip_bmd' => function($query) use ($year) {
+            $query->where('utilization_engagement_type', '=', 'sewa_sip_bmd')->where('payments.year', '=', $year)->select(DB::raw('sum(payment_amount)'));
+        },'payments as total_rupiah_tanah_retribusi' => function($query) use ($year) {
+            $query->where('utilization_engagement_type', '=', 'retribusi')->where('payments.year', '=', $year)->select(DB::raw('sum(payment_amount)'));
+        },])
+        ->get();
+
+       
 
         return response()->json([
             'success' => true,
