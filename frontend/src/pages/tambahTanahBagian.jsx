@@ -59,14 +59,13 @@ export const TambahTanahBagian = () => {
                   <input type="text" className="w-100" name="nilai-sewa" />
                 </div>
                 <div>
-                  <label htmlFor="jenis-pemanfaatan">
-                    Jenis Perikatan Pemanfaatan
+                  <label htmlFor="sertifikat-jenispemanfaatan">
+                    Jenis Perikatan
                   </label>
-                  <input
-                    type="text"
-                    className="w-100"
-                    name="jenis-pemanfaatan"
-                  />
+                  <select className="form-select">
+                    <option value="Sewa/SIP BMD">Sewa/SIP BMD</option>
+                    <option value="Retribusi">Retribusi</option>
+                  </select>
                 </div>
                 <div>
                   <label htmlFor="berlaku-dari">Atas Nama</label>
