@@ -36,6 +36,17 @@ class ChilderController extends Controller
     public function getAll(Request $request)
     {
         $child_query = Childer::with(['parent'])
+        ->whereHas('parent', function ($query) {
+            $query->where('auhtor', Auth::id());
+        })
+        ->paginate(10);
+
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
+    }
+
+    public function getAllChilder(Request $request)
+    {
+        $child_query = Childer::with(['parent'])
         ->get();
 
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
