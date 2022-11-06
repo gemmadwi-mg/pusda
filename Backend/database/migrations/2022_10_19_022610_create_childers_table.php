@@ -17,7 +17,7 @@ class CreateChildersTable extends Migration
             $table->id();
             $table->bigInteger('parent_id')->unsigned();
             $table->integer('rental_retribution');
-            $table->enum('utilization_engagement_type',['sewa_sip_bmd','retribusi'])->nullable();
+            $table->enum('utilization_engagement_type',['sewa_sip_bmd','retribusi']);
             $table->string('utilization_engagement_name');
             $table->string('allotment_of_use');
             $table->string('coordinate');
@@ -26,6 +26,7 @@ class CreateChildersTable extends Migration
             $table->date('validity_period_until');
             $table->string('engagement_number');
             $table->date('engagement_date');
+            $table->string('description');
             $table->string('application_letter');
             $table->string('agreement_letter');
             $table->timestamps();

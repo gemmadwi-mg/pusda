@@ -36,10 +36,10 @@ class ChilderController extends Controller
     public function getAll(Request $request)
     {
         $child_query = Childer::with(['parent'])
-        ->whereHas('parent', function ($query) {
-            $query->where('auhtor', Auth::id());
-        })
-        ->paginate(10);
+            ->whereHas('parent', function ($query) {
+                $query->where('auhtor', Auth::id());
+            })
+            ->paginate(10);
 
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
     }
@@ -47,7 +47,7 @@ class ChilderController extends Controller
     public function getAllChilder(Request $request)
     {
         $child_query = Childer::with(['parent'])
-        ->get();
+            ->get();
 
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
     }
@@ -89,23 +89,22 @@ class ChilderController extends Controller
      */
     public function search($other)
     {
-            $result = Childer::where('rental_retribution', 'LIKE', '%'. $other. '%')
-                    ->orWhere('utilization_engagement_type', 'LIKE', '%'. $other. '%')
-                    ->orWhere('utilization_engagement_name', 'LIKE', '%'. $other. '%')
-                    ->orWhere('allotment_of_use', 'LIKE', '%'. $other. '%')
-                    ->orWhere('coordinate', 'LIKE', '%'. $other. '%')
-                    ->orWhere('large', 'LIKE', '%'. $other. '%')
-                    ->orWhere('validity_period_of', 'LIKE', '%'. $other. '%')
-                    ->orWhere('validity_period_until', 'LIKE', '%'. $other. '%')
-                    ->orWhere('engagement_number', 'LIKE', '%'. $other. '%')
-                    ->orWhere('engagement_date', 'LIKE', '%'. $other. '%')
-                    ->get();
-            if(count($result)){
+        $result = Childer::where('rental_retribution', 'LIKE', '%' . $other . '%')
+            ->orWhere('utilization_engagement_type', 'LIKE', '%' . $other . '%')
+            ->orWhere('utilization_engagement_name', 'LIKE', '%' . $other . '%')
+            ->orWhere('allotment_of_use', 'LIKE', '%' . $other . '%')
+            ->orWhere('coordinate', 'LIKE', '%' . $other . '%')
+            ->orWhere('large', 'LIKE', '%' . $other . '%')
+            ->orWhere('validity_period_of', 'LIKE', '%' . $other . '%')
+            ->orWhere('validity_period_until', 'LIKE', '%' . $other . '%')
+            ->orWhere('engagement_number', 'LIKE', '%' . $other . '%')
+            ->orWhere('engagement_date', 'LIKE', '%' . $other . '%')
+            ->get();
+        if (count($result)) {
             return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
-            }else{
+        } else {
             return ResponseFormatter::responseError('Data tidak ditemukan', 400);;
         }
-
     }
 
 
@@ -241,7 +240,7 @@ class ChilderController extends Controller
      */
     public function createChilder(Request $request)
     {
-        $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'application_letter', 'agreement_letter'), [
+        $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'description', 'application_letter', 'agreement_letter'), [
             'parent_id' => 'required',
             'rental_retribution' => 'required',
             'utilization_engagement_name' => 'required',
@@ -250,10 +249,11 @@ class ChilderController extends Controller
             'large' => 'required|integer',
             'validity_period_of' => 'required',
             'validity_period_until' => 'required',
+            'description' => 'required',
             'engagement_number' => 'required',
             'engagement_date' => 'required',
             'application_letter' => 'required|mimes:doc,docx,pdf,txt',
-            // 'agreement_letter' => 'required|mimes:doc,docx,pdf,txt',
+            'agreement_letter' => 'required|mimes:doc,docx,pdf,txt',
         ]);
 
         if ($validation->fails()) :
@@ -280,6 +280,7 @@ class ChilderController extends Controller
                 'validity_period_until' => $request->validity_period_until,
                 'engagement_number' => $request->engagement_number,
                 'engagement_date' => $request->engagement_date,
+                'description' => $request->description,
                 'application_letter' => $file_application,
                 'agreement_letter' => $file_agreement,
             ]);
@@ -287,9 +288,9 @@ class ChilderController extends Controller
             $data = Childer::where('id', $childer->id)->with(['parent'])->get();
 
             if ($data) :
-                return ResponseFormatter::responseCreated('Berhasil membuat childer', $data);
+                return ResponseFormatter::responseCreated('Berhasil membuat tanah bagian', $data);
             else :
-                return ResponseFormatter::responseError('Childer tidak berhasil dibuat', 400);
+                return ResponseFormatter::responseError('Tanah bagian tidak berhasil dibuat', 400);
             endif;
         } catch (Exception $error) {
             return ResponseFormatter::responseError($error->getMessage(), 400);
@@ -426,7 +427,7 @@ class ChilderController extends Controller
      */
     public function updateChilder(Request $request, $id)
     {
-        $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'application_letter', 'agreement_letter'), [
+        $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'description', 'application_letter', 'agreement_letter'), [
             'parent_id' => 'required',
             'rental_retribution' => 'required',
             'utilization_engagement_type' => 'required',
@@ -438,8 +439,9 @@ class ChilderController extends Controller
             'validity_period_until' => 'required',
             'engagement_number' => 'required',
             'engagement_date' => 'required',
+            'description' => 'required',
             'application_letter' => 'required|mimes:doc,docx,pdf,txt',
-            // 'agreement_letter' => 'required|mimes:doc,docx,pdf,txt',
+            'agreement_letter' => 'required|mimes:doc,docx,pdf,txt',
         ]);
 
         if ($validation->fails()) :
@@ -473,13 +475,14 @@ class ChilderController extends Controller
                 'validity_period_until' => $request->validity_period_until,
                 'engagement_number' => $request->engagement_number,
                 'engagement_date' => $request->engagement_date,
+                'description' => $request->description,
                 'application_letter' => $file_application,
                 'agreement_letter' => $file_agreement,
             ]);
             $childer->save();
 
             if ($childer) :
-                return ResponseFormatter::responseSuccessWithData('Sukses update tanah bagian', $childer);
+                return ResponseFormatter::responseSuccessWithData('Berhasil update tanah bagian', $childer);
             else :
                 return ResponseFormatter::responseError('Tanah bagian gagal di update', 400);
             endif;
@@ -506,6 +509,6 @@ class ChilderController extends Controller
             'id' => $id,
         ]);
         $parent->delete();
-        return ResponseFormatter::responseSuccess('Successfully deleting childer');
+        return ResponseFormatter::responseSuccess('Berhasil hapus tanah bagian');
     }
 }
