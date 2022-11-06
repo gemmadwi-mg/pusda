@@ -17,7 +17,7 @@
         "realrashid/sweet-alert": "^5.1",
         "santigarcor/laratrust": "^7.1",
         "staudenmeir/eloquent-has-many-deep": "^1.7",
-        "tymon/jwt-auth": "*"
+        "tymon/jwt-auth": "1.0.x-dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
