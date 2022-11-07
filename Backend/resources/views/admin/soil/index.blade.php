@@ -40,10 +40,10 @@
                             </div>
                             <div class="card-box">
                                     <div class="dropdown float-right">
-                                        <form action="{{route('importinduk.post')}}" method="post" enctype="multipart/form-data">
+                                        <form action="{{route('importmulti.post')}}" method="post" enctype="multipart/form-data">
                                             @csrf
                                              <div class="input-group mb-3">
-                                                <input type="file" name="file" required="" onfocus="file" accept=".xls,.xlsx"
+                                                <input type="file" name="file" required="" onfocus="file" accept=".xls,.xlsx,.csv,.xlx"
                                                 class="form-control @error('file') is-invalid @enderror" placeholder="Recipient's username"
                                                 aria-label="Recipient's username" aria-describedby="button-addon2">
                                                 <button class="btn btn-primary" type="submit" id="button-addon2" required>IMPORT</button>
@@ -67,6 +67,7 @@
                                                     <th>Utilization Type</th>
                                                     <th>Address</th>
                                                     <th>Large</th>
+                                                    <th>Asset Value</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
@@ -78,7 +79,7 @@
                                                     <td>
                                                         <h5 class="m-0 font-weight-normal"> {{$n->certificate_date}} </h5>
                                                     </td>
-                                                    <td>  {!! Str::limit($n->address, 20, ' ...') !!} </td>
+
                                                     @if ($n->utilization_type === "pinjam_pakai")
                                                     <td> Pinjam Pakai </td>
                                                     @elseif ($n->utilization_type === "pakai_sendiri")
@@ -86,8 +87,9 @@
                                                     @elseif ($n->utilization_type === "sewa_retibusi")
                                                     <td> Sewa Retibusi </td>
                                                     @endif
-
+                                                    <td>  {!! Str::limit($n->address, 20, ' ...') !!} </td>
                                                     <td>{{$n->large}} </td>
+                                                    <td> @currency($n->asset_value) </td>
                                                     <td class="text-center">
                                                         <a href="{{route('soil.show', ['soil' => $n->id])}}" title="Detail" class="btn btn-xs btn-light">
                                                             <i class="mdi mdi-eye text-info"></i>

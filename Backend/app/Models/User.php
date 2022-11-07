@@ -18,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
     use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
 
-    use HasRelationships;
+    // use HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -62,10 +62,10 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    // public function roles()
-    // {
-    //     return $this->belongsToMany(Role::class);
-    // }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 
     public function parents()
     {
@@ -83,8 +83,8 @@ class User extends Authenticatable implements JWTSubject
 
     public function payments() {
         return $this->hasManyDeep(
-            Payment::class, 
-            [Parents::class, Childer::class], 
+            Payment::class,
+            [Parents::class, Childer::class],
             [
                 'auhtor',
                 'parent_id',

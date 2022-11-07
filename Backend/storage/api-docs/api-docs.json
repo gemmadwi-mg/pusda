@@ -64,12 +64,78 @@
                 }
             }
         },
+        "/api/reset-password": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "resetpassword",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "password_confirmation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/api/childer": {
             "get": {
                 "tags": [
                     "Childers"
                 ],
                 "operationId": "childers",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/childer/search/{keyword}": {
+            "get": {
+                "tags": [
+                    "Childers"
+                ],
+                "operationId": "childersSearch",
+                "parameters": [
+                    {
+                        "name": "other",
+                        "in": "query",
+                        "description": "other",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "default": {
                         "description": "successful operation"
@@ -354,36 +420,12 @@
                 }
             }
         },
-        "/import/file/parent": {
+        "/import/file": {
             "post": {
                 "tags": [
                     "Import"
                 ],
-                "operationId": "importParent",
-                "parameters": [
-                    {
-                        "name": "file",
-                        "in": "query",
-                        "description": "file",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "default": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/import/file/childer": {
-            "post": {
-                "tags": [
-                    "Import"
-                ],
-                "operationId": "importChilder",
+                "operationId": "importfile",
                 "parameters": [
                     {
                         "name": "file",
@@ -408,6 +450,30 @@
                     "Parents"
                 ],
                 "operationId": "parents",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/parent/search/{keyword}": {
+            "get": {
+                "tags": [
+                    "Parents"
+                ],
+                "operationId": "parentsSearch",
+                "parameters": [
+                    {
+                        "name": "other",
+                        "in": "query",
+                        "description": "other",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "default": {
                         "description": "successful operation"
@@ -475,6 +541,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "asset_value",
+                        "in": "query",
+                        "description": "large",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -534,6 +609,15 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "asset_value",
+                        "in": "query",
+                        "description": "large",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
