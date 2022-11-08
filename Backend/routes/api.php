@@ -65,6 +65,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::group(['prefix' => 'childer'], function () {
         Route::get('/search/{keyword}', [ChilderController::class, 'search']);
         Route::post('/create', [ChilderController::class, 'createChilder']);
+        Route::post('/createPakai', [ChilderController::class, 'createChilderPakai']);
         Route::get('/', [ChilderController::class, 'getAll']);
         Route::get('/all', [ChilderController::class, 'getAllChilder']);
         Route::get('/{id}', [ChilderController::class, 'getById']);

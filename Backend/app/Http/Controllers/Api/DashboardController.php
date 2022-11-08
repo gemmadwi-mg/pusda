@@ -21,18 +21,18 @@ class DashboardController extends Controller
     {
         $data = User::withCount(['parents as total_tanah_induk' => function (Builder $query) use ($year) {
             $query->whereYear('certificate_date', $year);
-        }, 'parents as total_tanah_pinjam_pakai' => function (Builder $query) use ($year) {
-            $query->whereYear('certificate_date', '=', $year)->where('utilization_type', 'pinjam_pakai');
-        }, 'parents as total_tanah_pakai_sendiri' => function (Builder $query) use ($year) {
-            $query->whereYear('certificate_date', '=', $year)->where('utilization_type', 'pakai_sendiri');
+        }, 'childers as total_tanah_pinjam_pakai' => function (Builder $query) use ($year) {
+            $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', 'pinjam_pakai');
+        }, 'childers as total_tanah_pakai_sendiri' => function (Builder $query) use ($year) {
+            $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', 'pakai_sendiri');
         }, 'childers as total_tanah_sewa_sip_bmd' => function (Builder $query) use ($year) {
             $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', 'sewa_sip_bmd');
         }, 'childers as total_tanah_retribusi' => function (Builder $query) use ($year) {
             $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', 'retribusi');
         }, 'childers as total_rupiah_tanah_pinjam_pakai' => function ($query) use ($year) {
-            $query->whereYear('certificate_date', '=', $year)->where('utilization_type', '=', 'pinjam_pakai')->select(DB::raw('sum(rental_retribution)'));
+            $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', '=', 'pinjam_pakai')->select(DB::raw('sum(assets_value)'));
         }, 'childers as total_rupiah_tanah_pakai_sendiri' => function ($query) use ($year) {
-            $query->whereYear('certificate_date', '=', $year)->where('utilization_type', '=', 'pakai_sendiri')->select(DB::raw('sum(rental_retribution)'));
+            $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', '=', 'pakai_sendiri')->select(DB::raw('sum(assets_value)'));
         }, 'payments as total_rupiah_tanah_sewa_sip_bmd' => function ($query) use ($year) {
             $query->where('utilization_engagement_type', '=', 'sewa_sip_bmd')->where('payments.year', '=', $year)->select(DB::raw('sum(payment_amount)'));
         }, 'payments as total_rupiah_tanah_retribusi' => function ($query) use ($year) {
@@ -43,19 +43,28 @@ class DashboardController extends Controller
 
         $total_tanah = Parents::whereYear('certificate_date', '=', $year)->count();
 
-        $total_tanah_pinjam_pakai = Parents::with('childers')->whereYear('certificate_date', '=', $year)->where('utilization_type', '=', 'pinjam_pakai')->count();
+        $total_tanah_pinjam_pakai = DB::table('parents')
+            ->join('childers', function ($join) {
+                $join->on('childers.parent_id', '=', 'parents.id');
+            })
+            ->whereYear('certificate_date', '=', $year)
+            ->where('utilization_engagement_type', '=', 'pinjam_pakai')
+            ->count();
 
         $total_rupiah_tanah_pinjam_pakai = DB::table('parents')
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
             ->whereYear('certificate_date', '=', $year)
-            ->where('utilization_type', '=', 'pinjam_pakai')
-            ->sum('rental_retribution');
+            ->where('utilization_engagement_type', '=', 'pinjam_pakai')
+            ->sum('assets_value');
 
-        $total_tanah_pakai_sendiri = Parents::with('childers')
+        $total_tanah_pakai_sendiri = DB::table('parents')
+            ->join('childers', function ($join) {
+                $join->on('childers.parent_id', '=', 'parents.id');
+            })
             ->whereYear('certificate_date', '=', $year)
-            ->where('utilization_type', '=', 'pakai_sendiri')
+            ->where('utilization_engagement_type', '=', 'pakai_sendiri')
             ->count();
 
         $total_rupiah_tanah_pakai_sendiri = DB::table('parents')
@@ -63,16 +72,18 @@ class DashboardController extends Controller
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
             ->whereYear('certificate_date', '=', $year)
-            ->where('utilization_type', '=', 'pakai_sendiri')
-            ->sum('rental_retribution');
+            ->where('utilization_engagement_type', '=', 'pakai_sendiri')
+            ->sum('assets_value');
 
         $total_tanah_retribusi = DB::table('parents')
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
-            ->whereYear('certificate_date', '=', $year)
-            ->where('utilization_type', '=', 'sewa_retribusi')
+            ->join('payments', function ($join) {
+                $join->on('childers.id', '=', 'payments.childrens_id');
+            })
             ->where('utilization_engagement_type', '=', 'retribusi')
+            ->where('year', '=', $year)
             ->count();
 
         $total_rupiah_retribusi = DB::table('parents')
@@ -90,9 +101,11 @@ class DashboardController extends Controller
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
-            ->whereYear('certificate_date', '=', $year)
-            ->where('utilization_type', '=', 'sewa_retribusi')
+            ->join('payments', function ($join) {
+                $join->on('childers.id', '=', 'payments.childrens_id');
+            })
             ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
+            ->where('year', '=', $year)
             ->count();
 
         $total_rupiah_sewa = DB::table('parents')
@@ -102,7 +115,6 @@ class DashboardController extends Controller
             ->join('payments', function ($join) {
                 $join->on('childers.id', '=', 'payments.childrens_id');
             })
-            ->where('utilization_type', '=', 'sewa_retribusi')
             ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
             ->where('year', '=', $year)
             ->sum('payment_amount');
