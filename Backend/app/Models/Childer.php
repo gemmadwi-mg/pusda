@@ -11,16 +11,18 @@ class Childer extends Model
     protected $table = 'childers';
     protected $fillable = [
         'parent_id',
-        'rental_retribution',
         'utilization_engagement_type',
+        'rental_retribution',
         'utilization_engagement_name',
         'allotment_of_use',
         'coordinate',
         'large',
+        'present_condition',
         'validity_period_of',
         'validity_period_until',
         'engagement_number',
         'engagement_date',
+        'description',
         'application_letter',
         'agreement_letter',
     ];

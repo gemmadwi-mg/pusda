@@ -81,16 +81,15 @@ class ParentController extends Controller
      *     )
      * )
      */
-    public function search($other)
+    public function search($keyword)
     {
         $result = Parents::with(['user'])
             ->where('auhtor', '=', Auth::user()->id)
-            ->orwhere('certificate_number', 'LIKE', '%' . $other . '%')
-            ->orWhere('certificate_date', 'LIKE', '%' . $other . '%')
-            ->orWhere('utilization_type', 'LIKE', '%' . $other . '%')
-            ->orWhere('address', 'LIKE', '%' . $other . '%')
-            ->orWhere('large', 'LIKE', '%' . $other . '%')
-            ->orWhere('asset_value', 'LIKE', '%' . $other . '%')
+            ->orwhere('certificate_number', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('certificate_date', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('address', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('large', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('asset_value', 'LIKE', '%' . $keyword . '%')
             ->get();
         if (count($result)) {
             return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
