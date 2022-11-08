@@ -22,7 +22,7 @@ class CreateChildersTable extends Migration
             $table->string('allotment_of_use');
             $table->string('coordinate');
             $table->string('large');
-            $table->string('present_condiition');
+            $table->string('present_condiition')->nullable();
             $table->date('validity_period_of');
             $table->date('validity_period_until');
             $table->string('engagement_number');
