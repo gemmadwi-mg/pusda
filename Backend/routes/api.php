@@ -70,6 +70,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('/all', [ChilderController::class, 'getAllChilder']);
         Route::get('/{id}', [ChilderController::class, 'getById']);
         Route::post('/update/{id}', [ChilderController::class, 'updateChilder']);
+        Route::post('/updatePakai/{id}', [ChilderController::class, 'updateChilderPakai']);
         Route::delete('/delete/{id}', [ChilderController::class, 'deleteChilder']);
     });
 
