@@ -178,10 +178,9 @@ class ParentController extends Controller
      */
     public function createParent(Request $request)
     {
-        $validation = Validator::make($request->only('certificate_number', 'certificate_date', 'utilization_type', 'address', 'large', 'asset_value'), [
+        $validation = Validator::make($request->only('certificate_number', 'certificate_date', 'address', 'large', 'asset_value'), [
             'certificate_number' => 'required|integer',
             'certificate_date' => 'required',
-            'utilization_type' => 'required',
             'address' => 'required',
             'large' => 'required',
             'asset_value' => 'required'
@@ -196,7 +195,6 @@ class ParentController extends Controller
                 'auhtor' => Auth::user()->id,
                 'certificate_number' => $request->certificate_number,
                 'certificate_date' => $request->certificate_date,
-                'utilization_type' => $request->utilization_type,
                 'address' => $request->address,
                 'large' => $request->large,
                 'asset_value' => $request->asset_value,
@@ -281,10 +279,9 @@ class ParentController extends Controller
      */
     public function updateParent(Request $request, $id)
     {
-        $validation = Validator::make($request->only('auhtor', 'certificate_number', 'certificate_date', 'utilization_type', 'address', 'large', 'asset_value'), [
+        $validation = Validator::make($request->only('auhtor', 'certificate_number', 'certificate_date', 'address', 'large', 'asset_value'), [
             'certificate_number' => 'required|integer',
             'certificate_date' => 'required',
-            'utilization_type' => 'required',
             'address' => 'required',
             'large' => 'required',
             'asset_value' => 'required',
@@ -304,7 +301,6 @@ class ParentController extends Controller
             $parent->update([
                 'certificate_number' => $request->certificate_number,
                 'certificate_date' => $request->certificate_date,
-                'utilization_type' => $request->utilization_type,
                 'address' => $request->address,
                 'large' => $request->large,
                 'asset_value' => $request->asset_value
