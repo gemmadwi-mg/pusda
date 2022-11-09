@@ -1,5 +1,5 @@
 @extends('layouts.base')
-@section('title','Asset Soil')
+@section('title','Asset Soil Parent')
 @section('content')
 
 
@@ -37,6 +37,7 @@
                                         <i class="mdi mdi-plus"></i>
                                     </a>
                                 </div>
+
                             </div>
                             <div class="card-box">
                                     <div class="dropdown float-right">
@@ -56,7 +57,12 @@
                                         </form>
                                     </div>
 
-                                    <h4 class="header-title mb-3 text-dark">Data Parent</h4>
+                                    <div class="">
+                                        <a href="{{route('export.post')}}" title="Create" class=" font-18 btn btn-xs btn-light">
+                                            <i class="mdi mdi-file-import text-success"></i> Export All Data
+                                        </a>
+                                    </div>
+
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-nowrap table-hover table-centered m-0">
                                             <thead class="thead-dark">
@@ -64,7 +70,6 @@
                                                     <th>#</th>
                                                     <th>Certificate Number</th>
                                                     <th>Certificate Date</th>
-                                                    <th>Utilization Type</th>
                                                     <th>Address</th>
                                                     <th>Large</th>
                                                     <th>Asset Value</th>
@@ -79,14 +84,6 @@
                                                     <td>
                                                         <h5 class="m-0 font-weight-normal"> {{$n->certificate_date}} </h5>
                                                     </td>
-
-                                                    @if ($n->utilization_type === "pinjam_pakai")
-                                                    <td> Pinjam Pakai </td>
-                                                    @elseif ($n->utilization_type === "pakai_sendiri")
-                                                    <td> Pinjam Sendiri </td>
-                                                    @elseif ($n->utilization_type === "sewa_retibusi")
-                                                    <td> Sewa Retibusi </td>
-                                                    @endif
                                                     <td>  {!! Str::limit($n->address, 20, ' ...') !!} </td>
                                                     <td>{{$n->large}} </td>
                                                     <td> @currency($n->asset_value) </td>

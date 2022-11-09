@@ -18,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
     use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
 
-    use HasRelationships;
+    // use HasRelationships;
 
     /**
      * The attributes that are mass assignable.

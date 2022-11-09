@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DataAllUptExport;
+use App\Exports\DataExport;
 use App\Http\Controllers\Controller;
 use App\Imports\MultiSheetSelector;
+use App\Models\Parents;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -124,4 +127,8 @@ class DashboardController extends Controller
     }
 
 
+    public function exportMapping() {
+
+        return Excel::download(new DataAllUptExport(), 'Semua-data-upt.xlsx');
+    }
 }
