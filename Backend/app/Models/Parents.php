@@ -22,10 +22,14 @@ class Parents extends Model
     {
         return $this->belongsTo(User::class, 'auhtor', 'id');
     }
-
-    public function childers ()
+    public function anak()
     {
-        return $this->hasMany(Childer::class, 'parent_id');
+        return $this->belongsTo(Childer::class, 'id','parent_id');
     }
+
+    // public function childers ()
+    // {
+    //     return $this->hasMany(Childer::class, 'parent_id');
+    // }
 
 }

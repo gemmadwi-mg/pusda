@@ -42,6 +42,8 @@ class SecondSheetImporter implements ToModel,WithHeadingRow
             'allotment_of_use'  => $row['allotment_of_use'],
             'coordinate'  => $row['coordinate'],
             'large'  => $row['large'],
+            'present_condition'  => $row['present_condition'],
+            'assets_value'  => $row['assets_value'],
             'validity_period_of'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['validity_period_of']),
             'validity_period_until'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['validity_period_until']),
             'engagement_number'  => $row['engagement_number'],

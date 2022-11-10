@@ -136,8 +136,8 @@
                                                         <th>Utilization Engagement Type</th>
                                                         <th>Utilization Engagement Name</th>
                                                         <th>Allotment</th>
-                                                        <th>Coordinate</th>
-                                                        <th>Large</th>
+                                                        <th>Year</th>
+                                                        <th>Payment Amount</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
@@ -149,8 +149,8 @@
                                                         <td>{{$c->utilization_engagement_type}}</td>
                                                         <td>{{$c->utilization_engagement_name}}</td>
                                                         <td> {{$c->allotment_of_use}} </td>
-                                                        <td>{{$c->coordinate}}</td>
-                                                        <td>{{$c->large}}</td>
+                                                        <td>{{$c->pembayaran->year}}</td>
+                                                        <td>{{$c->pembayaran->payment_amount}}</td>
 
                                                         <td class="text-center">
                                                                 <a href="{{route('childern.show', ['id' => $c->id])}}" title="Detail" class="btn btn-xs btn-light">

@@ -68,11 +68,12 @@
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Author</th>
                                                     <th>Certificate Number</th>
-                                                    <th>Certificate Date</th>
-                                                    <th>Address</th>
+                                                    <th>Utilization Type</th>
+                                                    <th>Utilization Name</th>
+                                                    <th>Value Asset</th>
                                                     <th>Large</th>
-                                                    <th>Asset Value</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
@@ -80,13 +81,14 @@
                                                 @foreach($data  as $no => $n)
                                                 <tr >
                                                     <td> {{ $no + $data->firstItem() }} </td>
-                                                    <td> {{$n->certificate_number}} </td>
+                                                    <td> {{$n->user->name}} </td>
                                                     <td>
-                                                        <h5 class="m-0 font-weight-normal"> {{$n->certificate_date}} </h5>
+                                                        <h5 class="m-0 font-weight-normal"> {{$n->certificate_number}} </h5>
                                                     </td>
-                                                    <td>  {!! Str::limit($n->address, 20, ' ...') !!} </td>
-                                                    <td>{{$n->large}} </td>
-                                                    <td> @currency($n->asset_value) </td>
+                                                    <td> {{$n->anak->utilization_engagement_type }}  </td>
+                                                    <td> {{$n->anak->utilization_engagement_name }} </td>
+                                                    <td> {{$n->asset_value}} </td>
+                                                    <td> {{$n->large}} </td>
                                                     <td class="text-center">
                                                         <a href="{{route('soil.show', ['soil' => $n->id])}}" title="Detail" class="btn btn-xs btn-light">
                                                             <i class="mdi mdi-eye text-info"></i>
