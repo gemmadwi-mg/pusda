@@ -27,9 +27,9 @@ class Parents extends Model
         return $this->belongsTo(Childer::class, 'id','parent_id');
     }
 
-    // public function childers ()
-    // {
-    //     return $this->hasMany(Childer::class, 'parent_id');
-    // }
+    public function childers ()
+    {
+        return $this->hasMany(Childer::class, 'parent_id');
+    }
 
 }

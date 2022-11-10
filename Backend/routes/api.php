@@ -66,11 +66,13 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('/search/{keyword}', [ChilderController::class, 'search']);
         Route::post('/create', [ChilderController::class, 'createChilder']);
         Route::post('/createPakai', [ChilderController::class, 'createChilderPakai']);
+        Route::post('/createPayment', [ChilderController::class, 'createChilderPayment']);
         Route::get('/', [ChilderController::class, 'getAll']);
         Route::get('/all', [ChilderController::class, 'getAllChilder']);
         Route::get('/{id}', [ChilderController::class, 'getById']);
         Route::post('/update/{id}', [ChilderController::class, 'updateChilder']);
         Route::post('/updatePakai/{id}', [ChilderController::class, 'updateChilderPakai']);
+        Route::post('/updatePayment/{id}', [ChilderController::class, 'updateChilderPayment']);
         Route::delete('/delete/{id}', [ChilderController::class, 'deleteChilder']);
     });
 

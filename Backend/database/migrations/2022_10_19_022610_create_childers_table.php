@@ -31,6 +31,9 @@ class CreateChildersTable extends Migration
             $table->string('description');
             $table->string('application_letter')->nullable();
             $table->string('agreement_letter')->nullable();
+            $table->string('year')->nullable();
+            $table->string('payment_amount')->nullable();
+            $table->string('proof_of_payment')->nullable();
             $table->timestamps();
             $table->foreign('parent_id')->references('id')->on('parents')->onDelete('cascade');
         });
