@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Exception;
+use Illuminate\Support\Facades\Password;
 
 class AuthenticationController extends Controller
 {
@@ -176,30 +177,50 @@ class AuthenticationController extends Controller
      *     )
      * )
      */
-    public function reset_password(Request $request,$id)
-    {
-        $credentials = $request->only('email', 'password','password_confirmation');
-        $validator = Validator::make($credentials, [
-            'email' => 'required|email|unique:users,email,except,id,'.$id,
-            'password' => 'required|string|min:8|max:50|confirmed'
+    // public function reset_password(Request $request,$id)
+    // {
+    //     $credentials = $request->only('email', 'password','password_confirmation');
+    //     $validator = Validator::make($credentials, [
+    //         'email' => 'required|email|unique:users,email,except,id,'.$id,
+    //         'password' => 'required|string|min:8|max:50|confirmed'
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return ResponseFormatter::responseValidation($validator->errors());
+    //     }
+
+    //     try {
+    //         $user =  User::find($id);
+    //         $user->email  = $request->email;
+    //         $user->password = Hash::make($request->password);
+    //         $user->save();
+    //         $user->attachRole($request->role_id);
+
+    //         return ResponseFormatter::responseSuccessWithData('', $user);
+
+    //         } catch(Exception $e){
+    //             return ResponseFormatter::responseError($e->getMessage(), 400);
+    //         }
+
+    // }
+
+    public function reset_password() {
+        $credentials = request()->validate([
+            'email' => 'required|email',
+            'token' => 'required|string',
+            'password' => 'required|string|confirmed'
         ]);
 
-        if ($validator->fails()) {
-            return ResponseFormatter::responseValidation($validator->errors());
+        $reset_password_status = Password::reset($credentials, function ($user, $password) {
+            $user->password = $password;
+            $user->save();
+        });
+
+        if ($reset_password_status == Password::INVALID_TOKEN) {
+            return response()->json(["message" => "Invalid token provided"], 400);
         }
 
-        try {
-            $user =  User::find($id);
-            $user->email  = $request->email;
-            $user->password = Hash::make($request->password);
-            $user->save();
-            $user->attachRole($request->role_id);
-
-            return ResponseFormatter::responseSuccessWithData('Kata sandi anda berhasil di atur ulang,Silakan Login!', $user);
-
-            } catch(Exception $e){
-                return ResponseFormatter::responseError($e->getMessage(), 400);
-            }
-
+        return response()->json(["message" => "Kata sandi anda berhasil di atur ulang,Silakan Login!"]);
     }
+
 }
