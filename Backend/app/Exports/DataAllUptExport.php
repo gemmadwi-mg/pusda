@@ -17,38 +17,34 @@ class DataAllUptExport implements FromCollection, WithMapping, WithHeadings
     */
     public function collection()
     {
-        return Childer::with('parent','pembayaran')->get();
+        return Parents::with('childers')->get();
     }
 
     public function map($invoice): array
     {
         return [
-            $invoice->parent->auhtor = Auth::user()->name,
-            $invoice->parent->certificate_number,
-            $invoice->parent->certificate_date,
-            $invoice->parent->address,
-            $invoice->parent->large,
-            $invoice->parent->asset_value,
-
-            $invoice->utilization_engagement_type,
-            $invoice->utilization_engagement_name,
-            $invoice->rental_retribution,
-            $invoice->allotment_of_use,
-            $invoice->coordinate,
+            $invoice->auhtor = Auth::user()->name,
+            $invoice->certificate_number,
+            $invoice->certificate_date,
+            $invoice->address,
             $invoice->large,
-            $invoice->present_condition,
-            $invoice->assets_value,
-            $invoice->validity_period_of,
-            $invoice->validity_period_until,
-            $invoice->engagement_number,
-            $invoice->engagement_date,
-            $invoice->description,
+            $invoice->asset_value,
 
-            // $invoice->pembayaran->year,
-            // $invoice->pembayaran->proof_of_payment,
-            // $invoice->pembayaran->payment_amount,
-
-
+            // $invoice->childers->utilization_engagement_type,
+            // $invoice->utilization_engagement_name,
+            // $invoice->rental_retribution,
+            // $invoice->allotment_of_use,
+            // $invoice->coordinate,
+            // $invoice->large,
+            // $invoice->present_condition,
+            // $invoice->assets_value,
+            // $invoice->validity_period_of,
+            // $invoice->validity_period_until,
+            // $invoice->engagement_number,
+            // $invoice->engagement_date,
+            // $invoice->description,
+            // $invoice->year,
+            // $invoice->payment_amount,
 
         ];
     }
@@ -77,7 +73,8 @@ class DataAllUptExport implements FromCollection, WithMapping, WithHeadings
             'Tanggal Perikatan',
             'keterangan',
 
-            'Tahun'
+            'Tahun',
+            'Jumlah Pembayaran',
         ];
     }
 }

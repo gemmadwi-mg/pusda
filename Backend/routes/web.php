@@ -62,8 +62,8 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::delete('/assets/soil/childern/delete/{id}', [childersController::class, 'destroy'])->name('childern.destroy');
 
     // Payment
-    Route::get('/assets/soil/childern/payment/create/{id}', [PaymentController::class, 'create'])->name('payment.create');
-    Route::post('/assets/soil/childern/payment/post', [PaymentController::class, 'store'])->name('payment.store');
+    // Route::get('/assets/soil/childern/payment/create/{id}', [PaymentController::class, 'create'])->name('payment.create');
+    // Route::post('/assets/soil/childern/payment/post', [PaymentController::class, 'store'])->name('payment.store');
 
     // CRUD data upt kediri
     Route::resource('/assets-soil/kediri',UptKediriController::class);

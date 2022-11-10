@@ -27,7 +27,7 @@ class SecondSheetImporter implements ToModel,WithHeadingRow
     */
     public function model(array $row)
     {
-        if (!isset($row['utilization_engagement_type'])) {
+        if (!isset($row['sewa_retribusi'])) {
             return null;
         }
 
@@ -36,18 +36,22 @@ class SecondSheetImporter implements ToModel,WithHeadingRow
 
         return new Childer([
             'parent_id' => $induk->id ?? NULL,
-            'rental_retribution' => $row['rental_retribution'],
-            'utilization_engagement_type' => $row['utilization_engagement_type'],
-            'utilization_engagement_name' => $row['utilization_engagement_name'],
-            'allotment_of_use'  => $row['allotment_of_use'],
-            'coordinate'  => $row['coordinate'],
-            'large'  => $row['large'],
-            'present_condition'  => $row['present_condition'],
-            'assets_value'  => $row['assets_value'],
-            'validity_period_of'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['validity_period_of']),
-            'validity_period_until'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['validity_period_until']),
-            'engagement_number'  => $row['engagement_number'],
-            'engagement_date'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['engagement_date']),
+            'rental_retribution' => $row['sewa_retribusi'],
+            'utilization_engagement_type' => $row['jenis_pemanfaatan'],
+            'utilization_engagement_name' => $row['nama_pemanfaatan'],
+            'allotment_of_use'  => $row['peruntukan_penggunaan'],
+            'coordinate'  => $row['koordinat'],
+            'large'  => $row['luas'],
+            'present_condition'  => $row['kondisi_sekarang'],
+            'assets_value'  => $row['nilai_aset'],
+            'validity_period_of'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['masa_berlaku']),
+            'validity_period_until'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['masa_berlaku_sampai']),
+            'engagement_number'  => $row['nomor_perikatan'],
+            'engagement_date'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_perikatan']),
+            'description'  => $row['keterangan'],
+            'year' => $row['tahun'],
+            'payment_amount' => $row['jumlah_pembayaran'],
+            'proof_of_payment' => 'null',
             'application_letter'=> 'null',
             'agreement_letter'=> 'null'
         ]);

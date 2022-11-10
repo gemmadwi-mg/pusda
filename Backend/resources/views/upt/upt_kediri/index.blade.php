@@ -28,30 +28,49 @@
                         </div>
                     </div>
                     <!-- end page title -->
-
+                    <div class="row">
                         <div class="col-xl-12 " >
-                                <div class="card-box">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="{{route('kediri.create')}}" title="Create" class=" font-18 btn btn-xs btn-light">
+                                        <i class="mdi mdi-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-box">
                                     <div class="dropdown float-right">
-                                        <a href="#" title="Import Data Excel" class=" font-18 btn btn-xs btn-light mr-2">
-                                            <i class="mdi mdi-file-import text-success"></i>
-                                        </a>
-                                        <a href="{{route('kediri.create')}}" title="Create" class=" font-18 btn btn-xs btn-light">
-                                            <i class="mdi mdi-plus"></i>
-                                        </a>
+                                        <form action="{{route('importmulti.post')}}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                             <div class="input-group mb-3">
+                                                <input type="file" name="file" required="" onfocus="file" accept=".xls,.xlsx,.csv,.xlx"
+                                                class="form-control @error('file') is-invalid @enderror" placeholder="Recipient's username"
+                                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                                                <button class="btn btn-primary" type="submit" id="button-addon2" required>IMPORT</button>
+                                                @error('file')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                 @enderror
+                                            </div>
+                                        </form>
                                     </div>
 
-                                    <h4 class="header-title mb-3 text-dark">Data Parent</h4>
+                                    <div class="">
+                                        <a href="{{route('export.post')}}" title="Create" class=" font-18 btn btn-xs btn-light">
+                                            <i class="mdi mdi-file-import text-success"></i> Export All Data
+                                        </a>
+                                    </div>
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-nowrap table-hover table-centered m-0">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>No Reg</th>
-                                                    <th>Name Goods</th>
-                                                    <th>Address</th>
-                                                    <th>No</th>
-                                                    <th>Date</th>
+                                                    <th>Author</th>
+                                                    <th>Certificate Number</th>
+                                                    <th>Certificate Date</th>
+                                                    <th>Value Asset</th>
                                                     <th>Large</th>
+                                                    <th>Address</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
@@ -59,19 +78,19 @@
                                                 @foreach($data  as $no => $n)
                                                 <tr >
                                                     <td> {{ $no + $data->firstItem() }} </td>
-                                                    <td> {{$n->no_reg}} </td>
+                                                    <td> {{$n->user->name}} </td>
                                                     <td>
-                                                        <h5 class="m-0 font-weight-normal"> {{$n->name_goods}} </h5>
+                                                        <h5 class="m-0 font-weight-normal"> {{$n->certificate_number}} </h5>
                                                     </td>
-                                                    <td>  {!! Str::limit($n->address, 20, ' ...') !!} </td>
-                                                    <td> {{$n->no}} </td>
-                                                    <td> {{$n->date}} </td>
+                                                    <td> {{$n->certificate_date}}  </td>
+                                                    <td> {{$n->asset_value}} </td>
                                                     <td>{{$n->large}} </td>
+                                                    <td>  {!! Str::limit($n->address, 20, ' ...') !!} </td>
                                                     <td class="text-center">
-                                                        <a href="{{route('kediri.show', ['kediri' => $n->no_reg])}}" title="Detail" class="btn btn-xs btn-light">
+                                                        <a href="{{route('kediri.show', ['kediri' => $n->id])}}" title="Detail" class="btn btn-xs btn-light">
                                                             <i class="mdi mdi-eye text-info"></i>
                                                         </a>
-                                                        <a href="{{route('kediri.edit', ['kediri' => $n->no_reg])}}" title="Edit" class="btn btn-xs btn-light">
+                                                        <a href="{{route('kediri.edit', ['kediri' => $n->id])}}" title="Edit" class="btn btn-xs btn-light">
                                                             <i class="mdi mdi-pencil text-warning"></i>
                                                         </a>
                                                         <a href="#" title="Edit" class="btn btn-xs btn-light">
@@ -84,9 +103,11 @@
                                             @endforeach
                                         </table>
                                     </div> <!-- end .table-responsive-->
-                                </div> <!-- end card-box-->
-                                {{$data->links('vendor.pagination.bootstrap-4')}}
-                            </div>
+                            </div> <!-- end card-box-->
+                            {{$data->links('vendor.pagination.bootstrap-4')}}
+                        </div>
+                     </div>
+
                     </div> <!-- container -->
                 </div> <!-- content -->
             </div>

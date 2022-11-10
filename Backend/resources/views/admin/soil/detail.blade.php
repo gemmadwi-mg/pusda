@@ -149,8 +149,8 @@
                                                         <td>{{$c->utilization_engagement_type}}</td>
                                                         <td>{{$c->utilization_engagement_name}}</td>
                                                         <td> {{$c->allotment_of_use}} </td>
-                                                        <td>{{$c->pembayaran->year}}</td>
-                                                        <td>{{$c->pembayaran->payment_amount}}</td>
+                                                        <td>{{$c->year}}</td>
+                                                        <td>{{$c->payment_amount}}</td>
 
                                                         <td class="text-center">
                                                                 <a href="{{route('childern.show', ['id' => $c->id])}}" title="Detail" class="btn btn-xs btn-light">
@@ -158,10 +158,6 @@
                                                                 </a>
                                                                 <a href="{{route('childern.edit', ['id' => $c->id])}}" title="Edit" class="btn btn-xs btn-light">
                                                                     <i class="mdi mdi-pencil text-warning"></i>
-                                                                </a>
-
-                                                                <a href="{{route('payment.create', ['id' => $c->id])}}" title="Add Payment" class="btn btn-xs btn-light">
-                                                                    <i class="mdi mdi-plus text-success"></i>
                                                                 </a>
                                                         </td>
 
