@@ -23,7 +23,7 @@
 
 ## ON PROGRESS
 - [x] API Export And Import
-- [x] API CRUD UPT Parent and Clidern
+
 
 ## DONE
 - [x] Install Package UI V3
@@ -46,3 +46,4 @@
 - [x] CRUD  Rest API controller API
 - [x] API Auth
 - [x] API CRUD Profile User
+- [x] API CRUD UPT Parent and Clidern
