@@ -44,6 +44,8 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::post('changes-password', [DashboardController::class, 'changePasswordPost'])->name('changepassword.post');
 
     Route::post('/import/post/multisheet', [DashboardController::class, 'import_multiple_different_formats'])->name('importmulti.post');
+    Route::post('/import/post', [DashboardController::class, 'uploadFile'])->name('importfile.post');
+
     Route::get('/export/post', [DashboardController::class, 'exportMapping'])->name('export.post');
 
     Route::get('/upload-photo/{id}', [DashboardController::class, 'vieUpload'])->name('upload.photo');

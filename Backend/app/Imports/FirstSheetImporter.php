@@ -30,7 +30,6 @@ class FirstSheetImporter implements ToModel, WithHeadingRow
             'auhtor' => $user,
             'certificate_number' => $row['nomor_sertifikat'],
             'certificate_date'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_sertifikat']),
-            'utilization_type'=> $row['pemanfaatan_tipe'],
             'address'=> $row['alamat'],
             'large'=> $row['luas'],
             'asset_value'=> $row['nilai_aset'],
