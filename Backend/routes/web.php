@@ -27,11 +27,11 @@ Route::get('/', function () {
 Auth::routes([
     'register' => false,
     'home' => false,
-    'password.confirm' => false,
-    'password.email' => false,
-    'password.request' => false,
-    'password.reset' => false,
-    'password.update' => false
+    // 'password.confirm' => false,
+    // 'password.email' => false,
+    // 'password.request' => false,
+    // 'password.reset' => false,
+    // 'password.update' => false
 ]);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

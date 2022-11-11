@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ChilderController;
 use App\Http\Controllers\Api\ImportExportData;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\ForgotController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,9 +28,10 @@ use Illuminate\Support\Facades\Route;
 
 // authentication
 Route::post('login', [AuthenticationController::class, 'login']);
-// Reset Password
-Route::post('reset-password', [AuthenticationController::class, 'reset_password']);
 
+// Reset Password
+Route::post('password/reset', [ForgotController::class, 'reset']);
+Route::post('password/email', [ForgotController::class, 'forgot']);
 
 
 
