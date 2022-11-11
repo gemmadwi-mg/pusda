@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ChilderController;
 use App\Http\Controllers\Api\ImportExportData;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\ForgotController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,9 @@ use Illuminate\Support\Facades\Route;
 // authentication
 Route::post('login', [AuthenticationController::class, 'login']);
 
+// Reset Password
+Route::post('password/reset', [ForgotController::class, 'reset']);
+Route::post('password/email', [ForgotController::class, 'forgot']);
 
 
 
@@ -46,8 +50,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::get('/user/all', [ProfileController::class, 'userAll']);
 
     //  Import File
-    Route::post('/import/file/parent', [ImportExportData::class, 'storeImportParent']);
-    Route::post('/import/file/childer', [ImportExportData::class, 'storeImportClidern']);
+    Route::post('/import/file', [ImportExportData::class, 'import_multiple_different_formats']);
 
     // parent
     Route::group(['prefix' => 'parent'], function () {
@@ -64,9 +67,14 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::group(['prefix' => 'childer'], function () {
         Route::get('/search/{keyword}', [ChilderController::class, 'search']);
         Route::post('/create', [ChilderController::class, 'createChilder']);
+        Route::post('/createPakai', [ChilderController::class, 'createChilderPakai']);
+        Route::post('/createPayment', [ChilderController::class, 'createChilderPayment']);
         Route::get('/', [ChilderController::class, 'getAll']);
+        Route::get('/all', [ChilderController::class, 'getAllChilder']);
         Route::get('/{id}', [ChilderController::class, 'getById']);
         Route::post('/update/{id}', [ChilderController::class, 'updateChilder']);
+        Route::post('/updatePakai/{id}', [ChilderController::class, 'updateChilderPakai']);
+        Route::post('/updatePayment/{id}', [ChilderController::class, 'updateChilderPayment']);
         Route::delete('/delete/{id}', [ChilderController::class, 'deleteChilder']);
     });
 
@@ -81,6 +89,5 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // dashboard
     Route::get('/dashboard/{year}', [DashboardController::class, 'getAll']);
-    Route::get('/dashboard/all/{year}', [DashboardController::class, 'getAllUser']);
-   
+
 });

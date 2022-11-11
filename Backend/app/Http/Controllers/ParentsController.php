@@ -153,6 +153,7 @@ class ParentsController extends Controller
     {
         try{
             $export = Parents::find($id);
+
             $export->delete();
             Alert::success('Success', 'Data Induk Berhasil Dihapus');
             return redirect()->back();

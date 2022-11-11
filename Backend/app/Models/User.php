@@ -62,10 +62,10 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    // public function roles()
-    // {
-    //     return $this->belongsToMany(Role::class);
-    // }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 
     public function parents()
     {
@@ -77,14 +77,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasManyThrough(Childer::class, Parents::class, 'auhtor', 'parent_id');
     }
 
-    // public function payments(){
-    //     return $this->hasManyThrough(Childer::class, Parents::class, 'auhtor', 'parent_id')->join('payments','childers.id','=','payments.childrens_id');
-    //  }
-
     public function payments() {
         return $this->hasManyDeep(
-            Payment::class, 
-            [Parents::class, Childer::class], 
+            Payment::class,
+            [Parents::class, Childer::class],
             [
                 'auhtor',
                 'parent_id',

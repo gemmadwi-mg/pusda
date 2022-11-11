@@ -111,9 +111,9 @@ class ProfileController extends Controller
 
         return ResponseFormatter::responseSuccessWithData('Akun telah berhasil diperbarui!', $user);
 
-    } catch(Exception $e){
-        return ResponseFormatter::responseError($e->getMessage(), 400);
-    }
+        } catch(Exception $e){
+            return ResponseFormatter::responseError($e->getMessage(), 400);
+        }
     }
 
 

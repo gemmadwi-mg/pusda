@@ -121,20 +121,7 @@
                                             List Children </h5>
                                         <div class="table-responsive">
                                             <div class="dropdown float-left">
-                                                <form action="{{route('importanak.post')}}" method="post" enctype="multipart/form-data">
-                                                    @csrf
-                                                     <div class="input-group mb-3">
-                                                        <input type="file" name="file" required="" onfocus="file" accept=".xls,.xlsx"
-                                                        class="form-control @error('file') is-invalid @enderror" placeholder="Recipient's username"
-                                                        aria-label="Recipient's username" aria-describedby="button-addon2">
-                                                        <button class="btn btn-primary" type="submit" id="button-addon2" required>IMPORT</button>
-                                                        @error('file')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                         @enderror
-                                                    </div>
-                                                </form>
+
                                             </div>
                                             <div class="dropdown float-right">
                                                 <a href="{{route('childern.create', ['id' => $parent->id])}}" title="Create" class=" font-18 btn btn-xs btn-light">
@@ -149,8 +136,8 @@
                                                         <th>Utilization Engagement Type</th>
                                                         <th>Utilization Engagement Name</th>
                                                         <th>Allotment</th>
-                                                        <th>Coordinate</th>
-                                                        <th>Large</th>
+                                                        <th>Year</th>
+                                                        <th>Payment Amount</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
@@ -162,8 +149,8 @@
                                                         <td>{{$c->utilization_engagement_type}}</td>
                                                         <td>{{$c->utilization_engagement_name}}</td>
                                                         <td> {{$c->allotment_of_use}} </td>
-                                                        <td>{{$c->coordinate}}</td>
-                                                        <td>{{$c->large}}</td>
+                                                        <td>{{$c->year}}</td>
+                                                        <td>{{$c->payment_amount}}</td>
 
                                                         <td class="text-center">
                                                                 <a href="{{route('childern.show', ['id' => $c->id])}}" title="Detail" class="btn btn-xs btn-light">
@@ -171,10 +158,6 @@
                                                                 </a>
                                                                 <a href="{{route('childern.edit', ['id' => $c->id])}}" title="Edit" class="btn btn-xs btn-light">
                                                                     <i class="mdi mdi-pencil text-warning"></i>
-                                                                </a>
-
-                                                                <a href="{{route('payment.create', ['id' => $c->id])}}" title="Add Payment" class="btn btn-xs btn-light">
-                                                                    <i class="mdi mdi-plus text-success"></i>
                                                                 </a>
                                                         </td>
 

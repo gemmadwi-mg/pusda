@@ -1,5 +1,5 @@
 @extends('layouts.base')
-@section('title','Asset Soil')
+@section('title','Asset Soil Parent')
 @section('content')
 
 
@@ -37,13 +37,14 @@
                                         <i class="mdi mdi-plus"></i>
                                     </a>
                                 </div>
+
                             </div>
                             <div class="card-box">
                                     <div class="dropdown float-right">
-                                        <form action="{{route('importinduk.post')}}" method="post" enctype="multipart/form-data">
+                                        <form action="{{route('importfile.post')}}" method="post" enctype="multipart/form-data">
                                             @csrf
                                              <div class="input-group mb-3">
-                                                <input type="file" name="file" required="" onfocus="file" accept=".xls,.xlsx"
+                                                <input type="file" name="file" required="" onfocus="file" accept=".xls,.xlsx,.csv,.xlx"
                                                 class="form-control @error('file') is-invalid @enderror" placeholder="Recipient's username"
                                                 aria-label="Recipient's username" aria-describedby="button-addon2">
                                                 <button class="btn btn-primary" type="submit" id="button-addon2" required>IMPORT</button>
@@ -56,17 +57,23 @@
                                         </form>
                                     </div>
 
-                                    <h4 class="header-title mb-3 text-dark">Data Parent</h4>
+                                    <div class="">
+                                        <a href="{{route('export.post')}}" title="Create" class=" font-18 btn btn-xs btn-light">
+                                            <i class="mdi mdi-file-import text-success"></i> Export All Data
+                                        </a>
+                                    </div>
+
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-nowrap table-hover table-centered m-0">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Author</th>
                                                     <th>Certificate Number</th>
                                                     <th>Certificate Date</th>
-                                                    <th>Utilization Type</th>
-                                                    <th>Address</th>
+                                                    <th>Value Asset</th>
                                                     <th>Large</th>
+                                                    <th>Address</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
@@ -74,20 +81,14 @@
                                                 @foreach($data  as $no => $n)
                                                 <tr >
                                                     <td> {{ $no + $data->firstItem() }} </td>
-                                                    <td> {{$n->certificate_number}} </td>
+                                                    <td> {{$n->user->name}} </td>
                                                     <td>
-                                                        <h5 class="m-0 font-weight-normal"> {{$n->certificate_date}} </h5>
+                                                        <h5 class="m-0 font-weight-normal"> {{$n->certificate_number}} </h5>
                                                     </td>
-                                                    <td>  {!! Str::limit($n->address, 20, ' ...') !!} </td>
-                                                    @if ($n->utilization_type === "pinjam_pakai")
-                                                    <td> Pinjam Pakai </td>
-                                                    @elseif ($n->utilization_type === "pakai_sendiri")
-                                                    <td> Pinjam Sendiri </td>
-                                                    @elseif ($n->utilization_type === "sewa_retibusi")
-                                                    <td> Sewa Retibusi </td>
-                                                    @endif
-
-                                                    <td>{{$n->large}} </td>
+                                                    <td> {{$n->certificate_date}}  </td>
+                                                    <td> {{$n->asset_value}} </td>
+                                                    <td> {{$n->large}} </td>
+                                                    <td> {!! Str::limit($n->address, 20, ' ...') !!} </td>
                                                     <td class="text-center">
                                                         <a href="{{route('soil.show', ['soil' => $n->id])}}" title="Detail" class="btn btn-xs btn-light">
                                                             <i class="mdi mdi-eye text-info"></i>

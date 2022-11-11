@@ -13,7 +13,6 @@ class Parents extends Model
         'auhtor',
         'certificate_number',
         'certificate_date',
-        'utilization_type',
         'address',
         'large',
         'asset_value'
@@ -23,10 +22,14 @@ class Parents extends Model
     {
         return $this->belongsTo(User::class, 'auhtor', 'id');
     }
+    public function anak()
+    {
+        return $this->belongsTo(Childer::class, 'id','parent_id');
+    }
 
     public function childers ()
     {
-        return $this->hasMany(Childer::class, 'parent_id');
+        return $this->hasMany(Childer::class, 'id','parent_id');
     }
 
 }

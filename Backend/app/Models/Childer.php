@@ -17,17 +17,23 @@ class Childer extends Model
         'allotment_of_use',
         'coordinate',
         'large',
+        'present_condition',
+        'assets_value',
         'validity_period_of',
         'validity_period_until',
         'engagement_number',
         'engagement_date',
+        'description',
+        'year',
+        'payment_amount',
         'application_letter',
         'agreement_letter',
+        'proof_of_payment'
     ];
 
     public function parent()
     {
-        return $this->belongsTo(Parents::class, 'parent_id', 'id');
+        return $this->belongsTo(Parents::class,'id');
     }
 
     public function payments ()

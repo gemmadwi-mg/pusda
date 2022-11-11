@@ -27,11 +27,11 @@ Route::get('/', function () {
 Auth::routes([
     'register' => false,
     'home' => false,
-    'password.confirm' => false,
-    'password.email' => false,
-    'password.request' => false,
-    'password.reset' => false,
-    'password.update' => false
+    // 'password.confirm' => false,
+    // 'password.email' => false,
+    // 'password.request' => false,
+    // 'password.reset' => false,
+    // 'password.update' => false
 ]);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -43,8 +43,10 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::get('changes-password', [DashboardController::class, 'changePassword'])->name('change.password');
     Route::post('changes-password', [DashboardController::class, 'changePasswordPost'])->name('changepassword.post');
 
-    Route::post('/import/post/induk', [DashboardController::class, 'storeImportParent'])->name('importinduk.post');
-    Route::post('/import/post/anak', [DashboardController::class, 'storeImportClidern'])->name('importanak.post');
+    Route::post('/import/post/multisheet', [DashboardController::class, 'import_multiple_different_formats'])->name('importmulti.post');
+    Route::post('/import/post', [DashboardController::class, 'uploadFile'])->name('importfile.post');
+
+    Route::get('/export/post', [DashboardController::class, 'exportMapping'])->name('export.post');
 
     Route::get('/upload-photo/{id}', [DashboardController::class, 'vieUpload'])->name('upload.photo');
     Route::post('/upload-photo/{id}', [DashboardController::class, 'vieUploadPost'])->name('uploadphoto.post');
@@ -62,8 +64,8 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::delete('/assets/soil/childern/delete/{id}', [childersController::class, 'destroy'])->name('childern.destroy');
 
     // Payment
-    Route::get('/assets/soil/childern/payment/create/{id}', [PaymentController::class, 'create'])->name('payment.create');
-    Route::post('/assets/soil/childern/payment/post', [PaymentController::class, 'store'])->name('payment.store');
+    // Route::get('/assets/soil/childern/payment/create/{id}', [PaymentController::class, 'create'])->name('payment.create');
+    // Route::post('/assets/soil/childern/payment/post', [PaymentController::class, 'store'])->name('payment.store');
 
     // CRUD data upt kediri
     Route::resource('/assets-soil/kediri',UptKediriController::class);

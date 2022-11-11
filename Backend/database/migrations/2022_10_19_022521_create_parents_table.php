@@ -18,7 +18,6 @@ class CreateParentsTable extends Migration
             $table->bigInteger('auhtor')->unsigned();
             $table->string('certificate_number')->unique();
             $table->date('certificate_date');
-            $table->enum('utilization_type',['pinjam_pakai','pakai_sendiri','sewa_retribusi']);
             $table->string('address');
             $table->string('large');
             $table->integer('asset_value');

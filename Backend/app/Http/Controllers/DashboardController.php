@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DataAllUptExport;
+use App\Exports\DataExport;
 use App\Http\Controllers\Controller;
-use App\Imports\ChildernImport;
-use App\Imports\ParentsImport;
+use App\Imports\DataAllImport;
+use App\Imports\MultiSheetSelector;
+use App\Models\Parents;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
@@ -106,36 +110,45 @@ class DashboardController extends Controller
 
     }
 
-    public function storeImportParent(Request $request) {
 
-        // validasi
-		$this->validate($request, [
-			'file' => 'required|mimes:xlsx'
+
+    public function import_multiple_different_formats(Request $request) {
+
+        $this->validate($request, [
+			'file' => 'required|mimes:csv,xlx,xls,xlsx'
 		]);
 
         try {
-            Excel::import(new ParentsImport, request()->file('file'));
+            Excel::import(new MultiSheetSelector,request()->file('file'));
             Alert::success('Success', 'Data Parent Import has been Successful');
             return redirect()->back();
         }catch (\Throwable $th) {
             Alert::error('Error','Opsss! Import Failed Data :(', ['error' => $th->getMessage()]);
         } return redirect()->back();
+
     }
 
-    public function storeImportClidern(Request $request) {
 
-        // validasi
-		$this->validate($request, [
-			'file' => 'required|mimes:xlsx'
-		]);
+    public function exportMapping() {
 
-        try {
-            Excel::import(new ChildernImport, request()->file('file'));
-            Alert::success('Success', 'Data Childern Import has been Successful');
+        return Excel::download(new DataAllUptExport(), 'Semua-data-upt.xlsx');
+    }
+
+
+    public function uploadFile(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xlx,xls,xlsx'
+        ]);
+
+
+            DB::beginTransaction();
+            Excel::import(new DataAllImport,request()->file('file'));
+            DB::commit();
+            Alert::success('Success', 'Data Parent Import has been Successful');
             return redirect()->back();
-        }catch (\Throwable $th) {
-            Alert::error('Error','Opsss! Import Failed Data :(', ['error' => $th->getMessage()]);
-        } return redirect()->back();
+
+
     }
 
 }

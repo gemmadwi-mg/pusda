@@ -77,6 +77,30 @@
                 }
             }
         },
+        "/api/childer/search/{keyword}": {
+            "get": {
+                "tags": [
+                    "Childers"
+                ],
+                "operationId": "childersSearch",
+                "parameters": [
+                    {
+                        "name": "other",
+                        "in": "query",
+                        "description": "other",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
         "/api/childer/create": {
             "post": {
                 "tags": [
@@ -354,17 +378,17 @@
                 }
             }
         },
-        "/import/file/parent": {
+        "/api/password/email": {
             "post": {
                 "tags": [
-                    "Import"
+                    "Authentication"
                 ],
-                "operationId": "importParent",
+                "operationId": "passdEmail",
                 "parameters": [
                     {
-                        "name": "file",
+                        "name": "email",
                         "in": "query",
-                        "description": "file",
+                        "description": "Email",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -378,12 +402,54 @@
                 }
             }
         },
-        "/import/file/childer": {
+        "/api/password/reset": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "operationId": "resetPassword",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "description": "password_confirmation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/import/file": {
             "post": {
                 "tags": [
                     "Import"
                 ],
-                "operationId": "importChilder",
+                "operationId": "importfile",
                 "parameters": [
                     {
                         "name": "file",
@@ -408,6 +474,30 @@
                     "Parents"
                 ],
                 "operationId": "parents",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/parent/search/{keyword}": {
+            "get": {
+                "tags": [
+                    "Parents"
+                ],
+                "operationId": "parentsSearch",
+                "parameters": [
+                    {
+                        "name": "other",
+                        "in": "query",
+                        "description": "other",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "default": {
                         "description": "successful operation"
@@ -475,6 +565,15 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "asset_value",
+                        "in": "query",
+                        "description": "large",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
@@ -534,6 +633,15 @@
                         "required": true,
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "asset_value",
+                        "in": "query",
+                        "description": "large",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
