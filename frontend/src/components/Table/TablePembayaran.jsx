@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
-import { DeleteConfirmation } from "./UPTDashboard/DeleteConfirmation";
+import { DeleteConfirmation } from "../UPTDashboard/DeleteConfirmation";
+
 
 export const TablePembayaran = () => {
   const [show, setShow] = useState(false);
@@ -24,7 +25,7 @@ export const TablePembayaran = () => {
         }}
       >
         <div
-          to="/dashboard/upt/detail"
+          to="/upt/detail"
           className="col number d-flex align-items-center justify-content-center font-semibold "
         >
           1

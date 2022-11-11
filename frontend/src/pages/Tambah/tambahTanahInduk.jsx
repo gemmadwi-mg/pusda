@@ -1,6 +1,6 @@
-import { SideMenu } from "../components/SideMenu";
-import { Navbar } from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "../../components/Navbar";
+import { SideMenu } from "../../components/SideMenu";
 
 export const TambahInduk = () => {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export const TambahInduk = () => {
             </div>
           </div>
           <div className="m-3">
-            <h5 style={{ paddingBottom: "20px" }}>Informasi Tanah Induk</h5>
+            <h5 style={{ paddingBottom: "20px" }}>Tambah Tanah Induk</h5>
             <form className="form-tambah-tanah d-flex flex-col gap-3 px-5">
               <div>
                 <p className="p-0 m-0">Sertifikat</p>
@@ -71,16 +71,6 @@ export const TambahInduk = () => {
                     />
                   </div>
                 </div>
-              </div>
-              <div>
-                <label htmlFor="sertifikat-jenispemanfaatan">
-                  Jenis Pemanfaatan
-                </label>
-                <select className="form-select">
-                  <option value="Pakai Sendiri">Pakai Sendiri</option>
-                  <option value="Pinjam Pakai">Pinjam Pakai</option>
-                  <option value="Jenis Perikatan">Jenis Perikatan</option>
-                </select>
               </div>
               <div>
                 <label htmlFor="sertifikat-alamat">Alamat</label>

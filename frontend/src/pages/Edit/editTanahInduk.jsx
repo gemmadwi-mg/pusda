@@ -1,6 +1,6 @@
-import { SideMenu } from "../components/SideMenu";
-import { Navbar } from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "../../components/Navbar";
+import { SideMenu } from "../../components/SideMenu";
 
 export const EditTanahInduk = () => {
   const navigate = useNavigate();
@@ -74,16 +74,6 @@ export const EditTanahInduk = () => {
               </div>
             </div>
             <div>
-                <label htmlFor="sertifikat-jenispemanfaatan">
-                  Jenis Pemanfaatan
-                </label>
-                <select className="form-select">
-                  <option value="Pakai Sendiri">Pakai Sendiri</option>
-                  <option value="Pinjam Pakai">Pinjam Pakai</option>
-                  <option value="Jenis Perikatan">Jenis Perikatan</option>
-                </select>
-              </div>
-            <div>
               <label htmlFor="sertifikat-alamat">Alamat</label>
               <textarea
                 name="sertifikat-alamat"
@@ -96,14 +86,6 @@ export const EditTanahInduk = () => {
                 type="text"
                 className="w-100"
                 name="sertifikat-luas"
-              />
-            </div>
-            <div>
-              <label htmlFor="sertifikat-nilai">Nilai Aset</label>
-              <input
-                type="text"
-                className="w-100"
-                name="sertifikat-nilai"
               />
             </div>
           </form>

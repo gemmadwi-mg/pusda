@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-export const TableBagian = () => {
+export const TableBagian = ({upt}) => {
   return (
     <Link
-      to="/dashboard/upt/detail/tanah-bagian"
+      to={"/upt/"+upt+"/detail/tanah-bagian"}
       className="row text-dark"
       style={{
         background: "#FFFFFF",
@@ -12,8 +12,8 @@ export const TableBagian = () => {
       }}
     >
       <div
-        to="/dashboard/upt/detail"
-        className="col number d-flex align-items-center justify-content-center font-semibold "
+        to="/upt/detail"
+        className="col-1 number d-flex align-items-center justify-content-center font-semibold "
       >
         3
       </div>

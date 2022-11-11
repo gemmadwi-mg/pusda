@@ -6,13 +6,6 @@ export const UPTDashboardTableCol = ({title, value}) => {
         <p className="table-content m-0 d-flex flex-col justify-content-center" style={{color:"#5C5C5C"}}>{value}</p>
       </div>
     );
-  } else if(title === "JENIS PEMANFAATAN") {
-    return (
-      <div className="col col-2">
-        <p style={{margin:"0px", color:"#9F9F9F"}}>{title}:</p>
-        <p className="table-content m-0" style={{color:"#5C5C5C"}}>{value}</p>
-      </div>
-    );
   } else {
     return (
       <div className="col">

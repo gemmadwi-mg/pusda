@@ -1,14 +1,16 @@
 import { Navbar } from "../components/Navbar";
 import { SideMenu } from "../components/SideMenu";
-import { useNavigate, Link } from "react-router-dom";
-import { TableBagian } from "../components/TableBagian";
-import { DeleteConfirmation } from "../components/UPTDashboard/DeleteConfirmation";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { ButtonDelete } from "../components/Button/ButtonDelete";
+import { ModalTambahBagian } from "../components/Modal/ModalTambahBagian";
+import { TableBagian } from "../components/Table/TableBagian";
+import { TableBagianPinjamPakai } from "../components/Table/TabelBagianPinjamPakai";
 
-export const DetailTanah = () => {
+export const DetailTanah = ({upt}) => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const params = useParams();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -19,7 +21,7 @@ export const DetailTanah = () => {
       <div className="w-100">
         <Navbar />
         <main className="bg-light-gray h-100 ">
-          <DeleteConfirmation
+          <ModalTambahBagian
             show={show}
             handleClose={handleClose}
             handleShow={handleShow}
@@ -49,7 +51,7 @@ export const DetailTanah = () => {
               <div className="d-flex gap-2">
                 <ButtonDelete />
                 <Link
-                  to="/dashboard/upt/edit-tanah-induk"
+                  to={"/upt/"+params.id+"/edit-tanah-induk"}
                   className="primary-btn px-4"
                 >
                   Ubah Data
@@ -74,16 +76,8 @@ export const DetailTanah = () => {
                     <p className="title p-0 m-0">Luas Induk (m)</p>
                     <p className="font-semibold">200</p>
                   </div>
-                  <div>
-                    <p className="title p-0 m-0">Nilai Aset</p>
-                    <p className="font-semibold">Rp39.000.000</p>
-                  </div>
                 </div>
                 <div className="right">
-                  <div>
-                    <p className="title p-0 m-0">Jenis Pemanfaatan</p>
-                    <p className="font-semibold">Jenis Perikatan</p>
-                  </div>
                   <div>
                     <p className="title p-0 m-0">Alamat</p>
                     <p className="font-semibold">
@@ -114,18 +108,22 @@ export const DetailTanah = () => {
                     placeholder="Search"
                     aria-label="Search"
                   ></input>
-                  <Link
-                    to="/dashboard/upt/detail/tanah-bagian/tambah"
+                  <div
                     className="primary-btn d-flex justify-content-center align-items-center"
+                    onClick={() => {
+                      setShow(true);
+                    }}
                   >
                     Tambah Bagian
-                  </Link>
+                  </div>
                 </div>
               </div>
               <div className="table-tanah-bagian">
-                <TableBagian />
-                <TableBagian />
-                <TableBagian />
+                <TableBagian upt={params.id}/>
+                <TableBagian upt={params.id}/>
+                <TableBagian upt={params.id}/>
+                <TableBagianPinjamPakai upt={params.id}/>
+                <TableBagianPinjamPakai upt={params.id}/>
               </div>
             </div>
           </div>

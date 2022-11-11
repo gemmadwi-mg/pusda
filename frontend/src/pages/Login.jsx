@@ -1,6 +1,6 @@
 import { LoginForm } from "../components/Home/LoginForm"
 
-export const Home = () => {
+export const Login = () => {
   return (
     <div className="home d-flex flex-row justify-content-center align-items-center">
       {/* pict */}

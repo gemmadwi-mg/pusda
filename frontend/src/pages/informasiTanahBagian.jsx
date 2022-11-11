@@ -1,14 +1,16 @@
 import { Navbar } from "../components/Navbar";
 import { SideMenu } from "../components/SideMenu";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import { ModalPembayaran } from "../components/ModalPembayaran";
-import { TablePembayaran } from "../components/TablePembayaran";
+import { ModalPembayaran } from "../components/Modal/ModalPembayaran";
 import { ButtonDelete } from "../components/Button/ButtonDelete";
+import { TablePembayaran } from "../components/Table/TablePembayaran";
 
 export const TanahBagian = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const params = useParams();
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
@@ -40,7 +42,7 @@ export const TanahBagian = () => {
             <div className="d-flex gap-2">
               <ButtonDelete />
               <Link
-                to="/dashboard/upt/detail/tanah-bagian/edit"
+                to={"/upt/"+params.id+"/detail/tanah-bagian/edit2"}
                 className="primary-btn"
               >
                 Ubah Data
@@ -122,7 +124,7 @@ export const TanahBagian = () => {
                 <h5>Informasi Pembayaran</h5>
                 <div className="d-flex">
                   <div
-                    to="/dashboard/tambah"
+                    to="/upt/tambah"
                     className="primary-btn d-flex justify-content-center align-items-center"
                     onClick={() => {
                       setShow(true);

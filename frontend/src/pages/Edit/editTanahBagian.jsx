@@ -1,7 +1,7 @@
-import { Navbar } from "../components/Navbar";
-import { SideMenu } from "../components/SideMenu";
 import { useNavigate } from "react-router-dom";
 import { Image } from "react-bootstrap";
+import { SideMenu } from "../../components/SideMenu";
+import { Navbar } from "../../components/Navbar";
 
 export const EditTanahBagian = () => {
   const navigate = useNavigate();
@@ -53,12 +53,6 @@ export const EditTanahBagian = () => {
             <form className="d-flex form-tambah-tanah gap-5">
               <div className="left-form d-flex flex-col gap-3">
                 <div>
-                  <label htmlFor="nilai-sewa">
-                    Nilai Sewa/Retribusi (Rp/Tahun)
-                  </label>
-                  <input type="text" className="w-100" name="nilai-sewa" />
-                </div>
-                <div>
                   <label htmlFor="sertifikat-jenispemanfaatan">
                     Jenis Perikatan
                   </label>
@@ -70,6 +64,12 @@ export const EditTanahBagian = () => {
                 <div>
                   <label htmlFor="berlaku-dari">Atas Nama</label>
                   <input type="text" className="w-100" name="atas-nama" />
+                </div>
+                <div>
+                  <label htmlFor="nilai-sewa">
+                    Nilai Sewa/Retribusi (Rp/Tahun)
+                  </label>
+                  <input type="text" className="w-100" name="nilai-sewa" />
                 </div>
                 <div>
                   <label htmlFor="peruntukan-pemanfaatan">
@@ -117,13 +117,19 @@ export const EditTanahBagian = () => {
                     name="tanggal-perikatan"
                   />
                 </div>
+                <div>
+                  <label htmlFor="keterangan">Keterangan</label>
+                  <textarea
+                    name="keterangan"
+                    className="w-100"
+                  ></textarea>
+                </div>
                 <div className="d-flex flex-col">
                   <label className="font-semibold">Surat Perjanjian</label>
                   <label
                     htmlFor="surat-perjanjian"
                     className="font-semibold file-input d-flex flex-col justify-content-center align-items-center"
                   >
-                    <Image src="/upload.png" width={80} />
                     <p className="p-0 m-0">
                       Drag & drop files or{" "}
                       <span style={{ color: "#483EA8" }}>Browse</span>
@@ -141,7 +147,6 @@ export const EditTanahBagian = () => {
                     htmlFor="surat-permohonan"
                     className="font-semibold file-input d-flex flex-col justify-content-center align-items-center"
                   >
-                    <Image src="/upload.png" width={80} />
                     <p className="p-0 m-0">
                       Drag & drop files or{" "}
                       <span style={{ color: "#483EA8" }}>Browse</span>
