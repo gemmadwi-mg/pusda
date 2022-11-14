@@ -18,6 +18,7 @@ class CreateParentsTable extends Migration
             $table->bigInteger('auhtor')->unsigned();
             $table->string('certificate_number')->unique();
             $table->date('certificate_date');
+            $table->string('item_name');
             $table->string('address');
             $table->string('large');
             $table->integer('asset_value');
