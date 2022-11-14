@@ -13,6 +13,7 @@ class Parents extends Model
         'auhtor',
         'certificate_number',
         'certificate_date',
+        'item_name',
         'address',
         'large',
         'asset_value'

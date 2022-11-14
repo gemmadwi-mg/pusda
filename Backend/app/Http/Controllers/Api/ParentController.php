@@ -177,9 +177,10 @@ class ParentController extends Controller
      */
     public function createParent(Request $request)
     {
-        $validation = Validator::make($request->only('certificate_number', 'certificate_date', 'address', 'large', 'asset_value'), [
+        $validation = Validator::make($request->only('certificate_number', 'certificate_date','item_name', 'address', 'large', 'asset_value'), [
             'certificate_number' => 'required|integer',
             'certificate_date' => 'required',
+            'item_name' => 'required',
             'address' => 'required',
             'large' => 'required',
             'asset_value' => 'required'
@@ -194,6 +195,7 @@ class ParentController extends Controller
                 'auhtor' => Auth::user()->id,
                 'certificate_number' => $request->certificate_number,
                 'certificate_date' => $request->certificate_date,
+                'item_name' => $request->item_name,
                 'address' => $request->address,
                 'large' => $request->large,
                 'asset_value' => $request->asset_value,
@@ -278,12 +280,13 @@ class ParentController extends Controller
      */
     public function updateParent(Request $request, $id)
     {
-        $validation = Validator::make($request->only('auhtor', 'certificate_number', 'certificate_date', 'address', 'large', 'asset_value'), [
+        $validation = Validator::make($request->only('certificate_number', 'certificate_date', 'item_name', 'address', 'large', 'asset_value'), [
             'certificate_number' => 'required|integer',
             'certificate_date' => 'required',
+            'item_name' => 'required',
             'address' => 'required',
             'large' => 'required',
-            'asset_value' => 'required',
+            'asset_value' => 'required'
         ]);
 
         if ($validation->fails()) :
@@ -300,9 +303,10 @@ class ParentController extends Controller
             $parent->update([
                 'certificate_number' => $request->certificate_number,
                 'certificate_date' => $request->certificate_date,
+                'item_name' => $request->item_name,
                 'address' => $request->address,
                 'large' => $request->large,
-                'asset_value' => $request->asset_value
+                'asset_value' => $request->asset_value,
             ]);
             $parent->save();
 
