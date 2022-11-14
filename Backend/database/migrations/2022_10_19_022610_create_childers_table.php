@@ -29,9 +29,6 @@ class CreateChildersTable extends Migration
             $table->string('engagement_number')->nullable();
             $table->date('engagement_date')->nullable();
             $table->string('description');
-            $table->string('year')->nullable();
-            $table->string('payment_amount')->nullable();
-            $table->string('proof_of_payment')->nullable();
             $table->string('application_letter')->nullable();
             $table->string('agreement_letter')->nullable();
             $table->timestamps();
