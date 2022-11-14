@@ -24,11 +24,8 @@ class Childer extends Model
         'engagement_number',
         'engagement_date',
         'description',
-        'year',
-        'payment_amount',
         'application_letter',
         'agreement_letter',
-        'proof_of_payment'
     ];
 
     public function parent()
