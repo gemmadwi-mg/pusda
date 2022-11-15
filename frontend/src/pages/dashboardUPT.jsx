@@ -26,6 +26,8 @@ export const DashboardUPT = () => {
   const [formData, setFormData] = useState({
     sertifikatNomor: "",
     hakPakaiTanggal: "",
+    namaJenisBarang: "",
+    nilaiAset: "",
     alamat: "",
     luas: "",
   });
@@ -35,6 +37,8 @@ export const DashboardUPT = () => {
       id: 1,
       sertifikatNomor: "39",
       hakPakaiTanggal: "08/09/2015",
+      namaJenisBarang: "TANAH KANTOR",
+      nilaiAset: "Rp20.000.000",
       alamat: "JL. TRUNOJOYO NO.3, KEPATIHAN, KEC.BOJONEGORO, JAWA TIMUR 62111",
       luas: "200 m²",
     },
@@ -42,6 +46,8 @@ export const DashboardUPT = () => {
       id: 2,
       sertifikatNomor: "99",
       hakPakaiTanggal: "08/01/2015",
+      namaJenisBarang: "TANAH KANTOR",
+      nilaiAset: "Rp20.000.000",
       alamat:
         "JL. TRUNOJOYO NO.13, KEPATIHAN, KEC.BOJONEGORO, JAWA TIMUR 62111",
       luas: "250 m²",
@@ -100,6 +106,8 @@ export const DashboardUPT = () => {
                         id={item.id}
                         sertifikatNomor={item.sertifikatNomor}
                         hakPakaiTanggal={item.hakPakaiTanggal}
+                        namaJenisBarang={item.namaJenisBarang}
+                        nilaiAset={item.nilaiAset}
                         alamat={item.alamat}
                         luas={item.luas}
                         handleShow={handleShow}
@@ -152,6 +160,19 @@ export const DashboardUPT = () => {
               <div className="m-3">
                 <h5 style={{ paddingBottom: "20px" }}>Edit Tanah Induk</h5>
                 <form className="form-tambah-tanah d-flex flex-col gap-3 px-5">
+                  <div>
+                    <label htmlFor="nama-jenis-barang">Nama/Jenis Barang</label>
+                    <input
+                      type="text"
+                      className="w-100"
+                      name="nama-jenis-barang"
+                      value={formData.namaJenisBarang}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="nilai-aset">Nilai Aset</label>
+                    <input type="text" className="w-100" name="nilai-aset" value={formData.nilaiAset} />
+                  </div>
                   <div>
                     <p className="p-0 m-0">Sertifikat</p>
                     <div className="d-flex gap-2">

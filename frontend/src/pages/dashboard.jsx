@@ -1,8 +1,20 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { DashboardTableRow } from "../components/Dashboard/DashboardTableRow";
 import { Navbar } from "../components/Navbar";
 import { SideMenu } from "../components/SideMenu";
+import { getUser } from "../redux/action/userAction";
 
 export const Dashboard = () => {
+  // const dispatch = useDispatch();
+  // const { isLoading, data: user, error } = useSelector((state) => state.user);
+
+  // useEffect(() => {
+  //   dispatch(getUser());
+  // }, [dispatch]);
+
+  // console.log(user);
+  // if (user?.roles?.id === "1") {
   return (
     <div className="d-flex ">
       <SideMenu />
@@ -33,14 +45,13 @@ export const Dashboard = () => {
                   NAMA UPT
                 </div>
                 <div className="col d-flex align-items-center justify-content-center">
-                  TANAH INDUK
+                  Jumlah Bidang Tanah
                 </div>
                 <div className="col d-flex flex-col align-items-center justify-content-center">
                   TOTAL PINJAM PAKAI
                   <br />
                   <div className="row py-2">
                     <div className="col">TANAH(M)</div>
-                    <div className="col">RUPIAH</div>
                   </div>
                 </div>
                 <div className="col d-flex flex-col align-items-center justify-content-center">
@@ -48,7 +59,6 @@ export const Dashboard = () => {
                   <br />
                   <div className="row py-2">
                     <div className="col">TANAH(M)</div>
-                    <div className="col">RUPIAH</div>
                   </div>
                 </div>
                 <div className="col d-flex flex-col align-items-center justify-content-center">
@@ -91,13 +101,11 @@ export const Dashboard = () => {
               <div className="col d-flex flex-col align-items-center justify-content-center">
                 <div className="row py-2">
                   <div className="col">500</div>
-                  <div className="col">5.000.000</div>
                 </div>
               </div>
               <div className="col d-flex flex-col align-items-center justify-content-center">
                 <div className="row py-2">
                   <div className="col">500</div>
-                  <div className="col">5.000.000</div>
                 </div>
               </div>
               <div className="col d-flex flex-col align-items-center justify-content-center">
@@ -118,4 +126,12 @@ export const Dashboard = () => {
       </div>
     </div>
   );
+  //   } else {
+  //   return (
+  //     <div className="side-menu border">
+  //       pe
+  //     </div>
+  //   );
+  // }
+  
 };

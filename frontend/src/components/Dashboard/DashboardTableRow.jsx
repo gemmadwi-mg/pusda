@@ -10,13 +10,11 @@ export const DashboardTableRow = ({title}) => {
       <div className="col d-flex flex-col align-items-center justify-content-center">
         <div className="row py-2">
           <div className="col">500</div>
-          <div className="col">5.000.000</div>
         </div>
       </div>
       <div className="col d-flex flex-col align-items-center justify-content-center">
         <div className="row py-2">
           <div className="col">500</div>
-          <div className="col">5.000.000</div>
         </div>
       </div>
       <div className="col d-flex flex-col align-items-center justify-content-center">

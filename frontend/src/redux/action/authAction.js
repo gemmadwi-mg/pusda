@@ -1,5 +1,6 @@
 import axios from "axios";
 import { LOGIN_SUCCESS, LOGIN_FAIL } from "../types";
+import Swal from "sweetalert2";
 
 export const authLogin = (email, password, navigate) => async (dispatch) => {
   try {
@@ -24,6 +25,13 @@ export const authLogin = (email, password, navigate) => async (dispatch) => {
       });
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Login Berhasil',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   } catch (err) {
     dispatch({
@@ -32,6 +40,11 @@ export const authLogin = (email, password, navigate) => async (dispatch) => {
         data: false,
         errorMessage: err,
       },
+    });
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: "Email atau Password yang anda masukan salah",
     });
   }
 };

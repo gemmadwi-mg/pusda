@@ -10,6 +10,7 @@ export const UPTDashboardTableRow = ({
   luas,
   handleShow,
   toggleTambahTanah,
+  namaJenisBarang,
   nilaiAset,
   setFormData,
   upt
@@ -24,6 +25,8 @@ export const UPTDashboardTableRow = ({
       </Link>
       <UPTDashboardTableCol title="SERTIFIKAT NOMOR" value={sertifikatNomor} />
       <UPTDashboardTableCol title="HAK PAKAI TANGGAL" value={hakPakaiTanggal} />
+      <UPTDashboardTableCol title="NAMA JENIS BARANG" value={namaJenisBarang} />
+      <UPTDashboardTableCol title="NILAI ASET" value={nilaiAset} />
       <UPTDashboardTableCol title="ALAMAT" value={alamat} />
       <UPTDashboardTableCol title="LUAS" value={luas} />
       <div
