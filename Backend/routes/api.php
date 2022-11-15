@@ -49,8 +49,10 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Get User All for admin
     Route::get('/user/all', [ProfileController::class, 'userAll']);
 
-    //  Import File
-    Route::post('/import/file', [ImportExportData::class, 'import_multiple_different_formats']);
+    //  Import File parent
+    Route::post('/import/file/parent', [ImportExportData::class, 'import_parent']);
+    //  Import File parent
+    Route::post('/import/file/children', [ImportExportData::class, 'import_children']);
 
     // parent
     Route::group(['prefix' => 'parent'], function () {

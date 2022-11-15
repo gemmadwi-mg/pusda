@@ -288,6 +288,7 @@ class ChilderController extends Controller
             return ResponseFormatter::responseError($error->getMessage(), 400);
         }
     }
+    
     public function createChilderPayment(Request $request)
     {
         $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'description', 'application_letter', 'agreement_letter', 'year', 'payment_amount', 'proof_of_payment'), [

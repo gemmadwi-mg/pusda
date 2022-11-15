@@ -29,10 +29,6 @@ class DashboardController extends Controller
             $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', 'sewa_sip_bmd');
         }, 'childers as total_tanah_retribusi' => function (Builder $query) use ($year) {
             $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', 'retribusi');
-        }, 'childers as total_rupiah_tanah_pinjam_pakai' => function ($query) use ($year) {
-            $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', '=', 'pinjam_pakai')->select(DB::raw('sum(assets_value)'));
-        }, 'childers as total_rupiah_tanah_pakai_sendiri' => function ($query) use ($year) {
-            $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', '=', 'pakai_sendiri')->select(DB::raw('sum(assets_value)'));
         }, 'payments as total_rupiah_tanah_sewa_sip_bmd' => function ($query) use ($year) {
             $query->where('utilization_engagement_type', '=', 'sewa_sip_bmd')->where('payments.year', '=', $year)->select(DB::raw('sum(payment_amount)'));
         }, 'payments as total_rupiah_tanah_retribusi' => function ($query) use ($year) {
@@ -127,9 +123,7 @@ class DashboardController extends Controller
             "keseluruhan" => [
                 "total_tanah" => $total_tanah,
                 "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
-                "total_rupiah_tanah_pinjam_pakai" => $total_rupiah_tanah_pinjam_pakai,
                 "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
-                "total_rupiah_tanah_pakai_sendiri" => $total_rupiah_tanah_pakai_sendiri,
                 "total_tanah_retribusi" => $total_tanah_retribusi,
                 "total_rupiah_retribusi" => $total_rupiah_retribusi,
                 "total_tanah_sewa" => $total_tanah_sewa,
