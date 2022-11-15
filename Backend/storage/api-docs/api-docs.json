@@ -444,12 +444,36 @@
                 }
             }
         },
-        "/import/file": {
+        "/import/file/parent": {
             "post": {
                 "tags": [
                     "Import"
                 ],
-                "operationId": "importfile",
+                "operationId": "importfileparent",
+                "parameters": [
+                    {
+                        "name": "file",
+                        "in": "query",
+                        "description": "file",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/import/file/children": {
+            "post": {
+                "tags": [
+                    "Import"
+                ],
+                "operationId": "importfilechildren",
                 "parameters": [
                     {
                         "name": "file",

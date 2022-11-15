@@ -52,6 +52,14 @@ export const TambahInduk = () => {
             <h5 style={{ paddingBottom: "20px" }}>Tambah Tanah Induk</h5>
             <form className="form-tambah-tanah d-flex flex-col gap-3 px-5">
               <div>
+                <label htmlFor="nama-jenis-barang">Nama/Jenis Barang</label>
+                <input type="text" className="w-100" name="nama-jenis-barang" />
+              </div>
+              <div>
+                <label htmlFor="nilai-aset">Nilai Aset</label>
+                <input type="text" className="w-100" name="nilai-aset" />
+              </div>
+              <div>
                 <p className="p-0 m-0">Sertifikat</p>
                 <div className="d-flex gap-2">
                   <div className="d-flex flex-col">

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { Image } from "react-bootstrap";
 import { SideMenu } from "../../components/SideMenu";
 import { Navbar } from "../../components/Navbar";
 
@@ -88,17 +87,13 @@ export const TambahBagianPinjamPakai = () => {
               </div>
               <div className="right-form d-flex flex-col gap-3">
                 <div>
-                  <label htmlFor="Nilai Asset">Nilai Asset</label>
-                  <input type="text" className="w-100" name="nilai-asset" />
-                </div>
-                <div>
                   <label htmlFor="koordinat">Koordinat (LS BT)</label>
                   <input type="text" className="w-100" name="koordinat" />
                 </div>
                 <div>
-                  <label htmlFor="sertifikat-alamat">Alamat</label>
+                  <label htmlFor="keterangan">Keterangan</label>
                   <textarea
-                    name="sertifikat-alamat"
+                    name="keterangan"
                     className="w-100"
                   ></textarea>
                 </div>

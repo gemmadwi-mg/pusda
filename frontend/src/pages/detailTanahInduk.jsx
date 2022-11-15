@@ -47,7 +47,7 @@ export const DetailTanah = ({upt}) => {
               className="d-flex justify-content-between mx-3"
               style={{ paddingBottom: "20px", paddingTop: "10px" }}
             >
-              <h5>Informasi Tanah Induk</h5>
+              <h5>Informasi Tanah Bidang</h5>
               <div className="d-flex gap-2">
                 <ButtonDelete />
                 <Link
@@ -61,6 +61,14 @@ export const DetailTanah = ({upt}) => {
             <div className="informasi-tanah">
               <div className="d-flex mx-4">
                 <div className="left">
+                <div>
+                    <p className="title p-0 m-0">Nama/Jenis Barang</p>
+                    <p className="font-semibold">Tanah</p>
+                  </div>
+                  <div>
+                    <p className="title p-0 m-0">Nilai Aset</p>
+                    <p className="font-semibold">Rp20.000.000</p>
+                  </div>
                   <h6>Sertifikat</h6>
                   <div className="d-flex gap-5">
                     <div className="left">
@@ -72,12 +80,13 @@ export const DetailTanah = ({upt}) => {
                       <p className="font-semibold">22/08/2011</p>
                     </div>
                   </div>
-                  <div>
+
+                </div>
+                <div className="right">
+                <div>
                     <p className="title p-0 m-0">Luas Induk (m)</p>
                     <p className="font-semibold">200</p>
                   </div>
-                </div>
-                <div className="right">
                   <div>
                     <p className="title p-0 m-0">Alamat</p>
                     <p className="font-semibold">

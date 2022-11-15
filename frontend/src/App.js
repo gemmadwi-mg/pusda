@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Dashboard } from "./pages/dashboard";
 import { DashboardUPT } from "./pages/dashboardUPT";
-import { DetailTanah } from "./pages/detailTanah";
+import { DetailTanah } from "./pages/detailTanahInduk";
 import { TanahBagian } from "./pages/informasiTanahBagian";
 import { TambahInduk } from "./pages/Tambah/tambahTanahInduk";
 import { LupaPassword } from "./pages/lupaPassword";
