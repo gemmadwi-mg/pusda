@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Helpers\ResponseFormatter;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Exception;
 use App\Models\Parents;
-use App\Models\Childer;
-use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 
 class DashboardController extends Controller
@@ -47,14 +41,6 @@ class DashboardController extends Controller
             ->where('utilization_engagement_type', '=', 'pinjam_pakai')
             ->count();
 
-        $total_rupiah_tanah_pinjam_pakai = DB::table('parents')
-            ->join('childers', function ($join) {
-                $join->on('childers.parent_id', '=', 'parents.id');
-            })
-            ->whereYear('certificate_date', '=', $year)
-            ->where('utilization_engagement_type', '=', 'pinjam_pakai')
-            ->sum('assets_value');
-
         $total_tanah_pakai_sendiri = DB::table('parents')
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
@@ -62,14 +48,6 @@ class DashboardController extends Controller
             ->whereYear('certificate_date', '=', $year)
             ->where('utilization_engagement_type', '=', 'pakai_sendiri')
             ->count();
-
-        $total_rupiah_tanah_pakai_sendiri = DB::table('parents')
-            ->join('childers', function ($join) {
-                $join->on('childers.parent_id', '=', 'parents.id');
-            })
-            ->whereYear('certificate_date', '=', $year)
-            ->where('utilization_engagement_type', '=', 'pakai_sendiri')
-            ->sum('assets_value');
 
         $total_tanah_retribusi = DB::table('parents')
             ->join('childers', function ($join) {
