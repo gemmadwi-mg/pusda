@@ -13,12 +13,12 @@ class AnakImport implements ToModel,WithHeadingRow
 {
     use Importable;
 
-    protected $id;
+    protected $parent;
 
-    public function __construct()
+    public function __construct($id)
     {
         //QUERY UNTUK MENGAMBIL SELURUH DATA USER
-        $this->id = Parents::select('id')->get();
+        $this->id = $id;
     }
 
     /**
@@ -28,22 +28,25 @@ class AnakImport implements ToModel,WithHeadingRow
     */
     public function model(array $row)
     {
-        $induk = Parents::where('id',$this->id)->first();
+        if (!isset($row['jenis_pemanfaatan'])) {
+            return null;
+        }
 
+        $induk = Parents::where('id',$this->id)->first();
         return new Childer([
             'parent_id' => $induk->id ?? NULL,
-            'rental_retribution' => $row['sewa_retribusi'],
             'utilization_engagement_type' => $row['jenis_pemanfaatan'],
             'utilization_engagement_name' => $row['nama_pemanfaatan'],
             'allotment_of_use'  => $row['peruntukan_penggunaan'],
-            'coordinate'  => $row['koordinat'],
             'large'  => $row['luas'],
-            'present_condition'  => $row['kondisi_sekarang'],
-            'assets_value'  => $row['nilai_aset'],
-            'validity_period_of'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['masa_berlaku']),
+            'rental_retribution' => $row['nilai_sewa'],
+            'validity_period_of'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['masa_berlaku_dari']),
             'validity_period_until'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['masa_berlaku_sampai']),
-            'engagement_number'  => $row['nomor_perikatan'],
             'engagement_date'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_perikatan']),
+            'engagement_number'  => $row['nomor_perikatan'],
+            'assets_value'  => $row['nilai_aset'],
+            'coordinate'  => $row['koordinat'],
+            'present_condition'  => $row['kondisi_sekarang'],
             'description'  => $row['keterangan'],
             'application_letter'=> 'null',
             'agreement_letter'=> 'null'

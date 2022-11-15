@@ -19,7 +19,6 @@ class ParentsController extends Controller
     public function index()
     {
         $data = Parents::orderBy('id','desc')
-        ->where('auhtor',Auth::user()->id)
         ->paginate(10);
         return view('admin.soil.index',compact('data'));
     }

@@ -44,7 +44,7 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::post('changes-password', [DashboardController::class, 'changePasswordPost'])->name('changepassword.post');
 
     Route::post('/import/parent/post', [DashboardController::class, 'import_induk'])->name('importinduk.post');
-    Route::post('/import/children/post', [DashboardController::class, 'import_anak'])->name('importanak.post');
+    Route::post('/import/children/post/{id}', [DashboardController::class, 'import_anak'])->name('importanak.post');
 
     Route::get('/export/post', [DashboardController::class, 'exportMapping'])->name('export.post');
 

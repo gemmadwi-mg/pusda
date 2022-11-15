@@ -73,7 +73,7 @@
                                                     <th>Certificate Date</th>
                                                     <th>Item Name</th>
                                                     <th>Value Asset</th>
-                                                    <th>Large</th>
+                                                    <th>Large(m2)</th>
                                                     <th>Address</th>
                                                     <th class="text-center">Action</th>
                                                 </tr>
@@ -88,8 +88,10 @@
                                                     </td>
                                                     <td> {{$n->certificate_date}}  </td>
                                                     <td> {{$n->item_name}}  </td>
-                                                    <td> {{$n->asset_value}} </td>
-                                                    <td> {{$n->large}} </td>
+                                                    <td> @currency($n->asset_value) </td>
+                                                    <td>
+                                                        {{$n->large}}
+                                                    </td>
                                                     <td> {!! Str::limit($n->address, 20, ' ...') !!} </td>
                                                     <td class="text-center">
                                                         <a href="{{route('soil.show', ['soil' => $n->id])}}" title="Detail" class="btn btn-xs btn-light">
