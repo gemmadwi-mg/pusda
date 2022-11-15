@@ -96,7 +96,7 @@ class DashboardController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Sukses',
+            'message' => 'Berhasil',
             'data' => $data,
             "keseluruhan" => [
                 "total_tanah" => $total_tanah,
