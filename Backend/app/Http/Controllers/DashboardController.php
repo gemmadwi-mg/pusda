@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Exports\DataAllUptExport;
 use App\Exports\DataExport;
 use App\Http\Controllers\Controller;
+use App\Imports\AnakImport;
 use App\Imports\DataAllImport;
+use App\Imports\IndukImport;
 use App\Imports\MultiSheetSelector;
 use App\Models\Parents;
 use App\Models\User;
@@ -134,21 +136,33 @@ class DashboardController extends Controller
         return Excel::download(new DataAllUptExport(), 'Semua-data-upt.xlsx');
     }
 
-
-    public function uploadFile(Request $request)
+    public function import_induk(Request $request)
     {
         $this->validate($request, [
-            'file' => 'required|mimes:csv,xlx,xls,xlsx'
-        ]);
-
-
-            DB::beginTransaction();
-            Excel::import(new DataAllImport,request()->file('file'));
-            DB::commit();
+			'file' => 'required|mimes:csv,xlx,xls,xlsx'
+		]);
+        try {
+            Excel::import(new IndukImport,request()->file('file'));
             Alert::success('Success', 'Data Parent Import has been Successful');
             return redirect()->back();
+        }catch (\Throwable $th) {
+            Alert::error('Error','Opsss! Import Failed Data :(', ['error' => $th->getMessage()]);
+        } return redirect()->back();
 
+    }
+    public function import_anak(Request $request)
+    {
+        $this->validate($request, [
+			'file' => 'required|mimes:csv,xlx,xls,xlsx'
+		]);
 
+        try {
+            Excel::import(new AnakImport,request()->file('file'));
+            Alert::success('Success', 'Data Parent Import has been Successful');
+            return redirect()->back();
+        }catch (\Throwable $th) {
+            Alert::error('Error','Opsss! Import Failed Data :(', ['error' => $th->getMessage()]);
+        } return redirect()->back();
     }
 
 }

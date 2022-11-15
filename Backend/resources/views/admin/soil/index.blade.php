@@ -41,7 +41,7 @@
                             </div>
                             <div class="card-box">
                                     <div class="dropdown float-right">
-                                        <form action="{{route('importfile.post')}}" method="post" enctype="multipart/form-data">
+                                        <form action="{{route('importinduk.post')}}" method="post" enctype="multipart/form-data">
                                             @csrf
                                              <div class="input-group mb-3">
                                                 <input type="file" name="file" required="" onfocus="file" accept=".xls,.xlsx,.csv,.xlx"
@@ -71,6 +71,7 @@
                                                     <th>Author</th>
                                                     <th>Certificate Number</th>
                                                     <th>Certificate Date</th>
+                                                    <th>Item Name</th>
                                                     <th>Value Asset</th>
                                                     <th>Large</th>
                                                     <th>Address</th>
@@ -86,6 +87,7 @@
                                                         <h5 class="m-0 font-weight-normal"> {{$n->certificate_number}} </h5>
                                                     </td>
                                                     <td> {{$n->certificate_date}}  </td>
+                                                    <td> {{$n->item_name}}  </td>
                                                     <td> {{$n->asset_value}} </td>
                                                     <td> {{$n->large}} </td>
                                                     <td> {!! Str::limit($n->address, 20, ' ...') !!} </td>
