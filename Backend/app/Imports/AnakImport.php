@@ -44,9 +44,8 @@ class AnakImport implements ToModel,WithHeadingRow
             'validity_period_until'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['masa_berlaku_sampai']),
             'engagement_date'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_perikatan']),
             'engagement_number'  => $row['nomor_perikatan'],
-            'assets_value'  => $row['nilai_aset'],
             'coordinate'  => $row['koordinat'],
-            'present_condition'  => $row['kondisi_sekarang'],
+            'present_condition'  => $row['kondisi_sekarang'] ?? NULL,
             'description'  => $row['keterangan'],
             'application_letter'=> 'null',
             'agreement_letter'=> 'null'

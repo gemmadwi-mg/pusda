@@ -18,7 +18,6 @@ class Childer extends Model
         'coordinate',
         'large',
         'present_condition',
-        'assets_value',
         'validity_period_of',
         'validity_period_until',
         'engagement_number',
