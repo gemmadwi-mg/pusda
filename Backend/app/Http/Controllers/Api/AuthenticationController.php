@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 
 class AuthenticationController extends Controller
@@ -72,9 +73,14 @@ class AuthenticationController extends Controller
                 	'message' => 'Tidak dapat membuat token.',
                 ], 500);
         }
+        $user = Auth::user();
         return response()->json([
-            'success' => true,
+            'status' => true,
+            'message' => 'You have successfully logged in!',
             'token' => $token,
+            'user' => array_merge($user->toArray(),
+            ['roles' => $user->roles()->get()->toArray()]),
+
         ]);
 
     }
@@ -92,13 +98,12 @@ class AuthenticationController extends Controller
      */
     public function getUser(Request $request)
     {
-        $this->validate($request, [
-            'token' => 'required'
+        $user = auth()->user();
+        $data = array_merge($user->toArray(),
+        [
+            'roles' => $user->roles()->get()->toArray(),
         ]);
-
-        $user = JWTAuth::authenticate($request->token);
-
-        return response()->json(['user' => $user]);
+        return response()->json($data,200);
     }
 
      /**
