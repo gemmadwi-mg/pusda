@@ -60,7 +60,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::post('/create', [ParentController::class, 'createParent']);
         Route::get('/', [ParentController::class, 'getAll']);
         Route::get('/all/{id}', [ParentController::class, 'getParentUserAll']);
-        // Route::get('/all', [ParentController::class, 'getParentUser']);
+        Route::get('/All', [ParentController::class, 'getParentUser']);
         Route::get('/{id}', [ParentController::class, 'getById']);
         Route::post('/update/{id}', [ParentController::class, 'updateParent']);
         Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
@@ -72,7 +72,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::post('/create', [ChilderController::class, 'createChilder']);
         Route::post('/createPakai', [ChilderController::class, 'createChilderPakai']);
         Route::post('/createPayment', [ChilderController::class, 'createChilderPayment']);
-        // Route::get('/', [ChilderController::class, 'getAll']);
+        Route::get('/', [ChilderController::class, 'getAll']);
+        Route::get('/All', [ChilderController::class, 'get']);
         Route::get('/all/{id}', [ChilderController::class, 'getAllChilder']);
         Route::get('/{id}', [ChilderController::class, 'getById']);
         Route::post('/update/{id}', [ChilderController::class, 'updateChilder']);
@@ -85,6 +86,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::group(['prefix' => 'payment'], function () {
         Route::post('/create', [PaymentController::class, 'createPayment']);
         Route::get('/', [PaymentController::class, 'getAll']);
+        // Route::get('/All', [PaymentController::class, 'get']);
         Route::get('/all/{id}', [PaymentController::class, 'getAllPaymentByChilder']);
         Route::get('/{id}', [PaymentController::class, 'getById']);
         Route::post('/update/{id}', [PaymentController::class, 'updatePayment']);

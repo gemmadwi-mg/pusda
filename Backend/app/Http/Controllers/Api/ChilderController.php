@@ -36,6 +36,14 @@ class ChilderController extends Controller
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
     }
 
+    public function get(Request $request)
+    {
+        $child_query = Childer::with(['parent'])
+            ->paginate(10);
+
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
+    }
+
     public function getAllChilder(Request $request, $id)
     {
         $child_query = Childer::with(['parent'])
