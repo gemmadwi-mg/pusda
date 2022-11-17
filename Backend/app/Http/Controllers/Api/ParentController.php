@@ -31,11 +31,22 @@ class ParentController extends Controller
      *     )
      * )
      */
-    public function getParentUser(Request $request)
+    public function getParentUser(Request $request, $id)
     {
-        $parent_query = Parents::all();
+       
+        $parentQuery = Parents::with(['user'])
+        ->where('auhtor', $id)
+        ->paginate(10);
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parentQuery);
+    }
 
-        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parent_query);
+    public function getParentUserAll(Request $request, $id)
+    {
+       
+        $parentQuery = Parents::with(['user'])
+        ->where('auhtor', $id)
+        ->paginate(10);
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parentQuery);
     }
 
 

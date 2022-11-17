@@ -59,7 +59,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('/search/{keyword}', [ParentController::class, 'search']);
         Route::post('/create', [ParentController::class, 'createParent']);
         Route::get('/', [ParentController::class, 'getAll']);
-        Route::get('/all', [ParentController::class, 'getParentUser']);
+        Route::get('/all/{id}', [ParentController::class, 'getParentUserAll']);
+        // Route::get('/all', [ParentController::class, 'getParentUser']);
         Route::get('/{id}', [ParentController::class, 'getById']);
         Route::post('/update/{id}', [ParentController::class, 'updateParent']);
         Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
