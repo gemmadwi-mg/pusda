@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export const TableBagian = ({upt}) => {
   return (
     <Link
-      to={"/upt/"+upt+"/detail/tanah-bagian"}
+      to={"/upt/"+upt+"/admin/detail/tanah-bagian-sr"}
       className="row text-dark"
       style={{
         background: "#FFFFFF",

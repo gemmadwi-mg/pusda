@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export const TableBagianPinjamPakai = ({upt}) => {
   return (
     <Link
-      to={"/upt/"+upt+"/detail/tanah-bagian2"}
+      to={"/upt/"+upt+"/admin/detail/tanah-bagian-ppps"}
       className="row text-dark"
       style={{
         background: "#FFFFFF",

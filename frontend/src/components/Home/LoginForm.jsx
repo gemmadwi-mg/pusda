@@ -1,26 +1,59 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { authLogin } from "../../redux/action/authAction";
 
 export const LoginForm = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const navigate = useNavigate();
+  const [message, setMessage] = useState([]);
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
-  
- const dispatch = useDispatch();
-  const { isLoading, dataAuth, error } = useSelector((state) => state.auth);
 
-  const handleSubmit = () => {
-    const action = authLogin(input.email, input.password, navigate);
-    dispatch(action);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      let res = await fetch(apiUrl + "login", {
+        method: "POST",
+        body: JSON.stringify(input),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      });
+
+      let resJson = await res.json();
+
+      if (res.status != 200) {
+        let message = resJson.message;
+
+        if (! Array.isArray(message))
+          message = [resJson.message];
+
+        return setMessage(message);
+      }
+
+      // Check roles
+      localStorage.setItem('user_id', resJson.user.id);
+      localStorage.setItem('user_name', resJson.user.name);
+      localStorage.setItem('token', resJson.token);
+
+      let roles = resJson.user.roles;
+      if (roles.filter(e => e.name === 'admin').length > 0) {
+        return navigate('/dashboard/admin');
+      }
+      
+      return navigate('/dashboard/UPT');
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
-    <form  onSubmit="return false;" className="d-flex flex-col justify-content-center align-items-center h-100 w-75 gap-1">
+    <form  onSubmit={handleSubmit} className="d-flex flex-col justify-content-center align-items-center h-100 w-75 gap-1">
       <div className="form-group w-100">
         <label htmlFor="email">Email</label>
         <input
@@ -57,12 +90,19 @@ export const LoginForm = () => {
           required
         />
       </div>
+
+      {/* Error text container */}
+      <div className="error-text-container w-100">
+        { message.map((item, key) => {
+          return <div className="text-danger" key={key}> {item} </div>;
+        }) }
+      </div>
+
       <div className="form-group submit-btn w-100 gap-2">
         <Button
-          type="button"
+          type="submit"
           className="rounded bg-cyanblue text-light form-btn mt-2 font-semibold text-center"
-          onClick={handleSubmit}
-          loading={isLoading}
+          // loading={isLoading}
         >
           MASUK
         </Button>
