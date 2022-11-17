@@ -150,19 +150,27 @@ class DashboardController extends Controller
         } return redirect()->back();
 
     }
-    public function import_anak(Request $request)
+
+    public function create_impotAnak($id)
+    {
+        $parent = Parents::where('id',$id)->first();
+        return view('admin.soil.childern.create',compact('parent'));
+    }
+
+    public function import_anak(Request $request,$id)
     {
         $this->validate($request, [
 			'file' => 'required|mimes:csv,xlx,xls,xlsx'
 		]);
 
-        try {
-            Excel::import(new AnakImport,request()->file('file'));
-            Alert::success('Success', 'Data Parent Import has been Successful');
-            return redirect()->back();
-        }catch (\Throwable $th) {
-            Alert::error('Error','Opsss! Import Failed Data :(', ['error' => $th->getMessage()]);
-        } return redirect()->back();
+            try {
+                Excel::import(new AnakImport($id), request()->file('file'));
+                Alert::success('Success', 'Data Children Import has been Successful');
+                return redirect()->back();
+            }catch (\Throwable $th) {
+                Alert::error('Error','Opsss! Import Failed Data :(', ['error' => $th->getMessage()]);
+            } return redirect()->back();
+
     }
 
 }

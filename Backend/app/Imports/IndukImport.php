@@ -25,11 +25,11 @@ class IndukImport implements ToModel,WithHeadingRow
 
         return new Parents([
             'auhtor' => $user,
+            'address'=> $row['letak_alamat'],
+            'item_name'=> $row['nama_barang'],
+            'large'=> $row['luas_induk'],
             'certificate_number' => $row['nomor_sertifikat'],
             'certificate_date'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_sertifikat']),
-            'item_name'=> $row['nama_barang'],
-            'address'=> $row['alamat'],
-            'large'=> $row['luas'],
             'asset_value'=> $row['nilai_aset'],
         ]);
     }

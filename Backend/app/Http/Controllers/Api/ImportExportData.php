@@ -7,6 +7,7 @@ use App\Imports\ParentsImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Helpers\ResponseFormatter;
+use App\Imports\AnakImport;
 use App\Imports\ChildernImport;
 use App\Imports\IndukImport;
 use App\Imports\MultiSheetSelector;
@@ -58,7 +59,7 @@ class ImportExportData extends Controller
 
     /**
      * @OA\Post(
-     *     path="/import/file/children",
+     *     path="/import/file/children/{id}",
      *     tags={"Import"},
      *     operationId="importfilechildren",
      *     @OA\Parameter(
@@ -77,7 +78,7 @@ class ImportExportData extends Controller
      * )
      */
 
-    public function import_children(Request $request)
+    public function import_children(Request $request,$id)
     {
         $validation = Validator::make($request->only('file'), [
             'file' => 'required|mimes:csv,xlx,xls,xlsx'
@@ -88,7 +89,7 @@ class ImportExportData extends Controller
         endif;
 
         try {
-            Excel::import(new IndukImport,request()->file('file'));
+            Excel::import(new AnakImport($id),request()->file('file'));
             return ResponseFormatter::responseSuccessWithData('Data Berhasil di Import');
         }catch (Exception $error) {
             return ResponseFormatter::responseError($error->getMessage(), 400);

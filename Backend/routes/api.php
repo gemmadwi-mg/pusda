@@ -52,14 +52,15 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     //  Import File parent
     Route::post('/import/file/parent', [ImportExportData::class, 'import_parent']);
     //  Import File parent
-    Route::post('/import/file/children', [ImportExportData::class, 'import_children']);
+    Route::post('/import/file/children/{id}', [ImportExportData::class, 'import_children']);
 
     // parent
     Route::group(['prefix' => 'parent'], function () {
         Route::get('/search/{keyword}', [ParentController::class, 'search']);
         Route::post('/create', [ParentController::class, 'createParent']);
         Route::get('/', [ParentController::class, 'getAll']);
-        Route::get('/all', [ParentController::class, 'getParentUser']);
+        Route::get('/all/{id}', [ParentController::class, 'getParentUserAll']);
+        Route::get('/All', [ParentController::class, 'getParentUser']);
         Route::get('/{id}', [ParentController::class, 'getById']);
         Route::post('/update/{id}', [ParentController::class, 'updateParent']);
         Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
@@ -72,7 +73,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::post('/createPakai', [ChilderController::class, 'createChilderPakai']);
         Route::post('/createPayment', [ChilderController::class, 'createChilderPayment']);
         Route::get('/', [ChilderController::class, 'getAll']);
-        Route::get('/all', [ChilderController::class, 'getAllChilder']);
+        Route::get('/All', [ChilderController::class, 'get']);
+        Route::get('/all/{id}', [ChilderController::class, 'getAllChilder']);
         Route::get('/{id}', [ChilderController::class, 'getById']);
         Route::post('/update/{id}', [ChilderController::class, 'updateChilder']);
         Route::post('/updatePakai/{id}', [ChilderController::class, 'updateChilderPakai']);
@@ -84,6 +86,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::group(['prefix' => 'payment'], function () {
         Route::post('/create', [PaymentController::class, 'createPayment']);
         Route::get('/', [PaymentController::class, 'getAll']);
+        // Route::get('/All', [PaymentController::class, 'get']);
+        Route::get('/all/{id}', [PaymentController::class, 'getAllPaymentByChilder']);
         Route::get('/{id}', [PaymentController::class, 'getById']);
         Route::post('/update/{id}', [PaymentController::class, 'updatePayment']);
         Route::delete('/delete/{id}', [PaymentController::class, 'deletePayment']);

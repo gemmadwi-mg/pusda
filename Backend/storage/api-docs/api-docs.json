@@ -468,7 +468,7 @@
                 }
             }
         },
-        "/import/file/children": {
+        "/import/file/children/{id}": {
             "post": {
                 "tags": [
                     "Import"
