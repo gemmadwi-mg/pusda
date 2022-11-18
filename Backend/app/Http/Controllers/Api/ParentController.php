@@ -33,7 +33,7 @@ class ParentController extends Controller
      */
     public function getParentUser(Request $request)
     {
-       
+
         $parentQuery = Parents::with(['user'])
         ->paginate(10);
         return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parentQuery);
@@ -41,7 +41,7 @@ class ParentController extends Controller
 
     public function getParentUserAll(Request $request, $id)
     {
-       
+
         $parentQuery = Parents::with(['user'])
         ->where('auhtor', $id)
         ->paginate(10);

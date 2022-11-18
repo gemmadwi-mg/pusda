@@ -76,7 +76,7 @@ class AuthenticationController extends Controller
         $user = Auth::user();
         return response()->json([
             'status' => true,
-            'message' => 'You have successfully logged in!',
+            'message' => 'Selamat datang! Anda berhasil masuk',
             'token' => $token,
             'user' => array_merge($user->toArray(),
             ['roles' => $user->roles()->get()->toArray()]),
