@@ -25,7 +25,7 @@ class ChilderController extends Controller
      * )
      */
 
-    public function getAll(Request $request)
+    public function getAllByParentUser(Request $request)
     {
         $child_query = Childer::with(['parent'])
             ->whereHas('parent', function ($query) {
@@ -36,21 +36,21 @@ class ChilderController extends Controller
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
     }
 
-    public function get(Request $request)
-    {
-        $child_query = Childer::with(['parent'])
-            ->paginate(10);
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
-    }
+    public function getAllChilder(Request $request)
+    {       
+        $parent_id = $request->input('parent_id');
+        $child_query = Childer::with(['parent']);
 
-    public function getAllChilder(Request $request, $id)
-    {
-        $child_query = Childer::with(['parent'])
-        ->where('parent_id', $id)
-        ->paginate(10);
+        $childs = $child_query;
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
+        if ($parent_id) {
+            $childs->whereHas('parent', function ($query) use ($parent_id) {
+                $query->where('parent_id', $parent_id);
+            });
+        }
+
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $childs->paginate(10));
     }
 
 
@@ -243,18 +243,12 @@ class ChilderController extends Controller
     {
         $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'description', 'application_letter', 'agreement_letter'), [
             'parent_id' => 'required',
-            'rental_retribution' => 'required',
-            'utilization_engagement_name' => 'required',
             'allotment_of_use' => 'required',
             'coordinate' => 'required',
             'large' => 'required|integer',
-            'validity_period_of' => 'required',
-            'validity_period_until' => 'required',
             'description' => 'required',
-            'engagement_number' => 'required',
-            'engagement_date' => 'required',
-            'application_letter' => 'required|mimes:doc,docx,pdf,txt',
-            'agreement_letter' => 'required|mimes:doc,docx,pdf,txt',
+            'application_letter' => 'mimes:doc,docx,pdf,txt',
+            'agreement_letter' => 'mimes:doc,docx,pdf,txt',
         ]);
 
         if ($validation->fails()) :
@@ -282,8 +276,8 @@ class ChilderController extends Controller
                 'engagement_number' => $request->engagement_number,
                 'engagement_date' => $request->engagement_date,
                 'description' => $request->description,
-                'application_letter' => $file_application,
-                'agreement_letter' => $file_agreement,
+                'application_letter' => isset($file_application) ? $file_application : '',
+                'agreement_letter' => isset($file_agreement) ? $file_agreement : '',
             ]);
 
             $data = Childer::where('id', $childer->id)->with(['parent'])->get();
@@ -363,46 +357,6 @@ class ChilderController extends Controller
         }
     }
 
-    public function createChilderPakai(Request $request)
-    {
-        $validation = Validator::make($request->only('parent_id', 'utilization_engagement_type', 'allotment_of_use', 'coordinate', 'large', 'present_condition', 'assets_value', 'description'), [
-            'parent_id' => 'required',
-            'utilization_engagement_type' => 'required',
-            'allotment_of_use' => 'required',
-            'large' => 'required',
-            'present_condition' => 'required',
-            'assets_value' => 'required',
-            'coordinate' => 'required',
-            'description' => 'required',
-        ]);
-
-        if ($validation->fails()) :
-            return ResponseFormatter::responseValidation($validation->errors());
-        endif;
-
-        try {
-            $childer = Childer::create([
-                'parent_id' => $request->parent_id,
-                'utilization_engagement_type' => $request->utilization_engagement_type,
-                'allotment_of_use' => $request->allotment_of_use,
-                'large' => $request->large,
-                'present_condition' => $request->present_condition,
-                'assets_value' => $request->assets_value,
-                'coordinate' => $request->coordinate,
-                'description' => $request->description,
-            ]);
-
-            $data = Childer::where('id', $childer->id)->with(['parent'])->get();
-
-            if ($data) :
-                return ResponseFormatter::responseCreated('Berhasil membuat tanah bagian', $data);
-            else :
-                return ResponseFormatter::responseError('Tanah bagian tidak berhasil dibuat', 400);
-            endif;
-        } catch (Exception $error) {
-            return ResponseFormatter::responseError($error->getMessage(), 400);
-        }
-    }
 
     /**
      * @OA\Put(
@@ -656,53 +610,6 @@ class ChilderController extends Controller
                 'year' => $request->year,
                 'payment_amount' => $request->payment_amount,
                 'proof_of_payment' => $request->proof_of_payment
-            ]);
-            $childer->save();
-
-            if ($childer) :
-                return ResponseFormatter::responseSuccessWithData('Berhasil update tanah bagian', $childer);
-            else :
-                return ResponseFormatter::responseError('Tanah bagian gagal di update', 400);
-            endif;
-        } catch (Exception $error) {
-            return ResponseFormatter::responseError($error->getMessage(), 400);
-        }
-    }
-
-    public function updateChilderPakai(Request $request, $id)
-    {
-        $validation = Validator::make($request->only('parent_id', 'utilization_engagement_type', 'allotment_of_use', 'coordinate', 'large', 'present_condition', 'assets_value', 'description'), [
-            'parent_id' => 'required',
-            'utilization_engagement_type' => 'required',
-            'allotment_of_use' => 'required',
-            'large' => 'required',
-            'present_condition' => 'required',
-            'assets_value' => 'required',
-            'coordinate' => 'required',
-            'description' => 'required',
-        ]);
-
-        if ($validation->fails()) :
-            return ResponseFormatter::responseValidation($validation->errors());
-        endif;
-
-        try {
-
-            $childer = Childer::find($id);
-
-            if (!$childer) {
-                throw new Exception('Tanah bagian tidak ditemukan');
-            }
-
-            $childer->update([
-                'parent_id' => $request->parent_id,
-                'utilization_engagement_type' => $request->utilization_engagement_type,
-                'allotment_of_use' => $request->allotment_of_use,
-                'large' => $request->large,
-                'present_condition' => $request->present_condition,
-                'assets_value' => $request->assets_value,
-                'coordinate' => $request->coordinate,
-                'description' => $request->description,
             ]);
             $childer->save();
 

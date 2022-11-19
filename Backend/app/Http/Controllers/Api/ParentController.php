@@ -31,25 +31,25 @@ class ParentController extends Controller
      *     )
      * )
      */
-    public function getParentUser(Request $request)
+    public function getAllParent(Request $request)
     {
+        $auhtor = $request->input('auhtor');
 
-        $parentQuery = Parents::with(['user'])
-        ->paginate(10);
-        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parentQuery);
+        $parentQuery = Parents::with(['user']);
+
+        $parents = $parentQuery;
+
+        if ($auhtor) {
+            $parents->whereHas('user', function ($query) use ($auhtor) {
+                $query->where('auhtor', $auhtor);
+            });
+        }
+       
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parents ->paginate(10));
     }
 
-    public function getParentUserAll(Request $request, $id)
-    {
 
-        $parentQuery = Parents::with(['user'])
-        ->where('auhtor', $id)
-        ->paginate(10);
-        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parentQuery);
-    }
-
-
-    public function getAll(Request $request)
+    public function getAllParentWithUserLogIn(Request $request)
     {
         $parent_query = Parents::with(['user'])
             ->where('auhtor', Auth::user()->id)
