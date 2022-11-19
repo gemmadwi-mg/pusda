@@ -6,12 +6,13 @@ import { IndukTableRowAdmin } from "../../components/UPTDashboard/IndukTableRowA
 import { UPTDashboardTableRow } from "../../components/UPTDashboard/UPTDashboardTableRow";
 
 export const TanahIndukAdmin = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [openEditTanah, setOpenEditTanah] = useState(false);
   const [show, setShow] = useState(false);
   const params = useParams();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   //format date into yyyy-mm-dd with leading zero
   const formatDate = (date) => {
@@ -35,16 +36,18 @@ export const TanahIndukAdmin = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+      let userId = localStorage.getItem('user_id');
+
       const fetchData = async () => {
         let token = localStorage.getItem('token');
 
         try {
-          let res = await fetch(apiUrl + 'parent', {
+          let res = await fetch(apiUrl + 'parent?author=' + userId, {
             method: "GET",
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
               'Authorization': 'Bearer ' + token
-            },
+            }
           });
 
           let resJson = await res.json();
@@ -52,11 +55,10 @@ export const TanahIndukAdmin = () => {
           if (res.status != 200) {
             return console.log(resJson.message);
           }
-
           
           let resData = resJson.data.data;
-          console.log(resData);
           setData(resData);
+
         } catch (error) {
           console.log(error);
         }

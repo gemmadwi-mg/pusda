@@ -20,7 +20,7 @@ export const IndukTableRowAdmin = ({
       className="row db-upt-row mx-auto bg-white m-1 py-2"
       style={{ width: "95%", borderRadius: "5px", minHeight: "80px" }}
     >
-      <Link to={"/upt/"+upt+"/admin/detail"} className="col number d-flex align-items-center justify-content-center font-semibold ">
+      <Link to={"/upt/"+upt+"/admin/detail/"+id} className="col number d-flex align-items-center justify-content-center font-semibold ">
         {id}
       </Link>
       <UPTDashboardTableCol title="SERTIFIKAT NOMOR" value={sertifikatNomor} />

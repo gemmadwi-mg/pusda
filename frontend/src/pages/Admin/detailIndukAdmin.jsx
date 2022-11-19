@@ -1,18 +1,68 @@
 import { useNavigate, Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LayoutAdmin from "../../components/Layout/layoutAdmin";
 import { ModalTambahBagian } from "../../components/Modal/ModalTambahBagian";
 import { ButtonDelete } from "../../components/Button/ButtonDelete";
 import { TableBagian } from "../../components/Table/TableBagian";
 import { TableBagianPinjamPakai } from "../../components/Table/TabelBagianPinjamPakai";
 
-export const DetailIndukAdmin = ({ upt }) => {
+export const DetailIndukAdmin = ({ induk_id }) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const params = useParams();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  //format date into yyyy-mm-dd with leading zero
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const month = `${d.getMonth() + 1}`.padStart(2, "0");
+    const day = `${d.getDate()}`.padStart(2, "0");
+    const year = d.getFullYear();
+    console.log([year, month, day].join("-"));
+    return [year, month, day].join("-");
+  };
+
+  const formatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  });
+
+  const [induk, setInduk] = useState({});
+
+  useEffect(() => {
+    const fetchInduk = async () => {
+      let token = localStorage.getItem('token');
+
+      try {
+        let res = await fetch(apiUrl + 'parent/' + params.induk_id, {
+          method: "GET",
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ' + token
+          },
+        });
+
+        let resJson = await res.json();
+
+        if (res.status != 200) {
+          return console.log(resJson.message);
+        }
+
+        
+        let resData = resJson.data;
+        setInduk(resData);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchInduk().catch(console.error);
+  }, []);
 
   return (
     <LayoutAdmin>
@@ -58,34 +108,33 @@ export const DetailIndukAdmin = ({ upt }) => {
             <div className="left">
               <div>
                 <p className="title p-0 m-0">Nama/Jenis Barang</p>
-                <p className="font-semibold">Tanah</p>
+                <p className="font-semibold">{induk.item_name}</p>
               </div>
               <div>
                 <p className="title p-0 m-0">Nilai Aset</p>
-                <p className="font-semibold">Rp20.000.000</p>
+                <p className="font-semibold">{formatter.format(induk.asset_value)}</p>
               </div>
               <h6>Sertifikat</h6>
               <div className="d-flex gap-5">
                 <div className="left">
                   <p className="title p-0 m-0">Nomor</p>
-                  <p className="font-semibold">39</p>
+                  <p className="font-semibold">{induk.certificate_number}</p>
                 </div>
                 <div className="right">
                   <p className="title p-0 m-0">Tanggal</p>
-                  <p className="font-semibold">22/08/2011</p>
+                  <p className="font-semibold">{formatDate(induk.certificate_date)}</p>
                 </div>
               </div>
             </div>
             <div className="right">
               <div>
                 <p className="title p-0 m-0">Luas Induk (m)</p>
-                <p className="font-semibold">200</p>
+                <p className="font-semibold">{induk.large}</p>
               </div>
               <div>
                 <p className="title p-0 m-0">Alamat</p>
                 <p className="font-semibold">
-                  Jl. TRUNOJOYO NO.3, KEPATIHAN, KEC. BOJONEGORO, JAWA TIMUR
-                  62111
+                  {induk.address}
                 </p>
               </div>
             </div>
