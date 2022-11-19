@@ -29,7 +29,7 @@ class Childer extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Parents::class,'id');
+        return $this->belongsTo(Parents::class,'parent_id','id');
     }
 
     public function payments ()

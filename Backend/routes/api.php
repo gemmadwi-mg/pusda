@@ -58,9 +58,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::group(['prefix' => 'parent'], function () {
         Route::get('/search/{keyword}', [ParentController::class, 'search']);
         Route::post('/create', [ParentController::class, 'createParent']);
-        Route::get('/', [ParentController::class, 'getAll']);
-        Route::get('/all/{id}', [ParentController::class, 'getParentUserAll']);
-        Route::get('/All', [ParentController::class, 'getParentUser']);
+        Route::get('/', [ParentController::class, 'getAllParentWithUserLogIn']);
+        Route::get('/all', [ParentController::class, 'getAllParent']);
         Route::get('/{id}', [ParentController::class, 'getById']);
         Route::post('/update/{id}', [ParentController::class, 'updateParent']);
         Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
@@ -70,15 +69,12 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     Route::group(['prefix' => 'childer'], function () {
         Route::get('/search/{keyword}', [ChilderController::class, 'search']);
         Route::post('/create', [ChilderController::class, 'createChilder']);
-        Route::post('/createPakai', [ChilderController::class, 'createChilderPakai']);
-        Route::post('/createPayment', [ChilderController::class, 'createChilderPayment']);
-        Route::get('/', [ChilderController::class, 'getAll']);
-        Route::get('/All', [ChilderController::class, 'get']);
-        Route::get('/all/{id}', [ChilderController::class, 'getAllChilder']);
+        // Route::post('/createPayment', [ChilderController::class, 'createChilderPayment']);
+        Route::get('/', [ChilderController::class, 'getAllByParentUser']);
+        Route::get('/all', [ChilderController::class, 'getAllChilder']);
         Route::get('/{id}', [ChilderController::class, 'getById']);
         Route::post('/update/{id}', [ChilderController::class, 'updateChilder']);
-        Route::post('/updatePakai/{id}', [ChilderController::class, 'updateChilderPakai']);
-        Route::post('/updatePayment/{id}', [ChilderController::class, 'updateChilderPayment']);
+        // Route::post('/updatePayment/{id}', [ChilderController::class, 'updateChilderPayment']);
         Route::delete('/delete/{id}', [ChilderController::class, 'deleteChilder']);
     });
 
@@ -94,6 +90,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     });
 
     // dashboard
-    Route::get('/dashboard/{year}', [DashboardController::class, 'getAll']);
+    Route::get('/dashboard/all/{year}', [DashboardController::class, 'getAll']);
+    Route::get('/dashboard/{year}', [DashboardController::class, 'get']);
 
 });
