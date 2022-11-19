@@ -60,7 +60,7 @@ class ParentController extends Controller
 
     public function getById(Request $request, $id)
     {
-        $parent_query = Parents::with(['user'])->where('auhtor', Auth::user()->id);
+        $parent_query = Parents::with(['user']);
 
         $parent = $parent_query->find($id);
 
