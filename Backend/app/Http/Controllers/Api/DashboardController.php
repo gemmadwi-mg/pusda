@@ -94,14 +94,16 @@ class DashboardController extends Controller
             'success' => true,
             'message' => 'Sukses',
             'data' => [
-                'auhtor' => Auth::user()->id,
-                "total_tanah_induk" => $total_tanah,
-                "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
-                "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
-                "total_tanah_retribusi" => $total_tanah_retribusi_query,
-                'total_rupiah_retribusi' => $total_rupiah_retribusi_query,
-                "total_tanah_sewa_sip_bmd" => $total_tanah_sewa_query,
-                'total_rupiah_tanah_sewa_sip_bmd' => $total_rupiah_sewa_query,
+                [
+                    'auhtor' => Auth::user()->id,
+                    "total_tanah_induk" => $total_tanah,
+                    "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
+                    "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
+                    "total_tanah_retribusi" => $total_tanah_retribusi_query,
+                    'total_rupiah_retribusi' => $total_rupiah_retribusi_query,
+                    "total_tanah_sewa_sip_bmd" => $total_tanah_sewa_query,
+                    'total_rupiah_tanah_sewa_sip_bmd' => $total_rupiah_sewa_query,
+                ]
             ]
         ]);
     }
