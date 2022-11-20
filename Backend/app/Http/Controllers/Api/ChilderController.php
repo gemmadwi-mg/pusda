@@ -525,8 +525,8 @@ class ChilderController extends Controller
                 'engagement_number' => $request->engagement_number,
                 'engagement_date' => $request->engagement_date,
                 'description' => $request->description,
-                'application_letter' => $file_application,
-                'agreement_letter' => $file_agreement,
+                'application_letter' => isset($file_application) ? $file_application : '',
+                'agreement_letter' => isset($file_agreement) ? $file_agreement : '',
             ]);
             $childer->save();
 
