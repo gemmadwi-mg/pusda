@@ -24,6 +24,8 @@ export const TanahIndukAdmin = () => {
     return [year, month, day].join("-");
   };
 
+  const [emptyMsg, setEmptyMsg] = useState('');
+
   const [formData, setFormData] = useState({
     sertifikatNomor: "",
     hakPakaiTanggal: "",
@@ -36,13 +38,12 @@ export const TanahIndukAdmin = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-      let userId = localStorage.getItem('user_id');
-
       const fetchData = async () => {
         let token = localStorage.getItem('token');
+        let authorId = localStorage.getItem('active_author_id');
 
         try {
-          let res = await fetch(apiUrl + 'parent?author=' + userId, {
+          let res = await fetch(apiUrl + 'parent/all?auhtor=' + authorId, {
             method: "GET",
             headers: {
               'Content-type': 'application/json; charset=UTF-8',
@@ -57,6 +58,12 @@ export const TanahIndukAdmin = () => {
           }
           
           let resData = resJson.data.data;
+
+          if (resData.length == 0) {
+            return setEmptyMsg('Tidak ada data.');
+          }
+
+          setEmptyMsg('');
           setData(resData);
 
         } catch (error) {
@@ -107,24 +114,32 @@ export const TanahIndukAdmin = () => {
 
           <div className="upt-dashboard-table">
             <div className="row m-0">
-              {data.map((item) => {
-                return (
-                  <IndukTableRowAdmin
-                    upt={params.id}
-                    key={item.id}
-                    id={item.id}
-                    sertifikatNomor={item.certificate_number}
-                    hakPakaiTanggal={item.certificate_date}
-                    namaJenisBarang={item.item_name}
-                    nilaiAset={item.asset_value}
-                    alamat={item.address}
-                    luas={item.large}
-                    handleShow={handleShow}
-                    toggleTambahTanah={toggleEditTanah}
-                    setFormData={setFormData}
-                  />
-                );
-              })}
+              {emptyMsg == '' ? (
+                <>
+                  {data.map((item) => {
+                    return (
+                      <IndukTableRowAdmin
+                        upt={params.id}
+                        key={item.id}
+                        id={item.id}
+                        sertifikatNomor={item.certificate_number}
+                        hakPakaiTanggal={item.certificate_date}
+                        namaJenisBarang={item.item_name}
+                        nilaiAset={item.asset_value}
+                        alamat={item.address}
+                        luas={item.large}
+                        handleShow={handleShow}
+                        toggleTambahTanah={toggleEditTanah}
+                        setFormData={setFormData}
+                      />
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  <div class="text-center">{emptyMsg}</div>
+                </>
+              )}
             </div>
           </div>
           <DeleteConfirmation show={show} handleClose={handleClose} />

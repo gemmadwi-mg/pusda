@@ -22,7 +22,6 @@ export const DetailIndukAdmin = ({ induk_id }) => {
     const month = `${d.getMonth() + 1}`.padStart(2, "0");
     const day = `${d.getDate()}`.padStart(2, "0");
     const year = d.getFullYear();
-    console.log([year, month, day].join("-"));
     return [year, month, day].join("-");
   };
 
@@ -32,11 +31,13 @@ export const DetailIndukAdmin = ({ induk_id }) => {
   });
 
   const [induk, setInduk] = useState({});
+  const [children, setChildren] = useState([]);
+  const [emptyMsg, setEmptyMsg] = useState('');
 
   useEffect(() => {
-    const fetchInduk = async () => {
-      let token = localStorage.getItem('token');
+    let token = localStorage.getItem('token');
 
+    const fetchInduk = async () => {
       try {
         let res = await fetch(apiUrl + 'parent/' + params.induk_id, {
           method: "GET",
@@ -51,7 +52,6 @@ export const DetailIndukAdmin = ({ induk_id }) => {
         if (res.status != 200) {
           return console.log(resJson.message);
         }
-
         
         let resData = resJson.data;
         setInduk(resData);
@@ -61,7 +61,37 @@ export const DetailIndukAdmin = ({ induk_id }) => {
       }
     }
 
+    const fetchChildren = async () => {
+      try {
+        let res = await fetch(apiUrl + 'childer/all?parent_id=' + params.induk_id, {
+          method: "GET",
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ' + token
+          },
+        });
+
+        let resJson = await res.json();
+
+        if (res.status != 200) {
+          return console.log(resJson.message);
+        }
+
+        let resData = resJson.data.data;
+        if (resData.length == 0)
+          return setEmptyMsg('Tidak ada data');
+
+        setEmptyMsg('');
+
+        setChildren(resData);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     fetchInduk().catch(console.error);
+    fetchChildren().catch(console.error);
   }, []);
 
   return (
@@ -177,11 +207,30 @@ export const DetailIndukAdmin = ({ induk_id }) => {
             </div>
           </div>
           <div className="table-tanah-bagian">
-            <TableBagian upt={params.id} />
-            <TableBagian upt={params.id} />
-            <TableBagian upt={params.id} />
-            <TableBagianPinjamPakai upt={params.id} />
-            <TableBagianPinjamPakai upt={params.id} />
+            {emptyMsg === '' ? (
+              children.map((item) => {
+                if (item.utilization_engagement_type == 'pinjam_pakai') {
+                  return (
+                    <TableBagianPinjamPakai 
+                      upt={params.id} 
+                      children={item}
+                      />
+                  )
+                } else if (item.utilization_engagement_type == 'sewa_sip_bmd') {
+                  return (
+                    <TableBagian 
+                      upt={params.id}
+                      children={item}
+                      />
+                  )
+                }
+              })
+            ) : (
+              <>
+                <div className="text-center">{emptyMsg}</div>
+              </>
+            )
+          }
           </div>
         </div>
       </div>

@@ -1,11 +1,61 @@
+import { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { ButtonDelete } from "../../components/Button/ButtonDelete";
 
 import LayoutAdmin from "../../components/Layout/layoutAdmin";
 
 export const DetailBagianPppsAdmin = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const navigate = useNavigate();
   const params = useParams();
+
+  const formatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  });
+
+  const mapType = (str) => {
+    if (str === 'pinjam_pakai')
+      return 'Pinjam Pakai';
+    else if (str === 'pakai_sendiri')
+      return 'Pakai Sendiri'
+
+    return '';
+  }
+
+  const [children, setChildren] = useState({});
+
+  useEffect(() => {
+    let token = localStorage.getItem('token');
+
+    const fetchInduk = async () => {
+      try {
+        let res = await fetch(apiUrl + 'childer/' + params.children_id, {
+          method: "GET",
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ' + token
+          },
+        });
+
+        let resJson = await res.json();
+
+        if (res.status != 200) {
+          return console.log(resJson.message);
+        }
+        
+        let resData = resJson.data;
+        
+        setChildren(resData);
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchInduk().catch(console.error);
+  }, []);
   return (
     <LayoutAdmin>
       <div
@@ -41,15 +91,15 @@ export const DetailBagianPppsAdmin = () => {
           <div className="left-form d-flex flex-col gap-3 ">
             <div>
               <label htmlFor="nilai-sewa">Jenis Perikatan Pemanfaatan</label>
-              <h5>Pakai Sendiri / Pinjam Pakai</h5>
+              <h5>{mapType(children.utilization_engagement_type)}</h5>
             </div>
             <div>
               <label htmlFor="berlaku-dari">Peruntukkan Pemanfaatan</label>
-              <h5>Kantor Aktif</h5>
+              <h5>{children.present_condition}</h5>
             </div>
             <div>
               <label htmlFor="luas-bagian">Luas Bagian (m)</label>
-              <h5>39</h5>
+              <h5>{children.large}</h5>
             </div>
           </div>
           <div
@@ -58,15 +108,15 @@ export const DetailBagianPppsAdmin = () => {
           >
             <div>
               <label htmlFor="nilai-asset">Nilai Asset (Rp/Tahun)</label>
-              <h5>Rp20.000.000</h5>
+              <h5>{formatter.format(children.assets_value)}</h5>
             </div>
             <div>
               <label htmlFor="koordinat">Koordinat (LS BT)</label>
-              <h5>123124135235345345</h5>
+              <h5>{children.coordinate}</h5>
             </div>
             <div>
               <label htmlFor="keterangan">Keterangan</label>
-              <h5>Berisi Keterangan</h5>
+              <h5>{children.description}</h5>
             </div>
           </div>
         </div>
