@@ -201,8 +201,10 @@ class ParentController extends Controller
         endif;
 
         try {
+            $file_application = $request->auhtor;
+
             $parent = Parents::create([
-                'auhtor' => Auth::user()->id,
+                'auhtor' => isset($file_application) ? $file_application :  Auth::user()->id,
                 'certificate_number' => $request->certificate_number,
                 'certificate_date' => $request->certificate_date,
                 'item_name' => $request->item_name,
