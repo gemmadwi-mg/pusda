@@ -155,7 +155,7 @@ class DashboardController extends Controller
                 $join->on('childers.id', '=', 'payments.childrens_id');
             })
             ->where('utilization_engagement_type', '=', 'retribusi')
-            ->where('year', '=', $year)
+            ->whereYear('certificate_date', '=', $year)
             ->count();
 
         $total_rupiah_retribusi = DB::table('parents')
@@ -177,7 +177,7 @@ class DashboardController extends Controller
                 $join->on('childers.id', '=', 'payments.childrens_id');
             })
             ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
-            ->where('year', '=', $year)
+            ->whereYear('certificate_date', '=', $year)
             ->count();
 
         $total_rupiah_sewa = DB::table('parents')
