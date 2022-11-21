@@ -15,6 +15,7 @@ class DashboardController extends Controller
 {
     public function get(Request $request, $year)
     {
+        $auhthor = $user = Auth::user();
         $query =  DB::table('parents')
             ->where('auhtor', '=', Auth::user()->id)
             ->whereYear('certificate_date', '=', $year);
@@ -95,7 +96,7 @@ class DashboardController extends Controller
             'message' => 'Sukses',
             'data' => [
                 [
-                    'auhtor' => Auth::user()->id,
+                    'auhtor' => $auhthor,
                     "total_tanah_induk" => $total_tanah,
                     "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
                     "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
@@ -196,13 +197,15 @@ class DashboardController extends Controller
             'message' => 'Berhasil',
             'data' => $data,
             "keseluruhan" => [
-                "total_tanah" => $total_tanah,
-                "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
-                "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
-                "total_tanah_retribusi" => $total_tanah_retribusi,
-                "total_rupiah_retribusi" => $total_rupiah_retribusi,
-                "total_tanah_sewa" => $total_tanah_sewa,
-                "total_rupiah_sewa" => $total_rupiah_sewa
+                [
+                    "total_tanah" => $total_tanah,
+                    "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
+                    "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
+                    "total_tanah_retribusi" => $total_tanah_retribusi,
+                    "total_rupiah_retribusi" => $total_rupiah_retribusi,
+                    "total_tanah_sewa" => $total_tanah_sewa,
+                    "total_rupiah_sewa" => $total_rupiah_sewa
+                ]
             ]
         ]);
     }
