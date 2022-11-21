@@ -38,9 +38,10 @@ class ChilderController extends Controller
 
 
     public function getAllChilder(Request $request)
-    {       
+    {
         $parent_id = $request->input('parent_id');
         $child_query = Childer::with(['parent']);
+        $keyword = $request->input('keyword');
 
         $childs = $child_query;
 
@@ -48,6 +49,28 @@ class ChilderController extends Controller
             $childs->whereHas('parent', function ($query) use ($parent_id) {
                 $query->where('parent_id', $parent_id);
             });
+        }
+
+        if ($keyword && $parent_id) {
+            $result = Childer::where('parent_id', '=', $parent_id)
+                ->OrWhere('rental_retribution', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('utilization_engagement_type', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('utilization_engagement_name', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('allotment_of_use', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('coordinate', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('large', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('present_condition', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('validity_period_of', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('validity_period_until', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('engagement_number', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('engagement_date', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('description', 'LIKE', '%' . $keyword . '%')
+                ->get();
+            if (count($result)) {
+                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
+            } else {
+                return ResponseFormatter::responseError('Data tidak ditemukan', 400);;
+            }
         }
 
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $childs->paginate(10));
@@ -88,25 +111,25 @@ class ChilderController extends Controller
      *     )
      * )
      */
-    public function search($other)
-    {
-        $result = Childer::where('rental_retribution', 'LIKE', '%' . $other . '%')
-            ->orWhere('utilization_engagement_type', 'LIKE', '%' . $other . '%')
-            ->orWhere('utilization_engagement_name', 'LIKE', '%' . $other . '%')
-            ->orWhere('allotment_of_use', 'LIKE', '%' . $other . '%')
-            ->orWhere('coordinate', 'LIKE', '%' . $other . '%')
-            ->orWhere('large', 'LIKE', '%' . $other . '%')
-            ->orWhere('validity_period_of', 'LIKE', '%' . $other . '%')
-            ->orWhere('validity_period_until', 'LIKE', '%' . $other . '%')
-            ->orWhere('engagement_number', 'LIKE', '%' . $other . '%')
-            ->orWhere('engagement_date', 'LIKE', '%' . $other . '%')
-            ->get();
-        if (count($result)) {
-            return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
-        } else {
-            return ResponseFormatter::responseError('Data tidak ditemukan', 400);;
-        }
-    }
+    // public function search($other)
+    // {
+    //     $result = Childer::where('rental_retribution', 'LIKE', '%' . $other . '%')
+    //         ->orWhere('utilization_engagement_type', 'LIKE', '%' . $other . '%')
+    //         ->orWhere('utilization_engagement_name', 'LIKE', '%' . $other . '%')
+    //         ->orWhere('allotment_of_use', 'LIKE', '%' . $other . '%')
+    //         ->orWhere('coordinate', 'LIKE', '%' . $other . '%')
+    //         ->orWhere('large', 'LIKE', '%' . $other . '%')
+    //         ->orWhere('validity_period_of', 'LIKE', '%' . $other . '%')
+    //         ->orWhere('validity_period_until', 'LIKE', '%' . $other . '%')
+    //         ->orWhere('engagement_number', 'LIKE', '%' . $other . '%')
+    //         ->orWhere('engagement_date', 'LIKE', '%' . $other . '%')
+    //         ->get();
+    //     if (count($result)) {
+    //         return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
+    //     } else {
+    //         return ResponseFormatter::responseError('Data tidak ditemukan', 400);;
+    //     }
+    // }
 
 
 
@@ -291,7 +314,7 @@ class ChilderController extends Controller
             return ResponseFormatter::responseError($error->getMessage(), 400);
         }
     }
-    
+
     public function createChilderPayment(Request $request)
     {
         $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'description', 'application_letter', 'agreement_letter', 'year', 'payment_amount', 'proof_of_payment'), [
