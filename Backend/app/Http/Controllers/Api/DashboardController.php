@@ -15,7 +15,7 @@ class DashboardController extends Controller
 {
     public function get(Request $request, $year)
     {
-        $auhthor = $user = Auth::user();
+        $auhthor = Auth::user();
         $query =  DB::table('parents')
             ->where('auhtor', '=', Auth::user()->id)
             ->whereYear('certificate_date', '=', $year);
@@ -151,9 +151,9 @@ class DashboardController extends Controller
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
-            ->join('payments', function ($join) {
-                $join->on('childers.id', '=', 'payments.childrens_id');
-            })
+            // ->join('payments', function ($join) {
+            //     $join->on('childers.id', '=', 'payments.childrens_id');
+            // })
             ->where('utilization_engagement_type', '=', 'retribusi')
             ->whereYear('certificate_date', '=', $year)
             ->count();
@@ -173,9 +173,9 @@ class DashboardController extends Controller
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
-            ->join('payments', function ($join) {
-                $join->on('childers.id', '=', 'payments.childrens_id');
-            })
+            // ->join('payments', function ($join) {
+            //     $join->on('childers.id', '=', 'payments.childrens_id');
+            // })
             ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
             ->whereYear('certificate_date', '=', $year)
             ->count();
