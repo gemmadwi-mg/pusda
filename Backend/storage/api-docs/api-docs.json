@@ -10,30 +10,76 @@
                 "tags": [
                     "Authentication"
                 ],
-                "operationId": "login",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "Email",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "Password",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "summary": "User Login",
+                "description": "Login User Here",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "email"
+                                    },
+                                    "password": {
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
                         }
                     }
-                ],
+                },
                 "responses": {
-                    "default": {
-                        "description": "successful operation"
+                    "201": {
+                        "description": "Selamat datang! Anda berhasil masuk",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Selamat datang! Anda berhasil masuk",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Kredensial masuk tidak valid,Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Tidak dapat membuat token",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
                     }
                 }
             }
@@ -43,6 +89,7 @@
                 "tags": [
                     "Authentication"
                 ],
+                "summary": "Get Data User after Login",
                 "operationId": "User",
                 "responses": {
                     "default": {
@@ -56,10 +103,89 @@
                 "tags": [
                     "Authentication"
                 ],
+                "summary": "User Log Out",
                 "operationId": "logout",
                 "responses": {
                     "default": {
                         "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/admin/add/user": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Admin Add access user",
+                "description": "only admin can add user data",
+                "operationId": "addUser",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "text"
+                                    },
+                                    "email": {
+                                        "type": "text"
+                                    },
+                                    "password": {
+                                        "type": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "password"
+                                    },
+                                    "role_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Register Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Register Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
                     }
                 }
             }
@@ -70,30 +196,6 @@
                     "Childers"
                 ],
                 "operationId": "childers",
-                "responses": {
-                    "default": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
-        "/api/childer/search/{keyword}": {
-            "get": {
-                "tags": [
-                    "Childers"
-                ],
-                "operationId": "childersSearch",
-                "parameters": [
-                    {
-                        "name": "other",
-                        "in": "query",
-                        "description": "other",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
                 "responses": {
                     "default": {
                         "description": "successful operation"
@@ -505,30 +607,6 @@
                 }
             }
         },
-        "/api/parent/search/{keyword}": {
-            "get": {
-                "tags": [
-                    "Parents"
-                ],
-                "operationId": "parentsSearch",
-                "parameters": [
-                    {
-                        "name": "other",
-                        "in": "query",
-                        "description": "other",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "default": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
         "/api/parent/create": {
             "post": {
                 "tags": [
@@ -822,6 +900,7 @@
                 "tags": [
                     "Profile"
                 ],
+                "summary": "User uploaded photo after log in",
                 "operationId": "upload",
                 "parameters": [
                     {
@@ -846,6 +925,7 @@
                 "tags": [
                     "Profile"
                 ],
+                "summary": "User changes data after login",
                 "operationId": "userupdate",
                 "parameters": [
                     {
@@ -879,6 +959,7 @@
                 "tags": [
                     "Profile"
                 ],
+                "summary": "The user changes the password after logging in",
                 "description": "Password minimum 8 character",
                 "operationId": "userupdatepass",
                 "parameters": [
@@ -922,6 +1003,8 @@
                 "tags": [
                     "Admin"
                 ],
+                "summary": "Admin all access user",
+                "description": "only my admin role can access this api",
                 "operationId": "Admin",
                 "responses": {
                     "default": {

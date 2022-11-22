@@ -18,6 +18,7 @@ class ProfileController extends Controller
      * @OA\Post(
      *     path="/api/user/upload/photo/{id}",
      *     tags={"Profile"},
+     *     summary="User uploaded photo after log in",
      *     operationId="upload",
      *     @OA\Parameter(
      *          name="photo",
@@ -68,6 +69,7 @@ class ProfileController extends Controller
      * @OA\Put(
      *     path="/api/user/update/{id}",
      *     tags={"Profile"},
+     *     summary="User changes data after login",
      *     operationId="userupdate",
      *     @OA\Parameter(
      *          name="email",
@@ -121,6 +123,7 @@ class ProfileController extends Controller
      * @OA\Post(
      *     path="/api/user/change-password",
      *     tags={"Profile"},
+     *     summary="The user changes the password after logging in",
      *     operationId="userupdatepass",
      *     description="Password minimum 8 character",
      *
@@ -186,6 +189,8 @@ class ProfileController extends Controller
      *     path="/api/user/all",
      *     tags={"Admin"},
      *     operationId="Admin",
+     *     summary="Admin all access user",
+     *     description="only my admin role can access this api",
      *     @OA\Response(
      *         response="default",
      *         description="successful operation"
