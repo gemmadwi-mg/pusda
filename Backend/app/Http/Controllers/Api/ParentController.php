@@ -34,6 +34,7 @@ class ParentController extends Controller
     public function getAllParent(Request $request)
     {
         $auhtor = $request->input('auhtor');
+        $keyword = $request->input('keyword');
 
         $parentQuery = Parents::with(['user']);
 
@@ -44,8 +45,24 @@ class ParentController extends Controller
                 $query->where('auhtor', $auhtor);
             });
         }
-       
-        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parents ->paginate(10));
+
+        if ($keyword && $auhtor) {
+            $result = Parents::with(['user'])
+                ->where('auhtor', '=', $auhtor)
+                ->orwhere('certificate_number', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('certificate_date', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('address', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('large', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('asset_value', 'LIKE', '%' . $keyword . '%')
+                ->get();
+            if (count($result)) {
+                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
+            } else {
+                return response()->json(['Result' => 'Data tidak ditemukan'], 404);
+            }
+        }
+
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parents->paginate(10));
     }
 
 
@@ -91,22 +108,22 @@ class ParentController extends Controller
      *     )
      * )
      */
-    public function search($keyword)
-    {
-        $result = Parents::with(['user'])
-            ->where('auhtor', '=', Auth::user()->id)
-            ->orwhere('certificate_number', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('certificate_date', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('address', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('large', 'LIKE', '%' . $keyword . '%')
-            ->orWhere('asset_value', 'LIKE', '%' . $keyword . '%')
-            ->get();
-        if (count($result)) {
-            return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
-        } else {
-            return response()->json(['Result' => 'Data tidak ditemukan'], 404);
-        }
-    }
+    // public function search($keyword)
+    // {
+    //     $result = Parents::with(['user'])
+    //         ->where('auhtor', '=', Auth::user()->id)
+    //         ->orwhere('certificate_number', 'LIKE', '%' . $keyword . '%')
+    //         ->orWhere('certificate_date', 'LIKE', '%' . $keyword . '%')
+    //         ->orWhere('address', 'LIKE', '%' . $keyword . '%')
+    //         ->orWhere('large', 'LIKE', '%' . $keyword . '%')
+    //         ->orWhere('asset_value', 'LIKE', '%' . $keyword . '%')
+    //         ->get();
+    //     if (count($result)) {
+    //         return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
+    //     } else {
+    //         return response()->json(['Result' => 'Data tidak ditemukan'], 404);
+    //     }
+    // }
 
 
 
@@ -187,7 +204,7 @@ class ParentController extends Controller
      */
     public function createParent(Request $request)
     {
-        $validation = Validator::make($request->only('certificate_number', 'certificate_date','item_name', 'address', 'large', 'asset_value'), [
+        $validation = Validator::make($request->only('certificate_number', 'certificate_date', 'item_name', 'address', 'large', 'asset_value'), [
             'certificate_number' => 'required|integer',
             'certificate_date' => 'required',
             'item_name' => 'required',

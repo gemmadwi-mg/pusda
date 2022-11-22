@@ -15,6 +15,7 @@ class DashboardController extends Controller
 {
     public function get(Request $request, $year)
     {
+        $auhthor = Auth::user();
         $query =  DB::table('parents')
             ->where('auhtor', '=', Auth::user()->id)
             ->whereYear('certificate_date', '=', $year);
@@ -95,12 +96,12 @@ class DashboardController extends Controller
             'message' => 'Sukses',
             'data' => [
                 [
-                    'auhtor' => Auth::user()->id,
+                    'auhtor' => $auhthor,
                     "total_tanah_induk" => $total_tanah,
                     "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
                     "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
                     "total_tanah_retribusi" => $total_tanah_retribusi_query,
-                    'total_rupiah_retribusi' => $total_rupiah_retribusi_query,
+                    'total_rupiah_tanah_retribusi' => $total_rupiah_retribusi_query,
                     "total_tanah_sewa_sip_bmd" => $total_tanah_sewa_query,
                     'total_rupiah_tanah_sewa_sip_bmd' => $total_rupiah_sewa_query,
                 ]
@@ -150,11 +151,11 @@ class DashboardController extends Controller
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
-            ->join('payments', function ($join) {
-                $join->on('childers.id', '=', 'payments.childrens_id');
-            })
+            // ->join('payments', function ($join) {
+            //     $join->on('childers.id', '=', 'payments.childrens_id');
+            // })
             ->where('utilization_engagement_type', '=', 'retribusi')
-            ->where('year', '=', $year)
+            ->whereYear('certificate_date', '=', $year)
             ->count();
 
         $total_rupiah_retribusi = DB::table('parents')
@@ -172,11 +173,11 @@ class DashboardController extends Controller
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
-            ->join('payments', function ($join) {
-                $join->on('childers.id', '=', 'payments.childrens_id');
-            })
+            // ->join('payments', function ($join) {
+            //     $join->on('childers.id', '=', 'payments.childrens_id');
+            // })
             ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
-            ->where('year', '=', $year)
+            ->whereYear('certificate_date', '=', $year)
             ->count();
 
         $total_rupiah_sewa = DB::table('parents')
@@ -196,13 +197,15 @@ class DashboardController extends Controller
             'message' => 'Berhasil',
             'data' => $data,
             "keseluruhan" => [
-                "total_tanah" => $total_tanah,
-                "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
-                "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
-                "total_tanah_retribusi" => $total_tanah_retribusi,
-                "total_rupiah_retribusi" => $total_rupiah_retribusi,
-                "total_tanah_sewa" => $total_tanah_sewa,
-                "total_rupiah_sewa" => $total_rupiah_sewa
+                [
+                    "total_tanah" => $total_tanah,
+                    "total_tanah_pinjam_pakai" => $total_tanah_pinjam_pakai,
+                    "total_tanah_pakai_sendiri" => $total_tanah_pakai_sendiri,
+                    "total_tanah_retribusi" => $total_tanah_retribusi,
+                    "total_rupiah_retribusi" => $total_rupiah_retribusi,
+                    "total_tanah_sewa" => $total_tanah_sewa,
+                    "total_rupiah_sewa" => $total_rupiah_sewa
+                ]
             ]
         ]);
     }

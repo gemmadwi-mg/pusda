@@ -36,25 +36,32 @@ class PaymentController extends Controller
     public function getAll(Request $request)
     {
         $parent_query = Payment::with(['childer'])
-        ->paginate(10);
+            ->paginate(10);
 
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $parent_query);
     }
 
-    public function getAllPaymentByChilder(Request $request, $id)
+    public function getAllPayment(Request $request)
     {
-        $child_query = Payment::with(['childer'])
-        ->where('childrens_id', $id)
-        ->paginate(10);
+        $childrens_id = $request->input('childrens_id');
+        $payment_query = Payment::with(['childer']);
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $child_query);
+        $payments = $payment_query;
+
+        if ($childrens_id) {
+            $payments->whereHas('childer', function ($query) use ($childrens_id) {
+                $query->where('childrens_id', $childrens_id);
+            });
+        }
+
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $payments->paginate(10));
     }
 
     public function getById(Request $request, $id)
     {
         $parent_query = Payment::with(['childer'])
-        ->where('id',$id)
-        ->first();
+            ->where('id', $id)
+            ->first();
 
 
         return ResponseFormatter::responseSuccessWithData('Berhasil', $parent_query);
