@@ -96,7 +96,7 @@ export const DetailBagianSrAdmin = () => {
         <div className="d-flex gap-2">
           <ButtonDelete />
           <Link
-            to={"/upt/" + params.id + "/detail/tanah-bagian/edit2"}
+            to={"/upt/" + params.id + "/admin/detail/" + params.induk_id + "/tanah-bagian-sr/edit/" + params.children_id}
             className="primary-btn"
           >
             Ubah Data
@@ -154,11 +154,11 @@ export const DetailBagianSrAdmin = () => {
             </div>
             <div className="d-flex flex-col">
               <label className="font-semibold">Surat Perjanjian</label>
-              <h5 className="filename">SURAT PERJANJIAN-1.PDF</h5>
+              <h5 className="filename">{children.application_letter}</h5>
             </div>
             <div className="d-flex flex-col">
               <label className="font-semibold">Surat Permohonan</label>
-              <h5 className="filename">SURAT PERMOHONAN-1.PDF</h5>
+              <h5 className="filename">{children.agreement_letter}</h5>
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ export const ModalTambahBagian = ({ show, handleClose }) => {
             <Button
               className="primary-btn"
               onClick={() => {
-                navigate("/upt/"+params.id+"/admin/detail/tambah-bagian-ppps");
+                navigate("/upt/"+params.id+"/admin/detail/"+params.induk_id+"/tambah-bagian-ppps");
               }}
             >
               Pakai Sendiri / Pinjam Pakai
@@ -30,7 +30,7 @@ export const ModalTambahBagian = ({ show, handleClose }) => {
             <Button
               className="primary-btn"
               onClick={() => {
-                navigate("/upt/"+params.id+"/admin/detail/tambah-bagian-sr");
+                navigate("/upt/"+params.id+"/admin/detail/"+params.induk_id+"/tambah-bagian-sr");
               }}
             >
               Sewa / Retribusi

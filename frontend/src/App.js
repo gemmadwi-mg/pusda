@@ -37,13 +37,13 @@ function App() {
           <Route path="/upt/:id/admin" element={<TanahIndukAdmin />} />
           <Route path="/upt/:id/admin/detail/:induk_id" element={<DetailIndukAdmin />} />
           <Route path="/upt/:id/admin/tambah-induk" element={<TambahIndukAdmin />} />
-          <Route path="/upt/:id/admin/edit-induk" element={<EditIndukAdmin />} />
+          <Route path="/upt/:id/admin/edit-induk/:induk_id" element={<EditIndukAdmin />} />
           <Route path="/upt/:id/admin/detail/:induk_id/tanah-bagian-sr/:children_id" element={<DetailBagianSrAdmin />} />
-          <Route path="/upt/:id/admin/detail/tambah-bagian-sr" element={<TambahBagianSrAdmin />} />
-          <Route path="/upt/:id/admin/detail/tanah-bagian-sr/edit" element={<EditBagianSrAdmin />} />
+          <Route path="/upt/:id/admin/detail/:induk_id/tambah-bagian-sr" element={<TambahBagianSrAdmin />} />
+          <Route path="/upt/:id/admin/detail/:induk_id/tanah-bagian-sr/edit/:children_id" element={<EditBagianSrAdmin />} />
           <Route path="/upt/:id/admin/detail/:induk_id/tanah-bagian-ppps/:children_id" element={<DetailBagianPppsAdmin />} />
-          <Route path="/upt/:id/admin/detail/tambah-bagian-ppps" element={<TambahBagianPppsAdmin />} />
-          <Route path="/upt/:id/admin/detail/tanah-bagian-ppps/edit" element={<EditBagianPppsAdmin />} />
+          <Route path="/upt/:id/admin/detail/:induk_id/tambah-bagian-ppps" element={<TambahBagianPppsAdmin />} />
+          <Route path="/upt/:id/admin/detail/:induk_id/tanah-bagian-ppps/edit/:children_id" element={<EditBagianPppsAdmin />} />
 
           <Route path="/dashboard/UPT" element={<DashboardUPT />} />
           <Route path="/upt/:id/UPT" element={<TanahIndukUPT />} />

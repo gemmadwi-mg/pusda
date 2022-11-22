@@ -126,7 +126,7 @@ export const DetailIndukAdmin = ({ induk_id }) => {
           <div className="d-flex gap-2">
             <ButtonDelete />
             <Link
-              to={"/upt/" + params.id + "/admin/edit-induk"}
+              to={"/upt/"+params.id+"/admin/edit-induk/"+params.induk_id}
               className="primary-btn px-4"
             >
               Ubah Data
@@ -209,14 +209,14 @@ export const DetailIndukAdmin = ({ induk_id }) => {
           <div className="table-tanah-bagian">
             {emptyMsg === '' ? (
               children.map((item) => {
-                if (item.utilization_engagement_type == 'pinjam_pakai') {
+                if (item.utilization_engagement_type == 'pinjam_pakai' || item.utilization_engagement_type == 'pakai_sendiri') {
                   return (
                     <TableBagianPinjamPakai 
                       upt={params.id} 
                       children={item}
                       />
                   )
-                } else if (item.utilization_engagement_type == 'sewa_sip_bmd') {
+                } else if (item.utilization_engagement_type == 'sewa_sip_bmd' || item.utilization_engagement_type == 'retribusi') {
                   return (
                     <TableBagian 
                       upt={params.id}

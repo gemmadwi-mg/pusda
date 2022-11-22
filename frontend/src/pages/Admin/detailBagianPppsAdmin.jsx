@@ -76,7 +76,7 @@ export const DetailBagianPppsAdmin = () => {
         <div className="d-flex gap-2">
           <ButtonDelete />
           <Link
-            to={"/upt/" + params.id + "/detail/tanah-bagian/edit"}
+            to={"/upt/" + params.id + "/admin/detail/" + params.induk_id + "/tanah-bagian-ppps/edit/" + params.children_id}
             className="primary-btn"
           >
             Ubah Data

@@ -33,7 +33,20 @@ export const IndukTableRowAdmin = ({
         className="col d-flex gap-4 align-items-center justify-content-center w-100 p-0"
         style={{ fontSize: "20px" }}
       >
-        <div
+        <Link
+          to={"/upt/"+upt+"/admin/edit-induk/"+id}
+          className="d-flex justify-content-center align-items-center p-1 btn"
+          style={{
+            color: "#286973",
+            borderRadius: "50%",
+            background: "#EDF9FB",
+            aspectRatio: "1",
+            flexShrink: "none",
+          }}
+        >
+          <FaRegEdit />
+        </Link>
+        {/* <div
           className="d-flex justify-content-center align-items-center p-1 btn"
           style={{
             color: "#286973",
@@ -55,7 +68,7 @@ export const IndukTableRowAdmin = ({
           }}
         >
           <FaRegEdit />
-        </div>
+        </div> */}
         <div
           className="d-flex justify-content-center align-items-center p-1 btn"
           style={{
