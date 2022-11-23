@@ -62,7 +62,7 @@ class ParentController extends Controller
             }
         }
 
-        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parents->paginate(10));
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parents->orderBy('id', 'ASC')->paginate(10));
     }
 
 
@@ -70,6 +70,7 @@ class ParentController extends Controller
     {
         $parent_query = Parents::with(['user'])
             ->where('auhtor', Auth::user()->id)
+            ->orderBy('id', 'ASC')
             ->paginate(10);
 
         return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan data tanah induk', $parent_query);
