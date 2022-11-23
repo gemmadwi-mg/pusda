@@ -1,8 +1,56 @@
-
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { DashboardTableRow } from "../../components/Dashboard/DashboardTableRow";
 import LayoutAdmin from "../../components/Layout/layoutAdmin";
 
 export const DashboardAdmin = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
+  const [emptyMsg, setEmptyMsg] = useState("");
+
+  const [data, setData] = useState([]);
+  const [dataKeseluruhan, setDataKeseluruhan] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let token = localStorage.getItem("token");
+
+      try {
+        let res = await fetch(apiUrl + "dashboard/all/2022", {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        let resJson = await res.json();
+        console.log(resJson);
+
+        if (res.status != 200) {
+          return console.log(resJson.message);
+        }
+
+        let resData = resJson.data;
+        let resDataKeseluruhan = resJson.keseluruhan;
+        console.log(resData);
+        console.log(resDataKeseluruhan);
+
+        if (resData.length == 0) {
+          return setEmptyMsg("Tidak ada data.");
+        }
+
+        setEmptyMsg("");
+        setData(resData);
+        setDataKeseluruhan(resDataKeseluruhan);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData().catch(console.error);
+  }, []);
+
   return (
     <LayoutAdmin>
       <div className="d-flex justify-content-between px-3 py-3">
@@ -23,6 +71,7 @@ export const DashboardAdmin = () => {
         <div className="d-flex justify-content-between py-2 px-2">
           <h5 className="font-semibold">Informasi Total Data UPT</h5>
         </div>
+
         <div className="">
           <div className="row row-header">
             <div className="col d-flex align-items-center justify-content-center">
@@ -56,49 +105,73 @@ export const DashboardAdmin = () => {
               </div>
             </div>
           </div>
-          <DashboardTableRow title={"PUSDA JATIM"} />
-          <DashboardTableRow title={"UPT KEDIRI"} />
-          <DashboardTableRow title={"UPT LUMAJANG"} />
-          <DashboardTableRow title={"UPT BONDOWOSO"} />
-          <DashboardTableRow title={"UPT PASURUAN"} />
-          <DashboardTableRow title={"UPT BOJONEGORO"} />
-          <DashboardTableRow title={"UPT PAMEKASAN"} />
+          {emptyMsg == "" ? (
+            <>
+              {data.map((item) => {
+                return (
+                  <DashboardTableRow
+                    key={item.id}
+                    name={item.name}
+                    total_tanah_induk={item.total_tanah_induk}
+                    total_tanah_pinjam_pakai={item.total_tanah_pinjam_pakai}
+                    total_tanah_pakai_sendiri={item.total_tanah_pakai_sendiri}
+                    total_tanah_sewa_sip_bmd={item.total_tanah_sewa_sip_bmd}
+                    total_rupiah_tanah_sewa_sip_bmd={
+                      item.total_rupiah_tanah_sewa_sip_bmd
+                    }
+                    total_tanah_retribusi={item.total_tanah_retribusi}
+                    total_rupiah_tanah_retribusi={
+                      item.total_rupiah_tanah_retribusi
+                    }
+                  />
+                );
+              })}
+            </>
+          ) : (
+            <>
+              <div class="text-center">{emptyMsg}</div>
+            </>
+          )}
         </div>
-        <div
-          className="row row-content col-footer border-none"
-          style={{
-            background: "#EDF9FB",
-          }}
-        >
-          <div className="col d-flex align-items-center justify-content-center">
-            TOTAL KESELURUHAN
-          </div>
-          <div className="col d-flex align-items-center justify-content-center">
-            500
-          </div>
-          <div className="col d-flex flex-col align-items-center justify-content-center">
-            <div className="row py-2">
-              <div className="col">500</div>
+        {dataKeseluruhan.map((item) => {
+          return (
+            <div
+              className="row row-content col-footer border-none"
+              style={{
+                background: "#EDF9FB",
+              }}
+            >
+              <div className="col d-flex align-items-center justify-content-center">
+                TOTAL KESELURUHAN
+              </div>
+              <div className="col d-flex align-items-center justify-content-center">
+                {item.total_tanah}
+              </div>
+              <div className="col d-flex flex-col align-items-center justify-content-center">
+                <div className="row py-2">
+                  <div className="col">{item.total_tanah_pinjam_pakai}</div>
+                </div>
+              </div>
+              <div className="col d-flex flex-col align-items-center justify-content-center">
+                <div className="row py-2">
+                  <div className="col">{item.total_tanah_pakai_sendiri}</div>
+                </div>
+              </div>
+              <div className="col d-flex flex-col align-items-center justify-content-center">
+                <div className="row py-2">
+                  <div className="col">{item.total_tanah_sewa}</div>
+                  <div className="col">{item.total_rupiah_sewa}</div>
+                </div>
+              </div>
+              <div className="col d-flex flex-col align-items-center justify-content-center">
+                <div className="row py-2">
+                  <div className="col">{item.total_tanah_retribusi}</div>
+                  <div className="col">{item.total_rupiah_retribusi}</div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="col d-flex flex-col align-items-center justify-content-center">
-            <div className="row py-2">
-              <div className="col">500</div>
-            </div>
-          </div>
-          <div className="col d-flex flex-col align-items-center justify-content-center">
-            <div className="row py-2">
-              <div className="col">500</div>
-              <div className="col">5.000.000</div>
-            </div>
-          </div>
-          <div className="col d-flex flex-col align-items-center justify-content-center">
-            <div className="row py-2">
-              <div className="col">500</div>
-              <div className="col">5.000.000</div>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </LayoutAdmin>
   );

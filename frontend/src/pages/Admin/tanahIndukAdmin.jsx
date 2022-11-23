@@ -52,12 +52,14 @@ export const TanahIndukAdmin = () => {
           });
 
           let resJson = await res.json();
+          console.log(resJson);
 
           if (res.status != 200) {
             return console.log(resJson.message);
           }
           
           let resData = resJson.data.data;
+          console.log(resData);
 
           if (resData.length == 0) {
             return setEmptyMsg('Tidak ada data.');

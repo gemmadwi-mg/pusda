@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { DashboardTableRow } from "../../components/Dashboard/DashboardTableRow";
 import LayoutUPT from "../../components/Layout/layoutUPT";
 
@@ -11,6 +12,50 @@ export const DashboardUPT = () => {
 
   // console.log(user);
   // if (user?.roles?.id === "1") {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
+  const [emptyMsg, setEmptyMsg] = useState("");
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      let token = localStorage.getItem("token");
+      let authorId = localStorage.getItem("active_author_id");
+
+      try {
+        let res = await fetch(apiUrl + "dashboard/2022", {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        let resJson = await res.json();
+        console.log(resJson);
+
+        if (res.status != 200) {
+          return console.log(resJson.message);
+        }
+
+        let resData = resJson.data;
+        console.log(resData);
+
+        if (resData.length == 0) {
+          return setEmptyMsg("Tidak ada data.");
+        }
+
+        setEmptyMsg("");
+        setData(resData);
+        console.log(resData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData().catch(console.error);
+  }, []);
   return (
     <LayoutUPT>
       <div className="d-flex justify-content-between px-3 py-3">
@@ -64,42 +109,33 @@ export const DashboardUPT = () => {
               </div>
             </div>
           </div>
-          <DashboardTableRow title={"UPT KEDIRI"} />
-        </div>
-        <div
-          className="row row-content col-footer border-none"
-          style={{
-            background: "#EDF9FB",
-          }}
-        >
-          <div className="col d-flex align-items-center justify-content-center">
-            TOTAL KESELURUHAN
-          </div>
-          <div className="col d-flex align-items-center justify-content-center">
-            500
-          </div>
-          <div className="col d-flex flex-col align-items-center justify-content-center">
-            <div className="row py-2">
-              <div className="col">500</div>
-            </div>
-          </div>
-          <div className="col d-flex flex-col align-items-center justify-content-center">
-            <div className="row py-2">
-              <div className="col">500</div>
-            </div>
-          </div>
-          <div className="col d-flex flex-col align-items-center justify-content-center">
-            <div className="row py-2">
-              <div className="col">500</div>
-              <div className="col">5.000.000</div>
-            </div>
-          </div>
-          <div className="col d-flex flex-col align-items-center justify-content-center">
-            <div className="row py-2">
-              <div className="col">500</div>
-              <div className="col">5.000.000</div>
-            </div>
-          </div>
+          {emptyMsg == "" ? (
+            <>
+              {data.map((item) => {
+                return (
+                  <DashboardTableRow
+                    key={item.id}
+                    name={item.auhtor.name}
+                    total_tanah_induk={item.total_tanah_induk}
+                    total_tanah_pinjam_pakai={item.total_tanah_pinjam_pakai}
+                    total_tanah_pakai_sendiri={item.total_tanah_pakai_sendiri}
+                    total_tanah_sewa_sip_bmd={item.total_tanah_sewa_sip_bmd}
+                    total_rupiah_tanah_sewa_sip_bmd={
+                      item.total_rupiah_tanah_sewa_sip_bmd
+                    }
+                    total_tanah_retribusi={item.total_tanah_retribusi}
+                    total_rupiah_tanah_retribusi={
+                      item.total_rupiah_tanah_retribusi
+                    }
+                  />
+                );
+              })}
+            </>
+          ) : (
+            <>
+              <div class="text-center">{emptyMsg}</div>
+            </>
+          )}
         </div>
       </div>
     </LayoutUPT>
