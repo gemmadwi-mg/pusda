@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 // authentication
 Route::post('login', [AuthenticationController::class, 'login']);
 
+
 // Reset Password
 Route::post('password/reset', [ForgotController::class, 'reset']);
 Route::post('password/email', [ForgotController::class, 'forgot']);
@@ -36,6 +37,9 @@ Route::post('password/email', [ForgotController::class, 'forgot']);
 
 
 Route::group(['middleware' => ['jwt.verify']], function () {
+
+    // Add user access
+    Route::post('/admin/add/user', [AuthenticationController::class, 'addUser']);
 
     // Get User
     Route::get('user', [AuthenticationController::class, 'getUser']);
