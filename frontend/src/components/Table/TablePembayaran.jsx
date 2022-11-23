@@ -3,11 +3,16 @@ import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 import { DeleteConfirmation } from "../UPTDashboard/DeleteConfirmation";
 
 
-export const TablePembayaran = () => {
+export const TablePembayaran = ({ payment }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const formatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  });
 
   return (
     <div>
@@ -32,18 +37,18 @@ export const TablePembayaran = () => {
         </div>
         <div className="col">
           <p className="table-title p-0 m-0">TAHUN</p>
-          <p className="p-0 m-0">2022</p>
+          <p className="p-0 m-0">{ payment.year }</p>
         </div>
         <div className="col">
           <p className="table-title p-0 m-0">JUMLAH PEMBAYARAN</p>
-          <p className="p-0 m-0">Rp2.000.000</p>
+          <p className="p-0 m-0">{ formatter.format(payment.payment_amount) }</p>
         </div>
         <div className="col">
           <p className="table-title p-0 m-0">BUKTI PEMBAYARAN</p>
           <p className="p-0 m-0 filename">BUKTI.JPG</p>
         </div>
         <div className="col d-flex gap-2 align-items-center justify-content-center w-100 p-0">
-          <div
+          {/* <div
             className="d-flex justify-content-center align-items-center p-1 btn"
             style={{
               color: "#286973",
@@ -55,7 +60,7 @@ export const TablePembayaran = () => {
             }}
           >
             <FaRegEdit />
-          </div>
+          </div> */}
           <div
             className="d-flex justify-content-center align-items-center p-1 btn"
             style={{
