@@ -3,11 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-export const ModalPembayaran = ({ show, handleClose, parentPayment, setParentPayment }) => {
+export const ModalPembayaran = ({ show, handleClose, parentPayment, setParentPayment, setEmptyMsg }) => {
     const apiUrl = process.env.REACT_APP_API_URL;
 
     const params = useParams();
-    const navigate = useNavigate();
 
     const [payment, setPayment] = useState({
         childrens_id: params.children_id,
@@ -58,6 +57,8 @@ export const ModalPembayaran = ({ show, handleClose, parentPayment, setParentPay
               ...parentPayment,
               newData
             ])
+
+            setEmptyMsg('')
         } catch (error) {
             console.log(error);
         }

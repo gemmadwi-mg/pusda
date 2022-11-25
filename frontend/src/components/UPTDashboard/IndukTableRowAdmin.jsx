@@ -13,8 +13,11 @@ export const IndukTableRowAdmin = ({
   namaJenisBarang,
   nilaiAset,
   setFormData,
-  upt
+  upt,
+  urlDeleteStateChanger,
 }) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+  
   return (
     <div
       className="row db-upt-row mx-auto bg-white m-1 py-2"
@@ -80,6 +83,7 @@ export const IndukTableRowAdmin = ({
           data-bs-toggle="modal"
           data-bs-target="#modal"
           onClick={() => {
+            urlDeleteStateChanger(apiUrl + 'parent/delete/' + id)
             handleShow();
           }}
         >

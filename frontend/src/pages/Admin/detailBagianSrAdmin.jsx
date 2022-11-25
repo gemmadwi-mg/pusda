@@ -6,6 +6,7 @@ import { ButtonDelete } from "../../components/Button/ButtonDelete";
 import { TablePembayaran } from "../../components/Table/TablePembayaran";
 
 export const DetailBagianSrAdmin = () => {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
     const apiUrl = process.env.REACT_APP_API_URL;
 
     const navigate = useNavigate();
@@ -39,6 +40,8 @@ export const DetailBagianSrAdmin = () => {
     const [children, setChildren] = useState({});
     const [payment, setPayment] = useState([]);
     const [emptyMsg, setEmptyMsg] = useState("");
+
+    const [triggerDeleted, setTriggerDeleted] = useState(false);
 
     useEffect(() => {
         let token = localStorage.getItem("token");
@@ -102,7 +105,7 @@ export const DetailBagianSrAdmin = () => {
 
         fetchChildren().catch(console.error);
         fetchPayment().catch(console.error);
-    }, []);
+    }, [triggerDeleted]);
 
     return (
         <LayoutAdmin>
@@ -112,6 +115,7 @@ export const DetailBagianSrAdmin = () => {
                 handleShow={handleShow}
                 parentPayment={payment}
                 setParentPayment={setPayment}
+                setEmptyMsg={setEmptyMsg}
             />
             <div
                 className="d-flex justify-content-between align-items-center mx-3 py-3"
@@ -129,7 +133,17 @@ export const DetailBagianSrAdmin = () => {
                     &larr; &emsp; Kembali
                 </div>
                 <div className="d-flex gap-2">
-                    <ButtonDelete />
+                    <ButtonDelete
+                        urlDelete={
+                            apiUrl + "childer/delete/" + params.children_id
+                        }
+                        urlRedirect={
+                            "/upt/" +
+                            params.id +
+                            "/admin/detail/" +
+                            params.induk_id
+                        }
+                    />
                     <Link
                         to={
                             "/upt/" +
@@ -215,13 +229,31 @@ export const DetailBagianSrAdmin = () => {
                             <label className="font-semibold">
                                 Surat Perjanjian
                             </label>
-                            <h5 className="filename">SURAT PERJANJIAN-1.PDF</h5>
+                            <h5 className="filename">
+                                <a
+                                    href={
+                                        backendUrl + children.agreement_letter
+                                    }
+                                    target="_blank"
+                                >
+                                    SURAT PERJANJIAN-1.PDF
+                                </a>
+                            </h5>
                         </div>
                         <div className="d-flex flex-col">
                             <label className="font-semibold">
                                 Surat Permohonan
                             </label>
-                            <h5 className="filename">SURAT PERMOHONAN-1.PDF</h5>
+                            <h5 className="filename">
+                                <a
+                                    href={
+                                        backendUrl + children.application_letter
+                                    }
+                                    target="_blank"
+                                >
+                                    SURAT PERMOHONAN-1.PDF
+                                </a>
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -252,7 +284,7 @@ export const DetailBagianSrAdmin = () => {
                     <div className="table-informasi-pembayaran">
                         {emptyMsg === "" ? (
                             payment.map((item) => {
-                                return <TablePembayaran payment={item} />;
+                                return <TablePembayaran payment={item} triggerDeleted={triggerDeleted} setTriggerDeleted={setTriggerDeleted} />;
                             })
                         ) : (
                             <>
