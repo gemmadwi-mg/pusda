@@ -179,8 +179,9 @@ class AuthenticationController extends Controller
     *            mediaType="multipart/form-data",
     *            @OA\Schema(
     *               type="object",
-    *               required={"name","email", "password", "password_confirmation","role_id"},
+    *               required={"name","slug","email", "password", "password_confirmation","role_id"},
     *               @OA\Property(property="name", type="text"),
+    *               @OA\Property(property="slug", type="text"),
     *               @OA\Property(property="email", type="text"),
     *               @OA\Property(property="password", type="password"),
     *               @OA\Property(property="password_confirmation", type="password"),
@@ -190,12 +191,12 @@ class AuthenticationController extends Controller
     *    ),
     *      @OA\Response(
     *          response=201,
-    *          description="Register Successfully",
+    *          description="'Data pengguna ditambahkan diubah!",
     *          @OA\JsonContent()
     *       ),
     *      @OA\Response(
     *          response=200,
-    *          description="Register Successfully",
+    *          description="'Data pengguna berhasil ditambahkan!",
     *          @OA\JsonContent()
     *       ),
     *      @OA\Response(
@@ -240,5 +241,127 @@ class AuthenticationController extends Controller
             return ResponseFormatter::responseError($e->getMessage(), 400);
         }
     }
+
+    /**
+    * @OA\Post(
+    * path="/api/admin/update/user/{id}",
+    * operationId="editUser",
+    * tags={"Admin"},
+    * summary="Admin Edit access user",
+    * description="only admin can update user data",
+    *     @OA\RequestBody(
+    *         @OA\JsonContent(),
+    *         @OA\MediaType(
+    *            mediaType="multipart/form-data",
+    *            @OA\Schema(
+    *               type="object",
+    *               required={"name","email","slug","role_id"},
+    *               @OA\Property(property="name", type="text"),
+    *               @OA\Property(property="slug", type="text"),
+    *               @OA\Property(property="email", type="text"),
+    *               @OA\Property(property="role_id", type="integer"),
+    *            ),
+    *        ),
+    *    ),
+    *      @OA\Response(
+    *          response=201,
+    *          description="'Data pengguna berhasil diubah!",
+    *          @OA\JsonContent()
+    *       ),
+    *      @OA\Response(
+    *          response=200,
+    *          description="'Data pengguna berhasil diubah!",
+    *          @OA\JsonContent()
+    *       ),
+    *      @OA\Response(
+    *          response=422,
+    *          description="Unprocessable Entity",
+    *          @OA\JsonContent()
+    *       ),
+    *      @OA\Response(response=400, description="Bad request"),
+    *      @OA\Response(response=404, description="Resource Not Found"),
+    * )
+    */
+
+    public function updateUser(Request $request,$id)
+    {
+        $validation = Validator::make($request->only(
+            'name',
+            'email',
+            'password',
+            'password_confirmation',
+            'slug',
+            'role_id',
+            ),[
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,'.$id,
+       ]);
+
+       if ($validation->fails()) :
+              return ResponseFormatter::responseValidation($validation->errors());
+        endif;
+
+        try {
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->slug = Str::slug($request->get('name'));
+            $user->email  = $request->email;
+            $user->update();
+            $user->attachRole($request->role_id);
+            return ResponseFormatter::responseCreated('Data pengguna berhasil diubah!', $user);
+
+        } catch(Exception $e){
+            return ResponseFormatter::responseError($e->getMessage(), 400);
+        }
+    }
+
+
+
+    /**
+     * @OA\Get(
+     *     path="/api/admin/edit/user/{id}",
+     *     tags={"Admin"},
+     *     operationId="Adminedituser",
+     *     summary="Admin calls user based on his id ",
+     *     description="only my admin role can access this api",
+     *     @OA\Response(
+     *         response="default",
+     *         description="successful operation"
+     *     )
+     * )
+     */
+    public function editUser($id){
+
+        $user = User::with('roles')
+        ->where('id',$id)->first();
+        return response()->json($user, 200);
+
+    }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/admin/delete/user/{id}",
+     *     tags={"Admin"},
+     *     operationId="Admindeleteuser",
+     *     summary="Admin remove user access ",
+     *     description="only my admin role can access this api",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Data pengguna berhasil dihapus"
+     *     )
+     * )
+     */
+    public function deleteUser($id){
+        try{
+            $user = User::find($id);
+            $user->delete();
+            return ResponseFormatter::responseSuccess('Data pengguna berhasil dihapus!', $user);
+        }catch (Exception $e) {
+            return ResponseFormatter::responseError($e->getMessage(), 400);
+        }
+
+
+    }
+
 
 }

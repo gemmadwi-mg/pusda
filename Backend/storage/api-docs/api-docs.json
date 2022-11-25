@@ -126,6 +126,7 @@
                             "schema": {
                                 "required": [
                                     "name",
+                                    "slug",
                                     "email",
                                     "password",
                                     "password_confirmation",
@@ -133,6 +134,9 @@
                                 ],
                                 "properties": {
                                     "name": {
+                                        "type": "text"
+                                    },
+                                    "slug": {
                                         "type": "text"
                                     },
                                     "email": {
@@ -158,7 +162,7 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Register Successfully",
+                        "description": "'Data pengguna ditambahkan diubah!",
                         "content": {
                             "application/json": {
                                 "schema": {}
@@ -166,7 +170,7 @@
                         }
                     },
                     "200": {
-                        "description": "Register Successfully",
+                        "description": "'Data pengguna berhasil ditambahkan!",
                         "content": {
                             "application/json": {
                                 "schema": {}
@@ -186,6 +190,110 @@
                     },
                     "404": {
                         "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/admin/update/user/{id}": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Admin Edit access user",
+                "description": "only admin can update user data",
+                "operationId": "editUser",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "slug",
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "text"
+                                    },
+                                    "slug": {
+                                        "type": "text"
+                                    },
+                                    "email": {
+                                        "type": "text"
+                                    },
+                                    "role_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "'Data pengguna berhasil diubah!",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "'Data pengguna berhasil diubah!",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/admin/edit/user/{id}": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Admin calls user based on his id ",
+                "description": "only my admin role can access this api",
+                "operationId": "Adminedituser",
+                "responses": {
+                    "default": {
+                        "description": "successful operation"
+                    }
+                }
+            }
+        },
+        "/api/admin/delete/user/{id}": {
+            "delete": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Admin remove user access ",
+                "description": "only my admin role can access this api",
+                "operationId": "Admindeleteuser",
+                "responses": {
+                    "200": {
+                        "description": "Data pengguna berhasil dihapus"
                     }
                 }
             }

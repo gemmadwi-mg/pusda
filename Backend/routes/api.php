@@ -40,6 +40,9 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Add user access
     Route::post('/admin/add/user', [AuthenticationController::class, 'addUser']);
+    Route::get('/admin/edit/user/{id}', [AuthenticationController::class, 'editUser']);
+    Route::put('/admin/update/user/{id}', [AuthenticationController::class, 'updateUser']);
+    Route::delete('/admin/delete/user/{id}', [AuthenticationController::class, 'deleteUser']);
 
     // Get User
     Route::get('user', [AuthenticationController::class, 'getUser']);
