@@ -31,6 +31,7 @@ class ChilderController extends Controller
             ->whereHas('parent', function ($query) {
                 $query->where('auhtor', Auth::id());
             })
+            ->orderBy('id', 'ASC')
             ->paginate(10);
 
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
@@ -73,7 +74,7 @@ class ChilderController extends Controller
             }
         }
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $childs->paginate(10));
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $childs->orderBy('id', 'ASC')->paginate(10));
     }
 
 
@@ -511,14 +512,14 @@ class ChilderController extends Controller
      */
     public function updateChilder(Request $request, $id)
     {
-        $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'description', 'application_letter', 'agreement_letter'), [
-            'application_letter' => 'mimes:doc,docx,pdf,txt',
-            'agreement_letter' => 'mimes:doc,docx,pdf,txt',
-        ]);
+        // $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'description', 'application_letter', 'agreement_letter'), [
+        //     'application_letter' => 'mimes:doc,docx,pdf,txt',
+        //     'agreement_letter' => 'mimes:doc,docx,pdf,txt',
+        // ]);
 
-        if ($validation->fails()) :
-            return ResponseFormatter::responseValidation($validation->errors());
-        endif;
+        // if ($validation->fails()) :
+        //     return ResponseFormatter::responseValidation($validation->errors());
+        // endif;
 
         try {
             if ($request->hasFile('application_letter')) {

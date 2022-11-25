@@ -36,6 +36,7 @@ class PaymentController extends Controller
     public function getAll(Request $request)
     {
         $parent_query = Payment::with(['childer'])
+            ->orderBy('id', 'ASC')
             ->paginate(10);
 
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $parent_query);
@@ -54,7 +55,7 @@ class PaymentController extends Controller
             });
         }
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $payments->paginate(10));
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $payments->orderBy('id', 'ASC')->paginate(10));
     }
 
     public function getById(Request $request, $id)
