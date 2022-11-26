@@ -87,7 +87,7 @@ class UptKediriController extends Controller
      */
     public function show($id)
     {
-        $parent = Parents::where('no_reg',$id)->first();
+        $parent = Parents::where('id',$id)->first();
         return view('upt.upt_kediri.detail',compact('parent'));
     }
 
@@ -99,7 +99,7 @@ class UptKediriController extends Controller
      */
     public function edit($id)
     {
-        $parent = Parents::where('no_reg',$id)->first();
+        $parent = Parents::where('id',$id)->first();
         return view('upt.upt_kediri.edit',compact('parent'));
     }
 

@@ -17,32 +17,31 @@ class DataAllUptExport implements FromCollection, WithMapping, WithHeadings
     */
     public function collection()
     {
-        return Parents::with('childers')->get();
+        return Childer::with('parent')->get();
     }
 
     public function map($invoice): array
     {
         return [
-            $invoice->auhtor = Auth::user()->name,
-            $invoice->certificate_number,
-            $invoice->certificate_date,
-            $invoice->address,
-            $invoice->large,
-            $invoice->asset_value,
+            $invoice->parent->auhtor = Auth::user()->name,
+            $invoice->parent->certificate_number,
+            $invoice->parent->certificate_date,
+            $invoice->parent->address,
+            $invoice->parent->large,
+            $invoice->parent->asset_value,
 
-            // $invoice->childers->utilization_engagement_type,
-            // $invoice->utilization_engagement_name,
-            // $invoice->rental_retribution,
-            // $invoice->allotment_of_use,
-            // $invoice->coordinate,
-            // $invoice->large,
-            // $invoice->present_condition,
-            // $invoice->assets_value,
-            // $invoice->validity_period_of,
-            // $invoice->validity_period_until,
-            // $invoice->engagement_number,
-            // $invoice->engagement_date,
-            // $invoice->description,
+            $invoice->utilization_engagement_type,
+            $invoice->utilization_engagement_name,
+            $invoice->rental_retribution,
+            $invoice->allotment_of_use,
+            $invoice->coordinate,
+            $invoice->large,
+            $invoice->present_condition,
+            $invoice->validity_period_of,
+            $invoice->validity_period_until,
+            $invoice->engagement_number,
+            $invoice->engagement_date,
+            $invoice->description,
             // $invoice->year,
             // $invoice->payment_amount,
 
@@ -66,15 +65,14 @@ class DataAllUptExport implements FromCollection, WithMapping, WithHeadings
             'koordinat',
             'Luas',
             'Kondisi Sekarang',
-            'Nilai Aset',
-            'Masa Berlaku',
+            'Masa Berlaku Dari',
             'Masa Berlaku Sampai',
             'Nomor Perikatan',
             'Tanggal Perikatan',
             'keterangan',
 
-            'Tahun',
-            'Jumlah Pembayaran',
+            // 'Tahun',
+            // 'Jumlah Pembayaran',
         ];
     }
 }

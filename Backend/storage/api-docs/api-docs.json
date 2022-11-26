@@ -702,6 +702,21 @@
                 }
             }
         },
+        "/export/all/data/upt": {
+            "get": {
+                "tags": [
+                    "Export"
+                ],
+                "summary": "Admin access api ",
+                "description": "only admin can download all upt data and access api",
+                "operationId": "Exportdataall",
+                "responses": {
+                    "200": {
+                        "description": "Data semua upt berhasil di download!"
+                    }
+                }
+            }
+        },
         "/api/parent": {
             "get": {
                 "tags": [

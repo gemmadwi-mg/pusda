@@ -151,12 +151,6 @@ class DashboardController extends Controller
 
     }
 
-    public function create_impotAnak($id)
-    {
-        $parent = Parents::where('id',$id)->first();
-        return view('admin.soil.childern.create',compact('parent'));
-    }
-
     public function import_anak(Request $request,$id)
     {
         $this->validate($request, [
