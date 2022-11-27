@@ -74,13 +74,15 @@
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody >
+                                            <tbody>
                                                 @foreach($data  as $no => $n)
                                                 <tr >
                                                     <td> {{ $no + $data->firstItem() }} </td>
                                                     <td> {{$n->user->name}} </td>
                                                     <td>
-                                                        <h5 class="m-0 font-weight-normal"> {{$n->certificate_number}} </h5>
+                                                        <h5 class="m-0 font-weight-normal">
+                                                            {{$n->certificate_number}}
+                                                        </h5>
                                                     </td>
                                                     <td> {{$n->certificate_date}}  </td>
                                                     <td> {{$n->asset_value}} </td>

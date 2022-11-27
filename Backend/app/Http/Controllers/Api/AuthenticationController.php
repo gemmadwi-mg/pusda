@@ -307,7 +307,7 @@ class AuthenticationController extends Controller
             $user->slug = Str::slug($request->get('name'));
             $user->email  = $request->email;
             $user->update();
-            $user->attachRole($request->role_id);
+            $user->syncRoles(explode(',',$request->role_id));
             return ResponseFormatter::responseCreated('Data pengguna berhasil diubah!', $user);
 
         } catch(Exception $e){
@@ -359,8 +359,6 @@ class AuthenticationController extends Controller
         }catch (Exception $e) {
             return ResponseFormatter::responseError($e->getMessage(), 400);
         }
-
-
     }
 
 

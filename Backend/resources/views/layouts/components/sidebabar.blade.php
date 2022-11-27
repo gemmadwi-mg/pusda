@@ -15,16 +15,16 @@
                  </a>
              </li>
 
-             {{-- <li>
-                 <a href="#">
+             <li>
+                 <a href="{{route('usermanagement.index')}}">
                      <i data-feather="users"></i>
                      @php
                      $countmember = DB::table('users')->count();
                      @endphp
                      <span class="badge badge-success badge-pill float-right">{{ $countmember }}</span>
-                     <span> Users </span>
+                     <span> Management Users </span>
                  </a>
-             </li> --}}
+             </li>
 
              <li>
                 <a href="#sidebarUPTKediri" data-toggle="collapse">
