@@ -35,13 +35,13 @@ export const DetailUser = () => {
             </div>
             <div className="mx-5">
                 <h5 style={{ paddingBottom: "20px", paddingTop: "10px" }}>
-                    Informasi Tanah Bagian
+                    Detail User
                 </h5>
                 <div className="d-flex informasi-tanah-bagian gap-5 justify-content-between">
                     <div className="left-form d-flex flex-col gap-3 ">
                         <div>
                             <label htmlFor="nilai-sewa">
-                                Jenis Perikatan Pemanfaatan
+                                Nama
                             </label>
                             <h5>
                                 a
@@ -49,32 +49,13 @@ export const DetailUser = () => {
                         </div>
                         <div>
                             <label htmlFor="berlaku-dari">
-                                Peruntukkan Pemanfaatan
+                                Email
                             </label>
                             <h5>b</h5>
                         </div>
                         <div>
-                            <label htmlFor="luas-bagian">Luas Bagian (m)</label>
+                            <label htmlFor="luas-bagian">Role</label>
                             <h5>c</h5>
-                        </div>
-                    </div>
-                    <div
-                        className="right-form d-flex flex-col gap-3"
-                        style={{ paddingRight: "100px" }}
-                    >
-                        <div>
-                            <label htmlFor="nilai-asset">
-                                Nilai Asset (Rp/Tahun)
-                            </label>
-                            <h5>d</h5>
-                        </div>
-                        <div>
-                            <label htmlFor="koordinat">Koordinat (LS BT)</label>
-                            <h5>e</h5>
-                        </div>
-                        <div>
-                            <label htmlFor="keterangan">Keterangan</label>
-                            <h5>f</h5>
                         </div>
                     </div>
                 </div>
