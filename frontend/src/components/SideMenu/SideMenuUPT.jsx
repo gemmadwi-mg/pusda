@@ -3,6 +3,9 @@ import { SideMenuItem } from "../SideMenuItem";
 
 
 export const SideMenuUPT = () => {
+  const userName = localStorage.getItem('user_name');
+  const userSlug = localStorage.getItem('user_slug');
+
     return (
       <div className="side-menu border">
         <Link
@@ -16,7 +19,7 @@ export const SideMenuUPT = () => {
         </div>
         <h6 className="ps-4 font-semibold">DATA UPT</h6>
         <div className="side-menu-list d-flex flex-col p-0">
-          <SideMenuItem title="UPT KEDIRI" id="/upt/kediri/upt" />
+          <SideMenuItem title={userName} id={"/upt/"+userSlug+"/upt"} />
         </div>
       </div>
     );

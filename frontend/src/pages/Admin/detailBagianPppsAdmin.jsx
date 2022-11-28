@@ -118,7 +118,7 @@ export const DetailBagianPppsAdmin = () => {
                             <label htmlFor="berlaku-dari">
                                 Peruntukkan Pemanfaatan
                             </label>
-                            <h5>{children.present_condition}</h5>
+                            <h5>{children.allotment_of_use}</h5>
                         </div>
                         <div>
                             <label htmlFor="luas-bagian">Luas Bagian (m)</label>

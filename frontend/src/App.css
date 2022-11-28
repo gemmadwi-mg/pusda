@@ -320,3 +320,10 @@ form .form-btn {
 }
 
 
+/* Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 95%;
+  margin-top: 20px;
+}

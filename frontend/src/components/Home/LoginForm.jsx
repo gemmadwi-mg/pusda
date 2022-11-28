@@ -38,6 +38,7 @@ export const LoginForm = () => {
       // Check roles
       localStorage.setItem('user_id', resJson.user.id);
       localStorage.setItem('user_name', resJson.user.name);
+      localStorage.setItem('user_slug', resJson.user.slug);
       localStorage.setItem('token', resJson.token);
 
       let roles = resJson.user.roles;
@@ -45,7 +46,7 @@ export const LoginForm = () => {
         return navigate('/dashboard/admin');
       }
       
-      return navigate('/dashboard/UPT');
+      return navigate('/dashboard/upt');
 
     } catch (error) {
       console.log(error);

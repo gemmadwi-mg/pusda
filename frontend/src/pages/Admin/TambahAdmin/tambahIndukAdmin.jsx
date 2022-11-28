@@ -9,6 +9,7 @@ export const TambahIndukAdmin = () => {
     const params = useParams();
 
     const [induk, setInduk] = useState({
+        auhtor: localStorage.getItem('active_author_id'),
         certificate_number: "",
         certificate_date: "",
         address: "",

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import LayoutAdmin from "../../components/Layout/layoutAdmin";
 import { DeleteConfirmation } from "../../components/UPTDashboard/DeleteConfirmation";
 import { IndukTableRowAdmin } from "../../components/UPTDashboard/IndukTableRowAdmin";
-import { UPTDashboardTableRow } from "../../components/UPTDashboard/UPTDashboardTableRow";
+import ReactPaginate from "react-paginate";
 
 export const TanahIndukAdmin = () => {
     const apiUrl = process.env.REACT_APP_API_URL;
@@ -20,10 +20,20 @@ export const TanahIndukAdmin = () => {
         const month = `${d.getMonth() + 1}`.padStart(2, "0");
         const day = `${d.getDate()}`.padStart(2, "0");
         const year = d.getFullYear();
-        console.log([year, month, day].join("-"));
         return [year, month, day].join("-");
     };
 
+    const handlePageClick = (e) => {
+        if (e.selected >= 0) {
+            setPageNum(e.selected + 1);
+        }
+    };
+
+    const [data, setData] = useState([]);
+    const [pageNum, setPageNum] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
+    const [startingPoint, setStartingPoint] = useState(0);
+    const [search, setSearch] = useState("");
     const [urlDelete, setUrlDelete] = useState("");
     const [triggerDeleted, setTriggerDeleted] = useState(false);
     const [emptyMsg, setEmptyMsg] = useState("");
@@ -37,8 +47,6 @@ export const TanahIndukAdmin = () => {
         luas: "",
     });
 
-    const [data, setData] = useState([]);
-
     useEffect(() => {
         const fetchData = async () => {
             let token = localStorage.getItem("token");
@@ -46,7 +54,13 @@ export const TanahIndukAdmin = () => {
 
             try {
                 let res = await fetch(
-                    apiUrl + "parent/all?auhtor=" + authorId,
+                    apiUrl +
+                        "parent/all?page=" +
+                        pageNum +
+                        "&auhtor=" +
+                        authorId +
+                        "&keyword=" +
+                        search,
                     {
                         method: "GET",
                         headers: {
@@ -62,8 +76,21 @@ export const TanahIndukAdmin = () => {
                     return console.log(resJson.message);
                 }
 
-                let resData = resJson.data.data;
+                // Check if result is from search
+                if (Array.isArray(resJson.data)) {
+                    setPageCount(1);
+                    setStartingPoint(1);
+                } else {
+                    setPageCount(resJson.data.last_page);
+                    setStartingPoint(
+                        resJson.data.per_page * resJson.data.current_page -
+                            (resJson.data.per_page - 1)
+                    );
+                }
 
+                let resData = Array.isArray(resJson.data)
+                    ? resJson.data
+                    : resJson.data.data;
                 if (resData.length == 0) {
                     return setEmptyMsg("Tidak ada data.");
                 }
@@ -76,7 +103,7 @@ export const TanahIndukAdmin = () => {
         };
 
         fetchData().catch(console.error);
-    }, [params.id, triggerDeleted]);
+    }, [params.id, triggerDeleted, pageNum, search]);
 
     const toggleEditTanah = () => {
         if (openEditTanah) {
@@ -106,6 +133,8 @@ export const TanahIndukAdmin = () => {
                                 type="search"
                                 placeholder="Search"
                                 aria-label="Search"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
                             ></input>
                             <Link
                                 to={"/upt/" + params.id + "/admin/tambah-induk"}
@@ -120,9 +149,10 @@ export const TanahIndukAdmin = () => {
                         <div className="row m-0">
                             {emptyMsg == "" ? (
                                 <>
-                                    {data.map((item) => {
+                                    {data.map((item, key) => {
                                         return (
                                             <IndukTableRowAdmin
+                                                iterator={startingPoint + key}
                                                 upt={params.id}
                                                 key={item.id}
                                                 id={item.id}
@@ -153,6 +183,29 @@ export const TanahIndukAdmin = () => {
                                     <div class="text-center">{emptyMsg}</div>
                                 </>
                             )}
+                        </div>
+
+                        <div className="pagination-container">
+                            <ReactPaginate
+                                nextLabel="next >"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={3}
+                                marginPagesDisplayed={2}
+                                pageCount={pageCount}
+                                previousLabel="< previous"
+                                pageClassName="page-item"
+                                pageLinkClassName="page-link"
+                                previousClassName="page-item"
+                                previousLinkClassName="page-link"
+                                nextClassName="page-item"
+                                nextLinkClassName="page-link"
+                                breakLabel="..."
+                                breakClassName="page-item"
+                                breakLinkClassName="page-link"
+                                containerClassName="pagination"
+                                activeClassName="active"
+                                renderOnZeroPageCount={null}
+                            />
                         </div>
                     </div>
                     <DeleteConfirmation

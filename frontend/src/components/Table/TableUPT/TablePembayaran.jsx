@@ -3,7 +3,7 @@ import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 import { DeleteConfirmation } from "../UPTDashboard/DeleteConfirmation";
 
 
-export const TablePembayaran = () => {
+export const TablePembayaran = ({ iterator }) => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -28,7 +28,7 @@ export const TablePembayaran = () => {
           to="/upt/detail"
           className="col number d-flex align-items-center justify-content-center font-semibold "
         >
-          1
+          {iterator}
         </div>
         <div className="col">
           <p className="table-title p-0 m-0">TAHUN</p>

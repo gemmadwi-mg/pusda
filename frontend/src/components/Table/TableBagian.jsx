@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-export const TableBagian = ({upt, children}) => {
+export const TableBagian = ({iterator, upt, children}) => {
   const params = useParams();
 
   //format date into yyyy-mm-dd with leading zero
@@ -40,7 +40,7 @@ export const TableBagian = ({upt, children}) => {
         to="/upt/detail"
         className="col-1 number d-flex align-items-center justify-content-center font-semibold "
       >
-        3
+        {iterator}
       </div>
       <div className="col">
         <p className="table-title p-0 m-0">NO PERIKATAN</p>

@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-export const TableBagianPinjamPakai = ({upt, children}) => {
+export const TableBagianPinjamPakai = ({iterator, upt, children}) => {
   const params = useParams();
 
   const mapType = (str) => {
@@ -26,7 +26,7 @@ export const TableBagianPinjamPakai = ({upt, children}) => {
         to="/upt/detail"
         className="col-1 number d-flex align-items-center justify-content-center font-semibold "
       >
-        1
+        {iterator}
       </div>
       <div className="col">
         <p className="table-title p-0 m-0">JENIS PERIKATAN</p>

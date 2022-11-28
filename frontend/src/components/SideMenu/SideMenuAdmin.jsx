@@ -12,6 +12,7 @@ export const SideMenuAdmin = () => {
         </Link>
         <div className="side-menu-list d-flex flex-col">
           <SideMenuItem title="DASHBOARD" id="/dashboard/admin" />
+          <SideMenuItem title="MANAJEMEN USER" id="/manajemenuser/admin" />
           <SideMenuItem title="PUSDA JATIM" id="/upt/pusdajatim/admin" />
         </div>
         <h6 className="ps-4 font-semibold">DATA UPT</h6>
