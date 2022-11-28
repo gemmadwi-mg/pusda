@@ -114,13 +114,23 @@
                                     <!-- end about me section content -->
 
                                     <div class="tab-pane" id="settings">
-                                        <div class="dropdown float-right">
-                                            <a href="#" title="Add Clildren" class=" font-18 btn btn-xs btn-light">
-                                                <i class="mdi mdi-plus"></i>
-                                            </a>
+                                        <div class="dropdown float-left">
+                                            <form action="{{route('importanak.post',['id' => $parent->id])}}" method="post" enctype="multipart/form-data">
+                                                @csrf
+                                                 <div class="input-group mb-3">
+                                                    <input type="file" name="file" required="" value="{{$parent->id}}"  onfocus="file" accept=".xls,.xlsx,.csv,.xlx"
+                                                    class="form-control @error('file') is-invalid @enderror" placeholder="Recipient's username"
+                                                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                                                    <button class="btn btn-primary" type="submit" id="button-addon2" required>IMPORT</button>
+                                                    @error('file')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                     @enderror
+                                                </div>
+                                            </form>
                                         </div>
-                                        <h5 class="mb-3 mt-4 text-uppercase"><i class="mdi mdi-cards-variant mr-1"></i>
-                                            List Children </h5>
+
 
                                         <div class="table-responsive">
                                             <table class="table table-borderless mb-0">

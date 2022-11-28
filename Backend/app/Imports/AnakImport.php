@@ -39,7 +39,7 @@ class AnakImport implements ToModel,WithHeadingRow
             'utilization_engagement_name' => $row['nama_pemanfaatan'],
             'allotment_of_use'  => $row['peruntukan_penggunaan'],
             'large'  => $row['luas'],
-            'rental_retribution' => $row['nilai_sewa'],
+            'rental_retribution' => $row['nilai_sewa_retribusi'],
             'validity_period_of'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['masa_berlaku_dari']),
             'validity_period_until'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['masa_berlaku_sampai']),
             'engagement_date'  => \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_perikatan']),

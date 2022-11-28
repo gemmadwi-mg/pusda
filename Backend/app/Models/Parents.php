@@ -33,4 +33,6 @@ class Parents extends Model
         return $this->hasMany(Childer::class, 'id','parent_id');
     }
 
-}
+
+
+    }

@@ -39,7 +39,7 @@
                             </div>
                             <div class="card-box">
                                     <div class="dropdown float-right">
-                                        <form action="{{route('importmulti.post')}}" method="post" enctype="multipart/form-data">
+                                        <form action="{{route('importinduk.post')}}" method="post" enctype="multipart/form-data">
                                             @csrf
                                              <div class="input-group mb-3">
                                                 <input type="file" name="file" required="" onfocus="file" accept=".xls,.xlsx,.csv,.xlx"
@@ -74,13 +74,15 @@
                                                     <th class="text-center">Action</th>
                                                 </tr>
                                             </thead>
-                                            <tbody >
+                                            <tbody>
                                                 @foreach($data  as $no => $n)
                                                 <tr >
                                                     <td> {{ $no + $data->firstItem() }} </td>
                                                     <td> {{$n->user->name}} </td>
                                                     <td>
-                                                        <h5 class="m-0 font-weight-normal"> {{$n->certificate_number}} </h5>
+                                                        <h5 class="m-0 font-weight-normal">
+                                                            {{$n->certificate_number}}
+                                                        </h5>
                                                     </td>
                                                     <td> {{$n->certificate_date}}  </td>
                                                     <td> {{$n->asset_value}} </td>

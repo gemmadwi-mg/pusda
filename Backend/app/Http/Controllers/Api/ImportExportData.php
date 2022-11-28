@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exports\DataAllUptExport;
 use App\Http\Controllers\Controller;
 use App\Imports\ParentsImport;
 use Illuminate\Http\Request;
@@ -96,4 +97,32 @@ class ImportExportData extends Controller
         }
 
     }
+
+
+
+    /**
+     * @OA\Get(
+     *     path="/export/all/data/upt",
+     *     tags={"Export"},
+     *     operationId="Exportdataall",
+     *     summary="Admin access api ",
+     *     description="only admin can download all upt data and access api",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Data semua upt berhasil di download!"
+     *     )
+     * )
+     */
+    public function exportMapping()
+    {
+        try {
+             Excel::download(new DataAllUptExport(), 'Semua-data-upt.xlsx');
+            return ResponseFormatter::responseSuccessWithData('Data semua upt berhasil di download!');
+        }catch (Exception $error) {
+            return ResponseFormatter::responseError($error->getMessage(), 400);
+        }
+
+    }
+
+
 }

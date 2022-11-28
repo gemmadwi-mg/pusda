@@ -10,14 +10,16 @@ use App\Imports\DataAllImport;
 use App\Imports\IndukImport;
 use App\Imports\MultiSheetSelector;
 use App\Models\Parents;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -112,8 +114,6 @@ class DashboardController extends Controller
 
     }
 
-
-
     public function import_multiple_different_formats(Request $request) {
 
         $this->validate($request, [
@@ -151,12 +151,6 @@ class DashboardController extends Controller
 
     }
 
-    public function create_impotAnak($id)
-    {
-        $parent = Parents::where('id',$id)->first();
-        return view('admin.soil.childern.create',compact('parent'));
-    }
-
     public function import_anak(Request $request,$id)
     {
         $this->validate($request, [
@@ -172,5 +166,99 @@ class DashboardController extends Controller
             } return redirect()->back();
 
     }
+
+
+    // Management Users
+    public function management_index()
+    {
+        $data['data'] = User::orderBy('id','desc')
+        ->paginate(10);
+        return view('admin.manajement_users.index',$data);
+    }
+
+    public function management_create()
+    {
+        $roles = Role::all();
+        return view('admin.manajement_users.create',compact('roles'));
+    }
+    public function management_store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:8',
+		]);
+
+        try {
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->slug = Str::slug($request->get('name'));
+            $user->save();
+            $user->attachRole($request->role_id);
+            Alert::success('Success', 'Data user has been added Successful');
+            return redirect()->route('usermanagement.index');
+        } catch(\Throwable $th){
+            Alert::error('Error','Opsss! Failed Data :(', ['error' => $th->getMessage()]);
+        }return redirect()->back();
+    }
+
+    public function management_edit($id)
+    {
+        $user = User::where('id',$id)->first();
+        $roles = Role::all();
+        return view('admin.manajement_users.edit',compact('user','roles'));
+    }
+
+    public function management_update(Request $request,$id)
+    {
+        $validation = Validator::make($request->only(
+            'name',
+            'email',
+            'slug',
+            'role_id',
+            ),[
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,'.$id,
+       ]);
+        // dd($request->all());
+
+        try {
+            $name = $request->input('name');
+            $email = $request->input('email');
+            $slug = Str::slug($request->get('name'));
+
+            $user = User::find($id);
+            $user->name = $name;
+            $user->email  = $email;
+            $user->slug = $slug;
+            $user->update();
+            $user->syncRoles(explode(',',$request->role_id));
+            Alert::success('Success', 'User data has been changed Successfully');
+            return redirect()->route('usermanagement.index');
+        }catch(\Throwable $th){
+            Alert::error('Error','Opsss! Failed Data :(', ['error' => $th->getMessage()]);
+        }return redirect()->back();
+
+
+
+    }
+
+    public function management_destroy($id)
+    {
+        try {
+            $user = User::find($id);
+            $user->delete();
+            Alert::success('Success', 'Your data has been successfully delete');
+            return redirect()->back();
+        }catch(\Throwable $th){
+            Alert::error('Error','Opsss! Failed Data :(', ['error' => $th->getMessage()]);
+        }return redirect()->back();
+
+
+    }
+
+
 
 }

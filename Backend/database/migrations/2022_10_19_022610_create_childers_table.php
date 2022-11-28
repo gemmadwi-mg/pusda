@@ -23,7 +23,6 @@ class CreateChildersTable extends Migration
             $table->string('coordinate');
             $table->string('large');
             $table->string('present_condition')->nullable();
-            $table->string('assets_value');
             $table->date('validity_period_of');
             $table->date('validity_period_until');
             $table->string('engagement_number')->unique();

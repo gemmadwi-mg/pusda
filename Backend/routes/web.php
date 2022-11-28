@@ -70,4 +70,10 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     // CRUD data upt kediri
     Route::resource('/assets-soil/kediri',UptKediriController::class);
 
+    Route::get('/management/users', [DashboardController::class, 'management_index'])->name('usermanagement.index');
+    Route::get('/management/user/create', [DashboardController::class, 'management_create'])->name('usermanagement.create');
+    Route::post('/management/user/store', [DashboardController::class, 'management_store'])->name('usermanagement.store');
+    Route::get('/management/user/edit/{id}', [DashboardController::class, 'management_edit'])->name('usermanagement.edit');
+    Route::put('/management/user/update/{id}', [DashboardController::class, 'management_update'])->name('usermanagement.update');
+    Route::delete('/management/user/delete/{id}', [DashboardController::class, 'management_destroy'])->name('usermanagement.delete');
 });
