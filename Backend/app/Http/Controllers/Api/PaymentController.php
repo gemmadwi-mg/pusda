@@ -54,7 +54,7 @@ class PaymentController extends Controller
             });
         }
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $payments->paginate(10));
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $payments->orderBy('id', 'DESC')->paginate(10));
     }
 
     public function getById(Request $request, $id)

@@ -125,17 +125,6 @@ class AuthenticationController extends Controller
         return response()->json($data,200);
     }
 
-    public function getUserId(Request $request, $id)
-    {
-        $child_query = User::with('roles')->find($id);
-
-        if ($child_query) {
-            return ResponseFormatter::responseSuccessWithData('Tanah bagian ditemukan', $child_query);
-        }
-
-        return ResponseFormatter::responseError("Tanah bagian tidak ditemukan", 400);
-    }
-
      /**
      * @OA\Get(
      *     path="/api/logout",

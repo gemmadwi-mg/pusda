@@ -62,7 +62,7 @@ class ParentController extends Controller
             }
         }
 
-        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parents->paginate(10));
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan semua data tanah induk', $parents->orderBy('id', 'DESC')->paginate(10));
     }
 
 

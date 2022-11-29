@@ -73,7 +73,7 @@ class ChilderController extends Controller
             }
         }
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $childs->paginate(10));
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $childs->orderBy('id', 'DESC')->paginate(10));
     }
 
 
@@ -270,8 +270,8 @@ class ChilderController extends Controller
             'coordinate' => 'required',
             'large' => 'required|integer',
             'description' => 'required',
-            'application_letter' => 'mimes:doc,docx,pdf,txt',
-            'agreement_letter' => 'mimes:doc,docx,pdf,txt',
+            'application_letter' => 'mimes:doc,docx,pdf,txt,jpg,jpeg,bmp,png',
+            'agreement_letter' => 'mimes:doc,docx,pdf,txt,jpg,jpeg,bmp,png',
         ]);
 
         if ($validation->fails()) :
