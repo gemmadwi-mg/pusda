@@ -25,7 +25,7 @@ class CreateChildersTable extends Migration
             $table->string('present_condition')->nullable();
             $table->date('validity_period_of')->nullable();
             $table->date('validity_period_until')->nullable();
-            $table->string('engagement_number')->unique();
+            $table->string('engagement_number')->unique()->nullable();
             $table->date('engagement_date')->nullable();
             $table->string('description')->nullable();
             $table->string('application_letter')->nullable();
