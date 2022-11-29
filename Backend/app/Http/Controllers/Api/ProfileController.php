@@ -199,7 +199,7 @@ class ProfileController extends Controller
      */
     public function userAll(){
 
-        $user = User::with('roles')->orderBy('id', 'desc')->paginate(10);
+        $user = User::with('roles')->paginate(10);
         return response()->json($user, 200);
 
     }

@@ -39,6 +39,7 @@ Route::post('password/email', [ForgotController::class, 'forgot']);
 Route::group(['middleware' => ['jwt.verify']], function () {
 
     // Add user access
+    Route::get('/admin/user/{id}', [AuthenticationController::class, 'getUserId']);
     Route::post('/admin/add/user', [AuthenticationController::class, 'addUser']);
     Route::get('/admin/edit/user/{id}', [AuthenticationController::class, 'editUser']);
     Route::put('/admin/update/user/{id}', [AuthenticationController::class, 'updateUser']);
