@@ -2,19 +2,31 @@ import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { UPTDashboardTableCol } from "../../UPTDashboard/UPTDashboardTableCol";
 
-export const ManajemenUserRow = ({ handleShow }) => {
+export const ManajemenUserRow = ({
+  iterator,
+  id,
+  handleShow,
+  name,
+  email,
+  role,
+  urlDeleteStateChanger,
+}) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   return (
     <div
       className="row db-upt-row mx-auto bg-white m-1 py-2"
       style={{ width: "95%", borderRadius: "5px", minHeight: "80px" }}
     >
       <Link
-        to={"/manajemenuser/admin/detail-user"}
+        to={"/manajemenuser/admin/detail-user" + id}
         className="col-1 number d-flex align-items-center justify-content-center font-semibold "
-      ></Link>
-      <UPTDashboardTableCol title="NAMA" />
-      <UPTDashboardTableCol title="EMAIL" />
-      <UPTDashboardTableCol title="ROLE" />
+      >
+        {iterator}
+      </Link>
+      <UPTDashboardTableCol title={"NAMA"} value={name} />
+      <UPTDashboardTableCol title="EMAIL" value={email} />
+      <UPTDashboardTableCol title="ROLE" value={role} />
       <div
         className="col d-flex gap-4 align-items-center justify-content-center w-100 p-0"
         style={{ fontSize: "20px" }}
@@ -43,6 +55,7 @@ export const ManajemenUserRow = ({ handleShow }) => {
           data-bs-toggle="modal"
           data-bs-target="#modal"
           onClick={() => {
+            urlDeleteStateChanger(apiUrl + 'admin/delete/user/' + id)
             handleShow();
           }}
         >

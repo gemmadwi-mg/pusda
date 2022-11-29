@@ -31,7 +31,6 @@ class ChilderController extends Controller
             ->whereHas('parent', function ($query) {
                 $query->where('auhtor', Auth::id());
             })
-            ->orderBy('id', 'ASC')
             ->paginate(10);
 
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
@@ -74,7 +73,7 @@ class ChilderController extends Controller
             }
         }
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $childs->orderBy('id', 'ASC')->paginate(10));
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $childs->paginate(10));
     }
 
 

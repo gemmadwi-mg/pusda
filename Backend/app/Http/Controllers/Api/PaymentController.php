@@ -36,7 +36,6 @@ class PaymentController extends Controller
     public function getAll(Request $request)
     {
         $parent_query = Payment::with(['childer'])
-            ->orderBy('id', 'ASC')
             ->paginate(10);
 
         return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $parent_query);
@@ -55,7 +54,7 @@ class PaymentController extends Controller
             });
         }
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $payments->orderBy('id', 'ASC')->paginate(10));
+        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data pemabayaran', $payments->paginate(10));
     }
 
     public function getById(Request $request, $id)
@@ -205,17 +204,6 @@ class PaymentController extends Controller
      */
     public function updatePayment(Request $request, $id)
     {
-        $validation = Validator::make($request->only('childrens_id', 'year', 'proof_of_payment', 'payment_amount'), [
-            'childrens_id' => 'required|integer',
-            'year' => 'required',
-            'proof_of_payment' => 'required|mimes:doc,docx,pdf,txt',
-            'payment_amount' => 'required'
-        ]);
-
-        if ($validation->fails()) :
-            return ResponseFormatter::responseValidation($validation->errors());
-        endif;
-
         try {
             if ($request->hasFile('proof_of_payment')) {
                 $file = $request->file('proof_of_payment')->store('public/documents');
