@@ -2,61 +2,26 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import LayoutAdmin from "../../components/Layout/layoutAdmin";
 import { ManajemenUserRow } from "../../components/Table/TableManajemenUser/ManajemenUserRow";
-import { DeleteConfirmation } from "../../components/UPTDashboard/DeleteConfirmation";
 import ReactPaginate from "react-paginate";
+import { DeleteConfirmation } from "../../components/UPTDashboard/DeleteConfirmation";
 
 export const ManajemenUser = () => {
-  // const apiUrl = process.env.REACT_APP_API_URL;
-
-  // const [userData, setUserData] = useState([]);
-
-  // const [emptyMsg, setEmptyMsg] = useState("");
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     let token = localStorage.getItem("token");
-
-  //     try {
-  //       let res = await fetch(apiUrl + "user/all", {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-type": "application/json; charset=UTF-8",
-  //           Authorization: "Bearer " + token,
-  //         },
-  //       });
-
-  //       let resJson = await res.json();
-  //       console.log(resJson);
-
-  //       if (res.status != 200) {
-  //         return console.log(resJson.message);
-  //       }
-
-  //       let resData = resJson.data;
-  //       let resRole = resJson.data.roles;
-
-  //       if (resData.length == 0) {
-  //         return setEmptyMsg("Tidak ada data.");
-  //       }
-
-  //       setEmptyMsg("");
-
-  //       console.log(resData);
-
-  //       setUserData(resData);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   fetchData().catch(console.error);
-  // }, []);
   const apiUrl = process.env.REACT_APP_API_URL;
 
-  const [openEditUser, setOpenEditUser] = useState(false);
+  const [openEditTanah, setOpenEditTanah] = useState(false);
   const [show, setShow] = useState(false);
   const params = useParams();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  //format date into yyyy-mm-dd with leading zero
+  const formatDate = (date) => {
+    const d = new Date(date);
+    const month = `${d.getMonth() + 1}`.padStart(2, "0");
+    const day = `${d.getDate()}`.padStart(2, "0");
+    const year = d.getFullYear();
+    return [year, month, day].join("-");
+  };
 
   const handlePageClick = (e) => {
     if (e.selected >= 0) {
@@ -68,6 +33,7 @@ export const ManajemenUser = () => {
   const [pageNum, setPageNum] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   const [startingPoint, setStartingPoint] = useState(0);
+  const [search, setSearch] = useState("");
   const [urlDelete, setUrlDelete] = useState("");
   const [triggerDeleted, setTriggerDeleted] = useState(false);
   const [emptyMsg, setEmptyMsg] = useState("");
@@ -118,6 +84,8 @@ export const ManajemenUser = () => {
           return setEmptyMsg("Tidak ada data.");
         }
 
+        console.log(resData);
+
         setEmptyMsg("");
         setData(resData);
       } catch (error) {
@@ -126,119 +94,103 @@ export const ManajemenUser = () => {
     };
 
     fetchData().catch(console.error);
-  }, [params.id, triggerDeleted, pageNum]);
+  }, [params.id, triggerDeleted, pageNum, search]);
 
   const toggleEditTanah = () => {
-    if (openEditUser) {
+    if (openEditTanah) {
       // setNavbarInfo("")
-      setOpenEditUser(false);
+      setOpenEditTanah(false);
     } else {
       // setNavbarInfo("/Tambah Total Tanah")
-      setOpenEditUser(true);
+      setOpenEditTanah(true);
     }
   };
 
   return (
     <LayoutAdmin>
-      {!openEditUser ? (
-        <>
-          <div className="d-flex justify-content-between px-3 py-3">
-            <div className="d-flex gap-2 align-items-center">
-              <Link
-                to={"/manajemenuser/admin/tambah-user"}
-                className="primary-btn d-flex justify-content-center align-items-center"
-              >
-                Tambah User
-              </Link>
-            </div>
-            <div className="d-flex">
-              <input
-                className="form-control me-2 bg-none"
-                style={{ width: "200px" }}
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              ></input>
-            </div>
+      <div>
+        <div className="d-flex justify-content-between px-3 py-3">
+          <div className="d-flex gap-2 align-items-center">
+            <Link
+              to={"/manajemenuser/admin/tambah-user"}
+              className="primary-btn d-flex justify-content-center align-items-center"
+            >
+              Tambah User
+            </Link>
           </div>
-          <div className="upt-dashboard-table">
-            <div className="row m-0">
-              {emptyMsg == "" ? (
-                <>
-                  {data.map((item, key) => {
-                    return (
-                      <ManajemenUserRow
-                        iterator={startingPoint + key}
-                        id={item.id}
-                        name={item.name}
-                        email={item.email}
-                        role={item.roles[0].name}
-                        handleShow={handleShow}
-                        toggleTambahTanah={toggleEditTanah}
-                        setFormData={setFormData}
-                        urlDeleteStateChanger={setUrlDelete}
-                      />
-                      // <IndukTableRowAdmin
-                      //   iterator={startingPoint + key}
-                      //   upt={params.id}
-                      //   key={item.id}
-                      //   id={item.id}
-                      //   sertifikatNomor={item.certificate_number}
-                      //   hakPakaiTanggal={item.certificate_date}
-                      //   namaJenisBarang={item.item_name}
-                      //   nilaiAset={item.asset_value}
-                      //   alamat={item.address}
-                      //   luas={item.large}
-                      //   handleShow={handleShow}
-                      //   toggleTambahTanah={toggleEditTanah}
-                      //   setFormData={setFormData}
-                      //   urlDeleteStateChanger={setUrlDelete}
-                      // />
-                    );
-                  })}
-                </>
-              ) : (
-                <>
-                  <div class="text-center">{emptyMsg}</div>
-                </>
-              )}
-            </div>
+          <div className="d-flex">
+            <input
+              className="form-control me-2 bg-none"
+              style={{ width: "200px" }}
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            ></input>
+          </div>
+        </div>
+        <div>
+          {emptyMsg == "" ? (
+            <>
+              {data.map((item, key) => {
+                return (
+                  <ManajemenUserRow
+                    iterator={startingPoint + key}
+                    upt={params.id}
+                    key={item.id}
+                    id={item.id}
+                    name={item.name}
+                    role={item.roles[0].name}
+                    email={item.email}
+                    nilaiAset={item.asset_value}
+                    alamat={item.address}
+                    luas={item.large}
+                    handleShow={handleShow}
+                    toggleTambahTanah={toggleEditTanah}
+                    setFormData={setFormData}
+                    urlDeleteStateChanger={setUrlDelete}
+                  />
+                );
+              })}
+            </>
+          ) : (
+            <>
+              <div class="text-center">{emptyMsg}</div>
+            </>
+          )}
 
-            <div className="pagination-container">
-              <ReactPaginate
-                nextLabel="next >"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
-                marginPagesDisplayed={2}
-                pageCount={pageCount}
-                previousLabel="< previous"
-                pageClassName="page-item"
-                pageLinkClassName="page-link"
-                previousClassName="page-item"
-                previousLinkClassName="page-link"
-                nextClassName="page-item"
-                nextLinkClassName="page-link"
-                breakLabel="..."
-                breakClassName="page-item"
-                breakLinkClassName="page-link"
-                containerClassName="pagination"
-                activeClassName="active"
-                renderOnZeroPageCount={null}
-              />
-            </div>
+          <div className="pagination-container">
+            <ReactPaginate
+              nextLabel="next >"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              marginPagesDisplayed={2}
+              pageCount={pageCount}
+              previousLabel="< previous"
+              pageClassName="page-item"
+              pageLinkClassName="page-link"
+              previousClassName="page-item"
+              previousLinkClassName="page-link"
+              nextClassName="page-item"
+              nextLinkClassName="page-link"
+              breakLabel="..."
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              containerClassName="pagination"
+              activeClassName="active"
+              renderOnZeroPageCount={null}
+            />
           </div>
-          <DeleteConfirmation
-            show={show}
-            handleClose={handleClose}
-            urlDelete={urlDelete}
-            urlRedirect={null}
-            triggerDeleted={triggerDeleted}
-            setTriggerDeleted={setTriggerDeleted}
-          />
-        </>
-      ) : (
-        <h1>dwdwd</h1>
-      )}
+        </div>
+
+        <DeleteConfirmation
+          show={show}
+          handleClose={handleClose}
+          urlDelete={urlDelete}
+          urlRedirect={null}
+          triggerDeleted={triggerDeleted}
+          setTriggerDeleted={setTriggerDeleted}
+        />
+      </div>
     </LayoutAdmin>
   );
 };
