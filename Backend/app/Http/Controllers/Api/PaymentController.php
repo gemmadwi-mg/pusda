@@ -122,7 +122,7 @@ class PaymentController extends Controller
         $validation = Validator::make($request->only('childrens_id', 'year', 'proof_of_payment', 'payment_amount'), [
             'childrens_id' => 'required|integer',
             'year' => 'required',
-            'proof_of_payment' => 'required|mimes:doc,docx,pdf,txt',
+            'proof_of_payment' => 'required|mimes:doc,docx,pdf,txt,jpg,jpeg,bmp,png',
             'payment_amount' => 'required'
         ]);
 
