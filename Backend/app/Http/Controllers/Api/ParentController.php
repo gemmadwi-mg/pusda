@@ -65,7 +65,7 @@ class ParentController extends Controller
 
 
             if ($parent) {
-                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $parent->paginate(10));
+                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $parent->orderBy('id', 'DESC')->paginate(10));
             } else {
                 return response()->json(['Result' => 'Data tidak ditemukan'], 404);
             }

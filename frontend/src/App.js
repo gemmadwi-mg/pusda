@@ -40,7 +40,7 @@ function App() {
           <Route path="/dashboard/admin" element={<DashboardAdmin />} />
           <Route path="/manajemenuser/admin" element={<ManajemenUser />} />
           <Route path="/manajemenuser/admin/tambah-user" element={<TambahUser />} />
-          <Route path="/manajemenuser/admin/edit-user" element={<EditUser />} />
+          <Route path="/manajemenuser/admin/edit-user/:user_id" element={<EditUser />} />
           <Route path="/manajemenuser/admin/detail-user" element={<DetailUser />} />
           <Route path="/upt/:id/admin" element={<TanahIndukAdmin />} />
           <Route path="/upt/:id/admin/detail/:induk_id" element={<DetailIndukAdmin />} />
