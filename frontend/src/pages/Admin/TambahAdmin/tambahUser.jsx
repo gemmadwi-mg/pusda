@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LayoutAdmin from "../../../components/Layout/layoutAdmin";
 
@@ -15,6 +15,8 @@ export const TambahUser = () => {
     password: "",
     password_confirmation: "",
   });
+
+  const [role, setRole] = useState([]);
 
   const [message, setMessage] = useState([]);
 
@@ -49,6 +51,36 @@ export const TambahUser = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+
+    const fetchRole = async () => {
+      try {
+        let res = await fetch("http://127.0.0.1:8000/api/admin/role", {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        let resJson = await res.json();
+
+        if (res.status != 200) {
+          return console.log(resJson.message);
+        }
+
+        let resData = resJson;
+        console.log(resData);
+        setRole(resData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchRole().catch(console.error);
+  }, []);
 
   return (
     <LayoutAdmin>
@@ -118,19 +150,31 @@ export const TambahUser = () => {
             />
           </div>
           <div>
-            <label htmlFor="role">Role</label>
-            <input
-              type="text"
-              className="w-100"
-              name="role"
-              value={user.role_id}
-              onChange={(e) =>
-                setUser({
-                  ...user,
-                  role_id: e.target.value,
-                })
-              }
-            />
+            <div>
+              <label htmlFor="role">
+                Role
+              </label>
+              <select
+                className="form-select"
+                value={user.role_id}
+                onChange={(e) =>
+                  setUser({
+                    ...user,
+                    role_id: e.target.value,
+                  })
+                }
+              >
+                <option value="" disabled>
+                  -- Pilih --
+                </option>
+                {role.map((item) => {
+                  return (
+                    <option value={item.id}>{item.name}</option>
+                  );
+                })}
+                
+              </select>
+            </div>
           </div>
           <div>
             <label htmlFor="email">Email</label>

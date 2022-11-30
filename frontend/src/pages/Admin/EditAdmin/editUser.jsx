@@ -17,7 +17,7 @@ export const EditUser = () => {
     try {
       let token = localStorage.getItem("token");
 
-      let res = await fetch(apiUrl + "admin/update/user/" + params.user_id, {
+      let res = await fetch(apiUrl + "user/update/" + params.user_id, {
         method: "PUT",
         body: JSON.stringify({
           ...user,
@@ -134,18 +134,23 @@ export const EditUser = () => {
           </div>
           <div>
             <label htmlFor="role">Role</label>
-            <input
-              type="text"
-              className="w-100"
-              name="role"
-              value={user.name}
+            <select
+              className="form-select"
+              value={user.role_id}
               onChange={(e) =>
                 setUser({
                   ...user,
-                  role: e.target.value,
+                  role_id: e.target.value,
                 })
               }
-            />
+            >
+              <option value="" disabled>
+                -- Pilih --
+              </option>
+              {user.map((item) => {
+                return <option value={item.id}>{item.name}</option>;
+              })}
+            </select>
           </div>
           <div>
             <label htmlFor="email">Email</label>

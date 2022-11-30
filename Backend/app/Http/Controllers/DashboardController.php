@@ -181,6 +181,7 @@ class DashboardController extends Controller
         $roles = Role::all();
         return view('admin.manajement_users.create',compact('roles'));
     }
+    
     public function management_store(Request $request)
     {
         $this->validate($request, [

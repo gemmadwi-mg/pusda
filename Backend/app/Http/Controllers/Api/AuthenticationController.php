@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Helpers\ResponseFormatter;
+use App\Models\Role;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -359,6 +360,13 @@ class AuthenticationController extends Controller
         }catch (Exception $e) {
             return ResponseFormatter::responseError($e->getMessage(), 400);
         }
+    }
+
+    public function getRole(Request $request){
+
+        $user = Role::all();
+        return response()->json($user, 200);
+
     }
 
 
