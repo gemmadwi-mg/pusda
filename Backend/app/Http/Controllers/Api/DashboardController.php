@@ -118,9 +118,9 @@ class DashboardController extends Controller
         }, 'childers as total_tanah_pakai_sendiri' => function (Builder $query) use ($year) {
             $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', 'pakai_sendiri');
         }, 'childers as total_tanah_sewa_sip_bmd' => function (Builder $query) use ($year) {
-            $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', 'sewa_sip_bmd');
+            $query->whereYear('engagement_date', '=', $year)->where('utilization_engagement_type', 'sewa_sip_bmd');
         }, 'childers as total_tanah_retribusi' => function (Builder $query) use ($year) {
-            $query->whereYear('certificate_date', '=', $year)->where('utilization_engagement_type', 'retribusi');
+            $query->whereYear('engagement_date', '=', $year)->where('utilization_engagement_type', 'retribusi');
         }, 'payments as total_rupiah_tanah_sewa_sip_bmd' => function ($query) use ($year) {
             $query->where('utilization_engagement_type', '=', 'sewa_sip_bmd')->where('payments.year', '=', $year)->select(DB::raw('sum(payment_amount)'));
         }, 'payments as total_rupiah_tanah_retribusi' => function ($query) use ($year) {
@@ -155,7 +155,7 @@ class DashboardController extends Controller
             //     $join->on('childers.id', '=', 'payments.childrens_id');
             // })
             ->where('utilization_engagement_type', '=', 'retribusi')
-            ->whereYear('certificate_date', '=', $year)
+            ->whereYear('engagement_date', '=', $year)
             ->count();
 
         $total_rupiah_retribusi = DB::table('parents')
@@ -177,7 +177,7 @@ class DashboardController extends Controller
             //     $join->on('childers.id', '=', 'payments.childrens_id');
             // })
             ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
-            ->whereYear('certificate_date', '=', $year)
+            ->whereYear('engagement_date', '=', $year)
             ->count();
 
         $total_rupiah_sewa = DB::table('parents')

@@ -275,12 +275,10 @@ class ChilderController extends Controller
      */
     public function createChilder(Request $request)
     {
-        $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'description', 'application_letter', 'agreement_letter'), [
+        $validation = Validator::make($request->only('parent_id', 'rental_retribution', 'utilization_engagement_type', 'utilization_engagement_name', 'allotment_of_use', 'coordinate', 'large', 'present_condition', 'validity_period_of', 'validity_period_until', 'engagement_number',  'engagement_date', 'description', 'application_letter', 'agreement_letter'), [
             'parent_id' => 'required',
             'allotment_of_use' => 'required',
-            'coordinate' => 'required',
             'large' => 'required|integer',
-            'description' => 'required',
             'application_letter' => 'mimes:doc,docx,pdf,txt,jpg,jpeg,bmp,png',
             'agreement_letter' => 'mimes:doc,docx,pdf,txt,jpg,jpeg,bmp,png',
         ]);
@@ -305,6 +303,7 @@ class ChilderController extends Controller
                 'allotment_of_use' => $request->allotment_of_use,
                 'coordinate' => $request->coordinate,
                 'large' => $request->large,
+                'present_condition' => $request->present_condition,
                 'validity_period_of' => $request->validity_period_of,
                 'validity_period_until' => $request->validity_period_until,
                 'engagement_number' => $request->engagement_number,
@@ -554,6 +553,7 @@ class ChilderController extends Controller
                 'allotment_of_use' => $request->allotment_of_use,
                 'coordinate' => $request->coordinate,
                 'large' => $request->large,
+                'present_condition' => $request->present_condition,
                 'validity_period_of' => $request->validity_period_of,
                 'validity_period_until' => $request->validity_period_until,
                 'engagement_number' => $request->engagement_number,
