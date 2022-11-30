@@ -36,7 +36,7 @@ class ParentController extends Controller
         $auhtor = $request->input('auhtor');
         $keyword = $request->input('keyword');
 
-        $parentQuery = Parents::with(['user']);
+        $parentQuery = Parents::query();
 
         $parents = $parentQuery;
 
@@ -46,26 +46,20 @@ class ParentController extends Controller
             });
         }
 
-        if ($keyword && $auhtor) {
+        if ($keyword) {
+            $columns = \Schema::getColumnListing((new Parents)->getTable());
 
-            // $requestData = ['certificate_number', 'certificate_date', 'address', 'large', 'asset_value'];
-            // $parent = $result->where(function ($q) use ($requestData, $keyword) {
-            //     foreach ($requestData as $field)
-            //         $q->orWhere($field, 'like', "%{$keyword}%");
-            // })->get();
-
-            // return $parent;
-
-            $parent = Parents::find($auhtor)->Where('certificate_number', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('certificate_date', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('item_name', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('address', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('large', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('asset_value', 'LIKE', '%' . $keyword . '%');
+            $parent = Parents::where(function ($query) use ($auhtor) {
+                $query->where('auhtor', $auhtor);
+            })->where(function ($query) use ($columns, $keyword) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', "%{$keyword}%");
+                }
+            })->orderBy('id', 'DESC')->paginate(10);
 
 
-            if ($parent) {
-                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $parent->orderBy('id', 'DESC')->paginate(10));
+            if (count($parent)) {
+                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $parent);
             } else {
                 return response()->json(['Result' => 'Data tidak ditemukan'], 404);
             }

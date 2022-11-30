@@ -52,22 +52,19 @@ class ChilderController extends Controller
         }
 
         if ($keyword && $parent_id) {
-            $result = Childer::where('parent_id', '=', $parent_id)
-                ->OrWhere('rental_retribution', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('utilization_engagement_type', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('utilization_engagement_name', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('allotment_of_use', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('coordinate', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('large', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('present_condition', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('validity_period_of', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('validity_period_until', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('engagement_number', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('engagement_date', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('description', 'LIKE', '%' . $keyword . '%')
-                ->get();
-            if (count($result)) {
-                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
+            $columns = \Schema::getColumnListing((new Childer)->getTable());
+
+            $childer = Childer::where(function ($query) use ($parent_id) {
+                $query->where('parent_id', $parent_id);
+            })->where(function ($query) use ($columns, $keyword) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', "%{$keyword}%");
+                }
+            })->orderBy('id', 'DESC')->paginate(10);
+
+            
+            if (count($childer)) {
+                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $childer);
             } else {
                 return ResponseFormatter::responseError('Data tidak ditemukan', 400);;
             }
