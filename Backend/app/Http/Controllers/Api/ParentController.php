@@ -47,16 +47,25 @@ class ParentController extends Controller
         }
 
         if ($keyword && $auhtor) {
-            $result = Parents::with(['user'])
-                ->where('auhtor', '=', $auhtor)
-                ->orwhere('certificate_number', 'LIKE', '%' . $keyword . '%')
+
+            // $requestData = ['certificate_number', 'certificate_date', 'address', 'large', 'asset_value'];
+            // $parent = $result->where(function ($q) use ($requestData, $keyword) {
+            //     foreach ($requestData as $field)
+            //         $q->orWhere($field, 'like', "%{$keyword}%");
+            // })->get();
+
+            // return $parent;
+
+            $parent = Parents::find($auhtor)->Where('certificate_number', 'LIKE', '%' . $keyword . '%')
                 ->orWhere('certificate_date', 'LIKE', '%' . $keyword . '%')
+                ->orWhere('item_name', 'LIKE', '%' . $keyword . '%')
                 ->orWhere('address', 'LIKE', '%' . $keyword . '%')
                 ->orWhere('large', 'LIKE', '%' . $keyword . '%')
-                ->orWhere('asset_value', 'LIKE', '%' . $keyword . '%')
-                ->get();
-            if (count($result)) {
-                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $result);
+                ->orWhere('asset_value', 'LIKE', '%' . $keyword . '%');
+
+
+            if ($parent) {
+                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $parent->paginate(10));
             } else {
                 return response()->json(['Result' => 'Data tidak ditemukan'], 404);
             }
