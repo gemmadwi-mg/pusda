@@ -27,13 +27,27 @@ class ChilderController extends Controller
 
     public function getAllByParentUser(Request $request)
     {
-        $child_query = Childer::with(['parent'])
-            ->whereHas('parent', function ($query) {
-                $query->where('auhtor', Auth::id());
-            })
-            ->paginate(10);
+        $keyword = $request->input('keyword');
+        $parent_id = $request->input('parent_id');
 
-        return ResponseFormatter::responseSuccessWithData('Sukses mendapatkan data tanah bagian', $child_query);
+        if ($keyword && $parent_id) {
+            $columns = \Schema::getColumnListing((new Childer)->getTable());
+
+            $childer = Childer::where(function ($query) use ($parent_id) {
+                $query->where('parent_id', $parent_id);
+            })->where(function ($query) use ($columns, $keyword) {
+                foreach ($columns as $column) {
+                    $query->orWhere($column, 'like', "%{$keyword}%");
+                }
+            })->orderBy('id', 'DESC')->paginate(10);
+
+
+            if (count($childer)) {
+                return ResponseFormatter::responseSuccessWithData('Data ditemukan', $childer);
+            } else {
+                return ResponseFormatter::responseError('Data tidak ditemukan', 400);;
+            }
+        }
     }
 
 
@@ -62,7 +76,7 @@ class ChilderController extends Controller
                 }
             })->orderBy('id', 'DESC')->paginate(10);
 
-            
+
             if (count($childer)) {
                 return ResponseFormatter::responseSuccessWithData('Data ditemukan', $childer);
             } else {

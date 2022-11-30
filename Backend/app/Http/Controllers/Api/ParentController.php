@@ -71,11 +71,19 @@ class ParentController extends Controller
 
     public function getAllParentWithUserLogIn(Request $request)
     {
-        $parent_query = Parents::with(['user'])
-            ->where('auhtor', Auth::user()->id)
-            ->paginate(10);
+        $keyword = $request->input('keyword');
 
-        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan data tanah induk', $parent_query);
+        $columns = \Schema::getColumnListing((new Parents)->getTable());
+
+        $parent = Parents::where(function ($query) {
+            $query->where('auhtor',  Auth::user()->id);
+        })->where(function ($query) use ($columns, $keyword) {
+            foreach ($columns as $column) {
+                $query->orWhere($column, 'like', "%{$keyword}%");
+            }
+        })->orderBy('id', 'DESC')->paginate(10);
+
+        return ResponseFormatter::responseSuccessWithData('Berhasil mendapatkan data tanah induk', $parent);
     }
 
     public function getById(Request $request, $id)
