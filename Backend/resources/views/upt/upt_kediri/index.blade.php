@@ -56,8 +56,8 @@
                                     </div>
 
                                     <div class="">
-                                        <a href="{{route('export.post')}}" title="Create" class=" font-18 btn btn-xs btn-light">
-                                            <i class="mdi mdi-file-import text-success"></i> Export All Data
+                                        <a href="{{route('export.postupt')}}" title="Download" class=" font-18 btn btn-xs btn-light">
+                                            <i class="mdi mdi-file-import text-success"></i> Export
                                         </a>
                                     </div>
                                     <div class="table-responsive">

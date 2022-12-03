@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Upt;
 
 use App\Http\Controllers\Controller;
+use App\Models\Childer;
 use Illuminate\Http\Request;
 use App\Models\Parents;
 use App\Models\User;
@@ -19,9 +20,7 @@ class UptKediriController extends Controller
     public function index()
     {
         $data = Parents::orderBy('id','desc')
-        ->where('id',[
-            implode(',',Auth::user()->roles()->pluck('id')->toArray() )
-        ])
+        ->where('auhtor',Auth::user()->roles()->pluck('id'))
         ->paginate(10);
         return view('upt.upt_kediri.index',compact('data'));
     }
@@ -90,7 +89,10 @@ class UptKediriController extends Controller
     public function show($id)
     {
         $parent = Parents::where('id',$id)->first();
-        return view('upt.upt_kediri.detail',compact('parent'));
+        $childer = Childer::orderBy('id','desc')
+        ->where('parent_id',$parent->id)
+        ->paginate(10);
+        return view('upt.upt_kediri.detail',compact('parent','childer'));
     }
 
     /**

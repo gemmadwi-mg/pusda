@@ -47,6 +47,7 @@ Route::group(['prefix' => 'dashboard','middleware' => ['web','auth']] , function
     Route::post('/import/children/post/{id}', [DashboardController::class, 'import_anak'])->name('importanak.post');
 
     Route::get('/export/post', [DashboardController::class, 'exportMapping'])->name('export.post');
+    Route::get('/download/file', [DashboardController::class, 'exportMappingUpt'])->name('export.postupt');
 
     Route::get('/upload-photo/{id}', [DashboardController::class, 'vieUpload'])->name('upload.photo');
     Route::post('/upload-photo/{id}', [DashboardController::class, 'vieUploadPost'])->name('uploadphoto.post');

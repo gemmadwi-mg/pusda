@@ -144,14 +144,18 @@
                                                     <i class="mdi mdi-file-excel"></i>
                                                 </a>
                                             </div>
+
                                             <table class="table table-borderless mb-0">
                                                 <thead class="thead-light">
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Rental Retribution</th>
-                                                        <th>Utilization Engagement Type</th>
-                                                        <th>Utilization Engagement Name</th>
+                                                        <th>Engagement Type</th>
+                                                        <th>Engagement Name</th>
                                                         <th>Allotment</th>
+                                                        <th>Amount</th>
+                                                        <th>Year</th>
+                                                        <th>Payment</th>
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
@@ -163,6 +167,11 @@
                                                         <td>{{$c->utilization_engagement_type}}</td>
                                                         <td>{{$c->utilization_engagement_name}}</td>
                                                         <td> {{$c->allotment_of_use}} </td>
+
+                                                        <td>  {{ implode(', ', $c->payments() ->pluck('payment_amount')->toArray())}} </td>
+                                                        <td>{{ implode(', ', $c->payments() ->pluck('year')->toArray())}} </td>
+                                                        <td> {{ implode(', ', $c->payments() ->pluck('proof_of_payment')->toArray())}} </td>
+
                                                         <td class="text-center">
                                                                 <a href="{{route('childern.show', ['id' => $c->id])}}" title="Detail" class="btn btn-xs btn-light">
                                                                     <i class="mdi mdi-eye text-info"></i>
@@ -179,6 +188,7 @@
                                                 <td colspan="8" class="table-active text-center bg-dark text-white">No Data Yet</td>
                                                 @endforelse
                                             </table>
+
                                         </div>
 
                                     </div>

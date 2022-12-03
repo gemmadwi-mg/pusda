@@ -53,48 +53,42 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="firstname">Name Goods</label>
-                                                        <input type="text" class="form-control" value="{{$parent->name_goods}}" readonly>
+                                                        <label for="firstname">Author</label>
+                                                        <input type="text" class="form-control" readonly value="{{Auth::user()->name}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="lastname">No Register</label>
-                                                        <input type="text" class="form-control" value="{{$parent->no_reg}}" readonly>
+                                                        <label for="lastname">Email Adress</label>
+                                                        <input type="text" class="form-control" readonly value="{{Auth::user()->email}}">
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="firstname">No</label>
-                                                        <input type="text" class="form-control" value="{{$parent->no}}" readonly>
+                                                        <label for="firstname">Certificate Number</label>
+                                                        <input type="text" class="form-control" readonly value="{{$parent->certificate_number}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="lastname">Certificate Date</label>
+                                                        <input type="text" class="form-control" readonly value="{{$parent->certificate_date}}">
+                                                    </div>
+                                                </div> <!-- end col -->
+                                            </div> <!-- end row -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="firstname">Utilization Type</label>
+                                                        <input type="text" class="form-control" readonly value="{{$parent->utilization_type}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="lastname">Large</label>
-                                                        <input type="text" class="form-control" value="{{$parent->large}}" readonly>
-                                                    </div>
-                                                </div> <!-- end col -->
-                                            </div> <!-- end row -->
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label for="firstname">Village</label>
-                                                        <input type="text" class="form-control" value="{{$parent->village}}" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label for="lastname">Kecamatan</label>
-                                                        <input type="text" class="form-control" value="{{$parent->kec}}" readonly>
-                                                    </div>
-                                                </div> <!-- end col -->
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label for="lastname">Kab/Kota</label>
-                                                        <input type="text" class="form-control" value="{{$parent->kab_city}}" readonly>
+                                                        <input type="text" class="form-control" readonly value="{{$parent->large}}">
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
@@ -102,11 +96,14 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label for="userbio">Alamat</label>
+                                                        <label for="userbio">Address</label>
                                                         <textarea class="form-control" id="userbio" rows="4" readonly>{{$parent->address}}</textarea>
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div> <!-- end row -->
+
+
+
 
                                         </form>
 
@@ -130,34 +127,58 @@
                                                 </div>
                                             </form>
                                         </div>
-
-
-                                        <div class="table-responsive">
-                                            <table class="table table-borderless mb-0">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Project Name</th>
-                                                        <th>Start Date</th>
-                                                        <th>Due Date</th>
-                                                        <th>Status</th>
-                                                        <th>Clients</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>App design and development</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>10/15/2018</td>
-                                                        <td><span class="badge badge-info">Work in Progress</span></td>
-                                                        <td>Halette Boivin</td>
-                                                    </tr>
-
-
-                                                </tbody>
-                                            </table>
+                                        <div class="dropdown float-right">
+                                            <a href="{{route('childern.create', ['id' => $parent->id])}}" title="Create" class=" font-18 btn btn-xs btn-light">
+                                                <i class="mdi mdi-plus"></i>
+                                            </a>
+                                            <a href="{{route('childern.create', ['id' => $parent->id])}}" title="Import" class=" font-18 btn btn-xs btn-light">
+                                                <i class="mdi mdi-file-excel"></i>
+                                            </a>
                                         </div>
+                                        <table class="table table-borderless mb-0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Rental Retribution</th>
+                                                    <th>Engagement Type</th>
+                                                    <th>Engagement Name</th>
+                                                    <th>Allotment</th>
+                                                    <th>Amount</th>
+                                                    <th>Year</th>
+                                                    <th>Payment</th>
+                                                    <th class="text-center">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse ($childer as $no => $c )
+                                                <tr>
+                                                    <td>{{ $no + $childer->firstItem() }}</td>
+                                                    <td> {{$c->rental_retribution}} </td>
+                                                    <td>{{$c->utilization_engagement_type}}</td>
+                                                    <td>{{$c->utilization_engagement_name}}</td>
+                                                    <td> {{$c->allotment_of_use}} </td>
+
+                                                    <td>  {{ implode(', ', $c->payments() ->pluck('payment_amount')->toArray())}} </td>
+                                                    <td>{{ implode(', ', $c->payments() ->pluck('year')->toArray())}} </td>
+                                                    <td> {{ implode(', ', $c->payments() ->pluck('proof_of_payment')->toArray())}} </td>
+
+                                                    <td class="text-center">
+                                                            <a href="{{route('childern.show', ['id' => $c->id])}}" title="Detail" class="btn btn-xs btn-light">
+                                                                <i class="mdi mdi-eye text-info"></i>
+                                                            </a>
+                                                            <a href="{{route('childern.edit', ['id' => $c->id])}}" title="Edit" class="btn btn-xs btn-light">
+                                                                <i class="mdi mdi-pencil text-warning"></i>
+                                                            </a>
+                                                    </td>
+
+                                                </tr>
+
+                                            </tbody>
+                                            @empty
+                                            <td colspan="9" class="table-active text-center bg-dark text-white">No Data Yet</td>
+                                            @endforelse
+                                        </table>
+
 
                                     </div>
                                     <!-- end settings content-->

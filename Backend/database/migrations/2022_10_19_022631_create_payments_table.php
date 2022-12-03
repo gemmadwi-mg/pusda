@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->bigInteger('childrens_id')->unsigned();
             $table->string('year');
             $table->integer('payment_amount');
-            $table->string('proof_of_payment');
+            $table->string('proof_of_payment')->nullable();
             $table->timestamps();
             $table->foreign('childrens_id')->references('id')->on('childers')->onDelete('cascade');
         });

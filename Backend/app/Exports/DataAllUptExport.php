@@ -17,7 +17,7 @@ class DataAllUptExport implements FromCollection, WithMapping, WithHeadings
     */
     public function collection()
     {
-        return Childer::with('parent')->get();
+        return Childer::with('parent','payments')->get();
     }
 
     public function map($invoice): array
@@ -42,8 +42,9 @@ class DataAllUptExport implements FromCollection, WithMapping, WithHeadings
             $invoice->engagement_number,
             $invoice->engagement_date,
             $invoice->description,
-            // $invoice->year,
-            // $invoice->payment_amount,
+
+            $invoice->payments()->pluck('year'),
+            $invoice->payments()->pluck('payment_amount'),
 
         ];
     }

@@ -76,7 +76,8 @@ class ParentController extends Controller
         $columns = \Schema::getColumnListing((new Parents)->getTable());
 
         $parent = Parents::where(function ($query) {
-            $query->where('auhtor',  Auth::user()->id);
+            // $query->where('auhtor',  Auth::user()->id); OLD
+            $query->where('auhtor',  Auth::user()->roles()->pluck('id'));
         })->where(function ($query) use ($columns, $keyword) {
             foreach ($columns as $column) {
                 $query->orWhere($column, 'like', "%{$keyword}%");

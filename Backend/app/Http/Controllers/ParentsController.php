@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Childer;
 use App\Models\Parents;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -79,9 +80,15 @@ class ParentsController extends Controller
     public function show($id)
     {
         $parent = Parents::where('id',$id)->first();
+
         $childer = Childer::orderBy('id','desc')
         ->where('parent_id',$parent->id)
         ->paginate(10);
+
+        // $payment = Payment::orderBy('id','desc')
+        // ->where('childrens_id',$id)
+        // ->get();
+
         return view('admin.soil.detail',compact('parent','childer'));
     }
 

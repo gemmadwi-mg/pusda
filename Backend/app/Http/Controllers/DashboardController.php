@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\DataAllUptExport;
 use App\Exports\DataExport;
+use App\Exports\ExportPerUpt;
 use App\Http\Controllers\Controller;
 use App\Imports\AnakImport;
 use App\Imports\DataAllImport;
@@ -135,6 +136,10 @@ class DashboardController extends Controller
 
         return Excel::download(new DataAllUptExport(), 'Semua-data-upt.xlsx');
     }
+    public function exportMappingUpt() {
+
+        return Excel::download(new ExportPerUpt(), 'file.xlsx');
+    }
 
     public function import_induk(Request $request)
     {
@@ -181,7 +186,7 @@ class DashboardController extends Controller
         $roles = Role::all();
         return view('admin.manajement_users.create',compact('roles'));
     }
-    
+
     public function management_store(Request $request)
     {
         $this->validate($request, [
