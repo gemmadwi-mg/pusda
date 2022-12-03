@@ -71,8 +71,8 @@ class DataAllUptExport implements FromCollection, WithMapping, WithHeadings
             'Tanggal Perikatan',
             'keterangan',
 
-            // 'Tahun',
-            // 'Jumlah Pembayaran',
+            'Tahun',
+            'Jumlah Pembayaran',
         ];
     }
 }
