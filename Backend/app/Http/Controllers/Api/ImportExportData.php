@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Exports\DataAllUptExport;
+use App\Exports\ExportPerUpt;
 use App\Http\Controllers\Controller;
 use App\Imports\ParentsImport;
 use Illuminate\Http\Request;
@@ -117,7 +118,31 @@ class ImportExportData extends Controller
     {
         try {
              Excel::download(new DataAllUptExport(), 'Semua-data-upt.xlsx');
-            return ResponseFormatter::responseSuccessWithData('Data semua upt berhasil di download!');
+            return ResponseFormatter::responseSuccessWithData('Data semua upt berhasil di unduh!');
+        }catch (Exception $error) {
+            return ResponseFormatter::responseError($error->getMessage(), 400);
+        }
+
+    }
+
+     /**
+     * @OA\Get(
+     *     path="/export/data",
+     *     tags={"Export"},
+     *     operationId="ExportPerUpt",
+     *     summary="users can download data based on their roles ",
+     *     description="only user can download all upt data and access api",
+     *     @OA\Response(
+     *         response="200",
+     *         description="Data semua upt berhasil di unduh!"
+     *     )
+     * )
+     */
+    public function exportMappingUpt()
+    {
+        try {
+             Excel::download(new ExportPerUpt(), 'file-download.xlsx');
+            return ResponseFormatter::responseSuccessWithData('Data berhasil di unduh!');
         }catch (Exception $error) {
             return ResponseFormatter::responseError($error->getMessage(), 400);
         }

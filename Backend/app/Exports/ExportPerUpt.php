@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Childer;
+use App\Models\Parents;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -10,14 +11,23 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class ExportPerUpt implements FromCollection, WithMapping, WithHeadings
 {
+
+
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Childer::with('parent','payments')
-                        ->where('id',Auth::user()->roles()->pluck('id'))
-                        ->get();
+        $induk = Parents::where('auhtor',Auth::user()->roles()->pluck('id'))->get();
+
+        foreach($induk as $inc){
+
+            $anak =  Childer::with('parent','payments')
+                            ->where('parent_id',$inc->id )
+                            ->get();
+        }
+
+        return $anak;
     }
 
     public function map($invoice): array

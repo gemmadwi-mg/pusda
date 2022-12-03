@@ -60,6 +60,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
 
     //  Export All Data
     Route::get('/export/all/data/upt', [ImportExportData::class, 'exportMapping']);
+    //  Export UPT Data
+    Route::get('/export/data', [ImportExportData::class, 'exportMappingUpt']);
     //  Import File parent
     Route::post('/import/file/parent', [ImportExportData::class, 'import_parent']);
     //  Import File parent
