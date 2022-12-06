@@ -207,7 +207,7 @@ export const EditIndukAdmin = () => {
             ></textarea>
           </div>
           <div>
-            <label htmlFor="sertifikat-luas">Luas Induk</label>
+            <label htmlFor="sertifikat-luas"> Luas Tanah Bidang  (m²)</label>
             <input
               type="text"
               className="w-100"

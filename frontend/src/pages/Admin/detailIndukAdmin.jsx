@@ -207,7 +207,7 @@ export const DetailIndukAdmin = ({ induk_id }) => {
                         </div>
                         <div className="right">
                             <div>
-                                <p className="title p-0 m-0">Luas Induk (m)</p>
+                                <p className="title p-0 m-0">Luas Tanah Bidang  (m²)</p>
                                 <p className="font-semibold">{induk.large}</p>
                             </div>
                             <div>
@@ -228,7 +228,7 @@ export const DetailIndukAdmin = ({ induk_id }) => {
                         className="d-flex flex-row justify-content-between px-3 py-3"
                         style={{ marginTop: "30px" }}
                     >
-                        <h5>Tanah Bagian</h5>
+                        <h5>Rincian Penggunaan/Pemanfaatan</h5>
                         <div className="d-flex">
                             <input
                                 className="form-control me-2 bg-none"
@@ -251,7 +251,7 @@ export const DetailIndukAdmin = ({ induk_id }) => {
                                     setShow(true);
                                 }}
                             >
-                                Tambah Bagian
+                                Tambah Data
                             </div>
                         </div>
                     </div>

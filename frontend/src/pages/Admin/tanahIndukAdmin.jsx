@@ -140,7 +140,7 @@ export const TanahIndukAdmin = () => {
                                 to={"/upt/" + params.id + "/admin/tambah-induk"}
                                 className="primary-btn d-flex justify-content-center align-items-center"
                             >
-                                Tambah Induk
+                                Tambah Tanah
                             </Link>
                         </div>
                     </div>

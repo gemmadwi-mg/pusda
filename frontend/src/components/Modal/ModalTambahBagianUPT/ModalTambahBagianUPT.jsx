@@ -13,7 +13,7 @@ export const ModalTambahBagianUPT = ({ show, handleClose }) => {
         className="d-flex justify-content-center align-items-center"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Bagian</Modal.Title>
+          <Modal.Title>Tambah Data</Modal.Title>
         </Modal.Header>
         <Modal.Body className="py-5 px-5">
           <div className="mb-3 d-flex justify-content-center">

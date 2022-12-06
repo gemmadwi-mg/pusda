@@ -44,7 +44,7 @@ export const TablePembayaran = ({
             >
                 <div
                     to="/upt/detail"
-                    className="col number d-flex align-items-center justify-content-center font-semibold "
+                    className="col-1 number d-flex align-items-center justify-content-center font-semibold "
                 >
                     {iterator}
                 </div>

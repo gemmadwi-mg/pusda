@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 
-export const TableBagian = ({iterator, upt, children}) => {
+export const TableBagian = ({ iterator, upt, children }) => {
   const params = useParams();
 
   //format date into yyyy-mm-dd with leading zero
@@ -12,23 +12,28 @@ export const TableBagian = ({iterator, upt, children}) => {
     return [year, month, day].join("-");
   };
 
-  const formatter = new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
+  const formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
   });
 
   const mapType = (str) => {
-    if (str === 'sewa_sip_bmd')
-      return 'Sewa/SIP BMD'
-    else if (str === 'retribusi')
-      return 'Retribusi';
+    if (str === "sewa_sip_bmd") return "Sewa/SIP BMD";
+    else if (str === "retribusi") return "Retribusi";
 
     return null;
-  }
+  };
 
   return (
     <Link
-      to={"/upt/"+upt+"/admin/detail/"+params.induk_id+"/tanah-bagian-sr/"+children.id}
+      to={
+        "/upt/" +
+        upt +
+        "/admin/detail/" +
+        params.induk_id +
+        "/tanah-bagian-sr/" +
+        children.id
+      }
       className="row text-dark"
       style={{
         background: "#FFFFFF",
@@ -43,12 +48,14 @@ export const TableBagian = ({iterator, upt, children}) => {
         {iterator}
       </div>
       <div className="col">
-        <p className="table-title p-0 m-0">NO PERIKATAN</p>
-        <p className="p-0 m-0">{children.engagement_number}</p>
+        <p className="table-title p-0 m-0">PENGGUNAN/ PEMANFAATAN</p>
+        <p className="p-0 m-0">
+          {mapType(children.utilization_engagement_type)}
+        </p>
       </div>
       <div className="col">
-        <p className="table-title p-0 m-0">JENIS PERIKATAN</p>
-        <p className="p-0 m-0">{mapType(children.utilization_engagement_type)}</p>
+        <p className="table-title p-0 m-0">NO PERIKATAN</p>
+        <p className="p-0 m-0">{children.engagement_number}</p>
       </div>
       <div className="col">
         <p className="table-title p-0 m-0">PEMANFAATAN</p>
@@ -56,7 +63,9 @@ export const TableBagian = ({iterator, upt, children}) => {
       </div>
       <div className="col">
         <p className="table-title p-0 m-0">NILAI SEWA</p>
-        <p className="p-0 m-0">{formatter.format(children.rental_retribution)}</p>
+        <p className="p-0 m-0">
+          {formatter.format(children.rental_retribution)}
+        </p>
       </div>
       <div className="col">
         <p className="table-title p-0 m-0">MASA BERLAKU</p>
@@ -64,7 +73,7 @@ export const TableBagian = ({iterator, upt, children}) => {
       </div>
       <div className="col">
         <p className="table-title p-0 m-0">LUAS</p>
-        <p className="p-0 m-0">{children.large} m</p>
+        <p className="p-0 m-0">{children.large} (m²)</p>
       </div>
     </Link>
   );

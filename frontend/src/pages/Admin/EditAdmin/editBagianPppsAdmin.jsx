@@ -203,7 +203,7 @@ export const EditBagianPppsAdmin = () => {
                             />
                         </div>
                         <div>
-                            <label htmlFor="luas-bagian">Luas Bagian</label>
+                            <label htmlFor="luas-bagian">Luas Bagian (m²)</label>
                             <input
                                 type="text"
                                 className="w-100"
