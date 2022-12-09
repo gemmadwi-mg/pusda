@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { DashboardTableRow } from "../../components/Dashboard/DashboardTableRow";
 import LayoutUPT from "../../components/Layout/layoutUPT";
 
+import { ExportCSV } from "../../components/ExportCSV";
+
 export const DashboardUPT = () => {
     const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -13,6 +15,7 @@ export const DashboardUPT = () => {
     });
 
     const [dashboardData, setDashboardData] = useState([]);
+    const [exportData, setExportData] = useState([]);
     const [total, setTotal] = useState({
         total_tanah_induk: 0,
         total_tanah_pinjam_pakai: 0,
@@ -68,32 +71,41 @@ export const DashboardUPT = () => {
             }
         };
 
-        fetchData().catch(console.error);
-    }, [filterYear]); // eslint-disable-line react-hooks/exhaustive-deps
+        const getExportData = async () => {
+            let token = localStorage.getItem("token");
 
-    const exportData = async () => {
-        let token = localStorage.getItem("token");
+            try {
+                let res = await fetch(apiUrl + "export/data", {
+                    method: "GET",
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        Authorization: "Bearer " + token,
+                    },
+                });
 
-        try {
-            let res = await fetch(apiUrl + "export/data", {
-                method: "GET",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8",
-                    Authorization: "Bearer " + token,
-                },
-            });
+                let resJson = await res.json();
 
-            let resJson = await res.json();
+                if (res.status !== 200) {
+                    return console.log(resJson.message);
+                }
 
-            if (res.status !== 200) {
-                return console.log(resJson.message);
+                let resData = resJson.data;
+
+                if (resData.length === 0) {
+                    return setEmptyMsg("Tidak ada data.");
+                }
+
+                setEmptyMsg("");
+
+                setExportData(resData);
+            } catch (error) {
+                console.log(error);
             }
+        };
 
-            console.log(resJson);
-        } catch (error) {
-            console.log(error);
-        }
-    };
+        fetchData().catch(console.error);
+        getExportData().catch(console.error);
+    }, [filterYear]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <LayoutUPT>
@@ -111,10 +123,7 @@ export const DashboardUPT = () => {
                     <option value="2019">2019</option>
                 </select>
                 <div className="d-flex gap-2 align-items-center">
-
-                    <div onClick={() => exportData()} className="bg-cyanblue px-3 py-1 font-semibold text-white rounded primary-btn">
-                        EXPORT DATA
-                    </div>
+                    <ExportCSV csvData={exportData} fileName="File Download" />
                     {/* <div className="bg-cyanblue px-3 py-1 font-semibold text-white rounded primary-btn">
                         EXPORT DATA
                     </div> */}
