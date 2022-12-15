@@ -65,7 +65,7 @@ export const TablePembayaran = ({
                             href={backendUrl + payment.proof_of_payment}
                             target="_blank"
                         >
-                            BUKTI.JPG
+                            BUKTI
                         </a>
                     </p>
                 </div>

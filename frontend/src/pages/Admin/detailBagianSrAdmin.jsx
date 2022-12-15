@@ -272,7 +272,7 @@ export const DetailBagianSrAdmin = () => {
                                     }
                                     target="_blank"
                                 >
-                                    SURAT PERJANJIAN-1.PDF
+                                    SURAT PERJANJIAN-1
                                 </a>
                             </h5>
                         </div>
@@ -287,7 +287,7 @@ export const DetailBagianSrAdmin = () => {
                                     }
                                     target="_blank"
                                 >
-                                    SURAT PERMOHONAN-1.PDF
+                                    SURAT PERMOHONAN-1
                                 </a>
                             </h5>
                         </div>
