@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect, useRef} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LayoutAdmin from "../../../components/Layout/layoutAdmin";
 
@@ -80,6 +80,85 @@ export const TambahBagianSrAdmin = () => {
       console.log(error);
     }
   };
+
+    const [file, setFile] = useState();
+    const uploadRef = useRef();
+    const statusRef = useRef();
+    const loadTotalRef = useRef();
+    const progressRef = useRef();
+
+    const UploadFile = () => {
+        const file = uploadRef.current.files[0];
+        setFile(URL.createObjectURL(file));
+        var formData = new FormData();
+        formData.append("image", file);
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", ProgressHandler, false);
+        xhr.addEventListener("load", SuccessHandler, false);
+        xhr.addEventListener("error", ErrorHandler, false);
+        xhr.addEventListener("abort", AbortHandler, false);
+        xhr.open("POST", "fileupload.php");
+        xhr.send(formData);
+    };
+
+    const ProgressHandler = (e) => {
+        loadTotalRef.current.innerHTML = `${uploadRef.current.files[0].name} uploaded ${Math.round(e.loaded/1024)}K bytes of ${Math.round(e.total/1024)}K    bytes`;
+        var percent = (e.loaded / e.total) * 100;
+        progressRef.current.value = Math.round(percent);
+        statusRef.current.innerHTML = Math.round(percent) + "% uploaded...";
+    };
+
+    const SuccessHandler = (e) => {
+        statusRef.current.innerHTML = e.target.responseText;
+        progressRef.current.value = 0;
+    };
+
+    const ErrorHandler = () => {
+        statusRef.current.innerHTML = "upload failed!!";
+    };
+    const AbortHandler = () => {
+        statusRef.current.innerHTML = "upload aborted!!";
+    };
+
+    /* 2222 */
+    const [file2, setFile2] = useState();
+    const uploadRef2 = useRef();
+    const statusRef2 = useRef();
+    const loadTotalRef2 = useRef();
+    const progressRef2 = useRef();
+
+    const UploadFile2 = () => {
+        const file = uploadRef2.current.files[0];
+        setFile2(URL.createObjectURL(file));
+        var formData = new FormData();
+        formData.append("image", file2);
+        var xhr = new XMLHttpRequest();
+        xhr.upload.addEventListener("progress", ProgressHandler2, false);
+        xhr.addEventListener("load", SuccessHandler2, false);
+        xhr.addEventListener("error", ErrorHandler2, false);
+        xhr.addEventListener("abort", AbortHandler2, false);
+        xhr.open("POST", "fileupload.php");
+        xhr.send(formData);
+    };
+
+    const ProgressHandler2 = (e) => {
+        loadTotalRef2.current.innerHTML = `${uploadRef2.current.files[0].name} uploaded ${e.loaded} bytes of ${e.total} bytes`;
+        var percent = (e.loaded / e.total) * 100;
+        progressRef2.current.value = Math.round(percent);
+        statusRef2.current.innerHTML = Math.round(percent) + "% uploaded...";
+    };
+
+    const SuccessHandler2 = (e) => {
+        // statusRef2.current.innerHTML = e.target.responseText;
+        progressRef2.current.value = 0;
+    };
+
+    const ErrorHandler2 = () => {
+        statusRef2.current.innerHTML = "upload failed!!";
+    };
+    const AbortHandler2 = () => {
+        statusRef2.current.innerHTML = "upload aborted!!";
+    };
 
   return (
     <LayoutAdmin>
@@ -341,13 +420,18 @@ export const TambahBagianSrAdmin = () => {
                 type="file"
                 className="d-none"
                 id="surat-perjanjian"
+                ref={uploadRef}
                 onChange={(e) =>
-                  setChildren({
-                    ...children,
-                    agreement_letter: e.target.files[0],
-                  })
+                {
+                    setChildren({
+                        ...children,
+                        agreement_letter: e.target.files[0],
+                    });
+                    UploadFile()
+                }
                 }
               />
+                <p ref={loadTotalRef}></p>
             </div>
             <div className="d-flex flex-col">
               <label className="font-semibold">Surat Permohonan</label>
@@ -367,14 +451,19 @@ export const TambahBagianSrAdmin = () => {
               <input
                 type="file"
                 className="d-none"
+                ref={uploadRef2}
                 id="surat-permohonan"
                 onChange={(e) =>
-                  setChildren({
-                    ...children,
-                    application_letter: e.target.files[0],
-                  })
+                {
+                    setChildren({
+                        ...children,
+                        application_letter: e.target.files[0],
+                    })
+                    UploadFile2();
+                }
                 }
               />
+                <p ref={loadTotalRef2}></p>
             </div>
           </div>
         </form>
