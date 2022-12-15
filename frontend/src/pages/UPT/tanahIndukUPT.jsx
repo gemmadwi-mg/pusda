@@ -183,7 +183,7 @@ export const TanahIndukUPT = () => {
                                 className="form-control me-2 bg-none"
                                 style={{ width: "200px" }}
                                 type="search"
-                                placeholder="Search"
+                                placeholder="Search by Certificate Number"
                                 aria-label="Search"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
