@@ -19,53 +19,53 @@ use Illuminate\Support\Str;
 class AuthenticationController extends Controller
 {
 
-        /**
-        * @OA\Post(
-        * path="/api/login",
-        * operationId="authLogin",
-        * tags={"Authentication"},
-        * summary="User Login",
-        * description="Login User Here",
-        *     @OA\RequestBody(
-        *         @OA\JsonContent(),
-        *         @OA\MediaType(
-        *            mediaType="multipart/form-data",
-        *            @OA\Schema(
-        *               type="object",
-        *               required={"email", "password"},
-        *               @OA\Property(property="email", type="email"),
-        *               @OA\Property(property="password", type="password")
-        *            ),
-        *        ),
-        *    ),
-        *      @OA\Response(
-        *          response=201,
-        *          description="Selamat datang! Anda berhasil masuk",
-        *          @OA\JsonContent()
-        *       ),
-        *      @OA\Response(
-        *          response=200,
-        *          description="Selamat datang! Anda berhasil masuk",
-        *          @OA\JsonContent()
-        *       ),
-        *      @OA\Response(
-        *          response=422,
-        *          description="Unprocessable Entity",
-        *          @OA\JsonContent()
-        *       ),
-        *      @OA\Response(
-        *          response=400,
-        *          description="Kredensial masuk tidak valid,Bad request",
-        *          @OA\JsonContent()
-        *       ),
-        *      @OA\Response(
-        *          response=500,
-        *          description="Tidak dapat membuat token",
-        *          @OA\JsonContent()
-        *       ),
-        *      @OA\Response(response=404, description="Resource Not Found"),
-        * )
-        */
+    /**
+     * @OA\Post(
+     * path="/api/login",
+     * operationId="authLogin",
+     * tags={"Authentication"},
+     * summary="User Login",
+     * description="Login User Here",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(),
+     *         @OA\MediaType(
+     *            mediaType="multipart/form-data",
+     *            @OA\Schema(
+     *               type="object",
+     *               required={"email", "password"},
+     *               @OA\Property(property="email", type="email"),
+     *               @OA\Property(property="password", type="password")
+     *            ),
+     *        ),
+     *    ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Selamat datang! Anda berhasil masuk",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Selamat datang! Anda berhasil masuk",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Kredensial masuk tidak valid,Bad request",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Tidak dapat membuat token",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -79,32 +79,33 @@ class AuthenticationController extends Controller
         }
 
         try {
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json([
-                	'success' => false,
-                	'message' => 'Kredensial masuk tidak valid.',
+                    'success' => false,
+                    'message' => 'Kredensial masuk tidak valid.',
                 ], 400);
             }
         } catch (JWTException $e) {
-    	return $credentials;
+            return $credentials;
             return response()->json([
-                	'success' => false,
-                	'message' => 'Tidak dapat membuat token.',
-                ], 404);
+                'success' => false,
+                'message' => 'Tidak dapat membuat token.',
+            ], 404);
         }
         $user = Auth::user();
         return response()->json([
             'status' => true,
             'message' => 'Selamat datang! Anda berhasil masuk',
             'token' => $token,
-            'user' => array_merge($user->toArray(),
-            ['roles' => $user->roles()->get()->toArray()]),
+            'user' => array_merge(
+                $user->toArray(),
+                ['roles' => $user->roles()->get()->toArray()]
+            ),
 
         ]);
-
     }
 
-     /**
+    /**
      * @OA\Get(
      *     path="/api/user",
      *     tags={"Authentication"},
@@ -119,14 +120,16 @@ class AuthenticationController extends Controller
     public function getUser(Request $request)
     {
         $user = auth()->user();
-        $data = array_merge($user->toArray(),
-        [
-            'roles' => $user->roles()->get()->toArray(),
-        ]);
-        return response()->json($data,200);
+        $data = array_merge(
+            $user->toArray(),
+            [
+                'roles' => $user->roles()->get()->toArray(),
+            ]
+        );
+        return response()->json($data, 200);
     }
 
-     /**
+    /**
      * @OA\Get(
      *     path="/api/logout",
      *     tags={"Authentication"},
@@ -153,7 +156,7 @@ class AuthenticationController extends Controller
             return ResponseFormatter::responseValidation($validator->errors());
         }
 
-		// Request divalidasi, lakukan logout
+        // Request divalidasi, lakukan logout
         try {
             JWTAuth::invalidate($request->token);
             return ResponseFormatter::responseSuccess('Logout berhasil!');
@@ -168,47 +171,47 @@ class AuthenticationController extends Controller
 
 
     /**
-    * @OA\Post(
-    * path="/api/admin/add/user",
-    * operationId="addUser",
-    * tags={"Admin"},
-    * summary="Admin Add access user",
-    * description="only admin can add user data",
-    *     @OA\RequestBody(
-    *         @OA\JsonContent(),
-    *         @OA\MediaType(
-    *            mediaType="multipart/form-data",
-    *            @OA\Schema(
-    *               type="object",
-    *               required={"name","slug","email", "password", "password_confirmation","role_id"},
-    *               @OA\Property(property="name", type="text"),
-    *               @OA\Property(property="slug", type="text"),
-    *               @OA\Property(property="email", type="text"),
-    *               @OA\Property(property="password", type="password"),
-    *               @OA\Property(property="password_confirmation", type="password"),
-    *               @OA\Property(property="role_id", type="integer"),
-    *            ),
-    *        ),
-    *    ),
-    *      @OA\Response(
-    *          response=201,
-    *          description="'Data pengguna ditambahkan diubah!",
-    *          @OA\JsonContent()
-    *       ),
-    *      @OA\Response(
-    *          response=200,
-    *          description="'Data pengguna berhasil ditambahkan!",
-    *          @OA\JsonContent()
-    *       ),
-    *      @OA\Response(
-    *          response=422,
-    *          description="Unprocessable Entity",
-    *          @OA\JsonContent()
-    *       ),
-    *      @OA\Response(response=400, description="Bad request"),
-    *      @OA\Response(response=404, description="Resource Not Found"),
-    * )
-    */
+     * @OA\Post(
+     * path="/api/admin/add/user",
+     * operationId="addUser",
+     * tags={"Admin"},
+     * summary="Admin Add access user",
+     * description="only admin can add user data",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(),
+     *         @OA\MediaType(
+     *            mediaType="multipart/form-data",
+     *            @OA\Schema(
+     *               type="object",
+     *               required={"name","slug","email", "password", "password_confirmation","role_id"},
+     *               @OA\Property(property="name", type="text"),
+     *               @OA\Property(property="slug", type="text"),
+     *               @OA\Property(property="email", type="text"),
+     *               @OA\Property(property="password", type="password"),
+     *               @OA\Property(property="password_confirmation", type="password"),
+     *               @OA\Property(property="role_id", type="integer"),
+     *            ),
+     *        ),
+     *    ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="'Data pengguna ditambahkan diubah!",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="'Data pengguna berhasil ditambahkan!",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
     public function addUser(Request $request)
     {
         $validation = Validator::make($request->only(
@@ -218,14 +221,14 @@ class AuthenticationController extends Controller
             'password_confirmation',
             'slug',
             'role_id',
-            ),[
+        ), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
-       ]);
+        ]);
 
-       if ($validation->fails()) :
-              return ResponseFormatter::responseValidation($validation->errors());
+        if ($validation->fails()) :
+            return ResponseFormatter::responseValidation($validation->errors());
         endif;
 
         try {
@@ -237,54 +240,53 @@ class AuthenticationController extends Controller
             $user->save();
             $user->attachRole($request->role_id);
             return ResponseFormatter::responseCreated('Data pengguna berhasil ditambahkan!', $user);
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return ResponseFormatter::responseError($e->getMessage(), 400);
         }
     }
 
     /**
-    * @OA\Post(
-    * path="/api/admin/update/user/{id}",
-    * operationId="editUser",
-    * tags={"Admin"},
-    * summary="Admin Edit access user",
-    * description="only admin can update user data",
-    *     @OA\RequestBody(
-    *         @OA\JsonContent(),
-    *         @OA\MediaType(
-    *            mediaType="multipart/form-data",
-    *            @OA\Schema(
-    *               type="object",
-    *               required={"name","email","slug","role_id"},
-    *               @OA\Property(property="name", type="text"),
-    *               @OA\Property(property="slug", type="text"),
-    *               @OA\Property(property="email", type="text"),
-    *               @OA\Property(property="role_id", type="integer"),
-    *            ),
-    *        ),
-    *    ),
-    *      @OA\Response(
-    *          response=201,
-    *          description="'Data pengguna berhasil diubah!",
-    *          @OA\JsonContent()
-    *       ),
-    *      @OA\Response(
-    *          response=200,
-    *          description="'Data pengguna berhasil diubah!",
-    *          @OA\JsonContent()
-    *       ),
-    *      @OA\Response(
-    *          response=422,
-    *          description="Unprocessable Entity",
-    *          @OA\JsonContent()
-    *       ),
-    *      @OA\Response(response=400, description="Bad request"),
-    *      @OA\Response(response=404, description="Resource Not Found"),
-    * )
-    */
+     * @OA\Post(
+     * path="/api/admin/update/user/{id}",
+     * operationId="editUser",
+     * tags={"Admin"},
+     * summary="Admin Edit access user",
+     * description="only admin can update user data",
+     *     @OA\RequestBody(
+     *         @OA\JsonContent(),
+     *         @OA\MediaType(
+     *            mediaType="multipart/form-data",
+     *            @OA\Schema(
+     *               type="object",
+     *               required={"name","email","slug","role_id"},
+     *               @OA\Property(property="name", type="text"),
+     *               @OA\Property(property="slug", type="text"),
+     *               @OA\Property(property="email", type="text"),
+     *               @OA\Property(property="role_id", type="integer"),
+     *            ),
+     *        ),
+     *    ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="'Data pengguna berhasil diubah!",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="'Data pengguna berhasil diubah!",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
 
-    public function updateUser(Request $request,$id)
+    public function updateUser(Request $request, $id)
     {
         $validation = Validator::make($request->only(
             'name',
@@ -293,13 +295,13 @@ class AuthenticationController extends Controller
             'password_confirmation',
             'slug',
             'role_id',
-            ),[
+        ), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,'.$id,
-       ]);
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+        ]);
 
-       if ($validation->fails()) :
-              return ResponseFormatter::responseValidation($validation->errors());
+        if ($validation->fails()) :
+            return ResponseFormatter::responseValidation($validation->errors());
         endif;
 
         try {
@@ -308,10 +310,9 @@ class AuthenticationController extends Controller
             $user->slug = Str::slug($request->get('name'));
             $user->email  = $request->email;
             $user->update();
-            $user->syncRoles(explode(',',$request->role_id));
+            $user->syncRoles(explode(',', $request->role_id));
             return ResponseFormatter::responseCreated('Data pengguna berhasil diubah!', $user);
-
-        } catch(Exception $e){
+        } catch (Exception $e) {
             return ResponseFormatter::responseError($e->getMessage(), 400);
         }
     }
@@ -331,12 +332,24 @@ class AuthenticationController extends Controller
      *     )
      * )
      */
-    public function editUser($id){
+    public function editUser($id)
+    {
 
-        $user = User::with('roles')
-        ->where('id',$id)->first();
-        return response()->json($user, 200);
+        $user = User::with('roles')->where('id', $id)->get();
 
+        $data = $user->map(function ($user) {
+            return [
+                'name' => $user->name,
+                'email' => $user->email,
+                'role_id' => implode(',', $user->roles()->pluck('id')->toArray()),
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil',
+            'data' => $data,
+        ]);
     }
 
     /**
@@ -352,22 +365,21 @@ class AuthenticationController extends Controller
      *     )
      * )
      */
-    public function deleteUser($id){
-        try{
+    public function deleteUser($id)
+    {
+        try {
             $user = User::find($id);
             $user->delete();
             return ResponseFormatter::responseSuccess('Data pengguna berhasil dihapus!', $user);
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             return ResponseFormatter::responseError($e->getMessage(), 400);
         }
     }
 
-    public function getRole(Request $request){
+    public function getRole(Request $request)
+    {
 
         $user = Role::all();
         return response()->json($user, 200);
-
     }
-
-
 }

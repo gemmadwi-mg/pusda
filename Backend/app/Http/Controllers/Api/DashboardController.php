@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
         $auhthor = Auth::user();
         $query =  DB::table('parents')
-            ->where('auhtor', '=', Auth::user()->id)
+            ->where('auhtor', '=', Auth::user()->roles()->pluck('id'))
             ->whereYear('certificate_date', '=', $year);
 
         $total_tanah = $query->count();
@@ -26,7 +26,7 @@ class DashboardController extends Controller
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
-            ->where('auhtor', '=', Auth::user()->id)
+            ->where('auhtor', '=', Auth::user()->roles()->pluck('id'))
             ->whereYear('certificate_date', '=', $year)
             ->where('utilization_engagement_type', '=', 'pinjam_pakai')
             ->count();
@@ -35,7 +35,7 @@ class DashboardController extends Controller
             ->join('childers', function ($join) {
                 $join->on('childers.parent_id', '=', 'parents.id');
             })
-            ->where('auhtor', '=', Auth::user()->id)
+            ->where('auhtor', '=', Auth::user()->roles()->pluck('id'))
             ->whereYear('certificate_date', '=', $year)
             ->where('utilization_engagement_type', '=', 'pakai_sendiri')
             ->count();
@@ -47,7 +47,7 @@ class DashboardController extends Controller
             // ->join('payments', function ($join) {
             //     $join->on('childers.id', '=', 'payments.childrens_id');
             // })
-            ->where('auhtor', '=', Auth::user()->id)
+            ->where('auhtor', '=', Auth::user()->roles()->pluck('id'))
             ->where('utilization_engagement_type', '=', 'retribusi')
             ->whereYear('certificate_date', '=', $year)
             // ->where('year', '=', $year)
@@ -60,7 +60,7 @@ class DashboardController extends Controller
             ->join('payments', function ($join) {
                 $join->on('childers.id', '=', 'payments.childrens_id');
             })
-            ->where('auhtor', '=', Auth::user()->id)
+            ->where('auhtor', '=', Auth::user()->roles()->pluck('id'))
             ->where('utilization_engagement_type', '=', 'retribusi')
             ->where('year', '=', $year)
             ->sum('payment_amount');
@@ -72,7 +72,7 @@ class DashboardController extends Controller
             // ->join('payments', function ($join) {
             //     $join->on('childers.id', '=', 'payments.childrens_id');
             // })
-            ->where('auhtor', '=', Auth::user()->id)
+            ->where('auhtor', '=', Auth::user()->roles()->pluck('id'))
             ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
             ->whereYear('certificate_date', '=', $year)
             // ->where('year', '=', $year)
@@ -85,7 +85,7 @@ class DashboardController extends Controller
             ->join('payments', function ($join) {
                 $join->on('childers.id', '=', 'payments.childrens_id');
             })
-            ->where('auhtor', '=', Auth::user()->id)
+            ->where('auhtor', '=', Auth::user()->roles()->pluck('id'))
             ->where('utilization_engagement_type', '=', 'sewa_sip_bmd')
             ->where('year', '=', $year)
             ->sum('payment_amount');

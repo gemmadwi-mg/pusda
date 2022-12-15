@@ -22,6 +22,7 @@ class CreateParentsTable extends Migration
             $table->string('address');
             $table->string('large');
             $table->integer('asset_value');
+            $table->string('upt');
             $table->timestamps();
             $table->foreign('auhtor')->references('id')->on('users')->onDelete('cascade');
         });

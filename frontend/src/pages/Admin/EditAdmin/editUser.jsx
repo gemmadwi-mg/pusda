@@ -2,16 +2,23 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import LayoutAdmin from "../../../components/Layout/layoutAdmin";
 
-import Swal from "sweetalert2";
-
 export const EditUser = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const params = useParams();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({});
-  // const [message, setMessage] = useState([]);
+  const [user, setUser] = useState({
+    name: "",
+    role_id: "",
+    email: "",
+  });
+
+  const [roles, setRoles] = useState([]);
+
+  const [role, setRole] = useState([]);
+
+  const [message, setMessage] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +26,7 @@ export const EditUser = () => {
     try {
       let token = localStorage.getItem("token");
 
-      let res = await fetch(apiUrl + "user/update/" + params.user_id, {
+      let res = await fetch(apiUrl + "admin/update/user/" + params.user_id, {
         method: "PUT",
         body: JSON.stringify({
           ...user,
@@ -31,35 +38,14 @@ export const EditUser = () => {
       });
 
       let resJson = await res.json();
+    
 
-      if (res.status != 200) {
+      if (res.status != 201) {
         let message = resJson.message;
         if (!Array.isArray(message)) message = [resJson.message];
 
-        let messageList = "";
-        message.forEach((item) => {
-          messageList += "<li>" + item + "</li>";
-        });
-
-        return Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          html: messageList,
-          // text: messageList,
-          // timer: 1000,
-        });
-
-        // return setMessage(message);
+        return setMessage(message);
       }
-
-      Swal.fire({
-        title: "Berhasil",
-        text: resJson.message,
-        icon: "success",
-        timer: 1000,
-        // position: "center",
-        // showConfirmButton: false,
-      });
 
       return navigate("/manajemenuser/admin");
     } catch (error) {
@@ -82,20 +68,50 @@ export const EditUser = () => {
 
         let resJson = await res.json();
 
-        if (res.status !== 200) {
+        if (res.status != 200) {
+          return console.log(resJson.message);
+        }
+
+        let resData = resJson;
+        console.log(resData.data[0]);
+        setUser(resData.data[0]);
+        // setRoles(resData.roles);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchUser().catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+
+    const fetchRole = async () => {
+      try {
+        let res = await fetch("http://127.0.0.1:8000/api/admin/role", {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: "Bearer " + token,
+          },
+        });
+
+        let resJson = await res.json();
+
+        if (res.status != 200) {
           return console.log(resJson.message);
         }
 
         let resData = resJson;
         console.log(resData);
-        setUser(resData);
+        setRole(resData);
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchUser().catch(console.error);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    fetchRole().catch(console.error);
+  }, []);
 
   return (
     <LayoutAdmin>
@@ -168,10 +184,7 @@ export const EditUser = () => {
                 })
               }
             >
-              <option value="" disabled>
-                -- Pilih --
-              </option>
-              {user.map((item) => {
+              {role.map((item) => {
                 return <option value={item.id}>{item.name}</option>;
               })}
             </select>
