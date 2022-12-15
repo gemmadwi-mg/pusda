@@ -65,7 +65,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
     // Route::get('/export/data', [ImportExportData::class, 'exportMappingUpt']);
     Route::get('/export/data', [DashboardController::class, 'getDataUPTExport']);
     //  Import File parent
-    Route::post('/import/file/parent', [ImportExportData::class, 'import_parent']);
+    Route::post('/import/file/{upt}/parent/{author}', [ImportExportData::class, 'import_parent']);
     //  Import File parent
     Route::post('/import/file/children/{id}', [ImportExportData::class, 'import_children']);
 
@@ -75,6 +75,7 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         Route::get('/', [ParentController::class, 'getAllParentWithUserLogIn']);
         Route::get('/all', [ParentController::class, 'getAllParent']);
         Route::get('/{id}', [ParentController::class, 'getById']);
+        Route::get('/{upt}/all', [ParentController::class, 'findUPT']);
         Route::post('/update/{id}', [ParentController::class, 'updateParent']);
         Route::delete('/delete/{id}', [ParentController::class, 'deleteParent']);
     });

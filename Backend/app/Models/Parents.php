@@ -16,7 +16,8 @@ class Parents extends Model
         'item_name',
         'address',
         'large',
-        'asset_value'
+        'asset_value',
+        'upt'
     ];
 
     public function user()

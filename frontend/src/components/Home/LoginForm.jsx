@@ -141,9 +141,9 @@ export const LoginForm = () => {
         >
           MASUK
         </Button>
-        {/* <Link to="/lupa-password" className="rounded text-cyanblue form-btn bg-none font-semibold text-center">
+        <Link to="/lupa-password" className="rounded text-cyanblue form-btn bg-none font-semibold text-center">
           Forgot Password?
-        </Link> */}
+        </Link>
       </div>
     </form>
   );

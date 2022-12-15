@@ -11,6 +11,13 @@ use Maatwebsite\Excel\Concerns\Importable;
 class IndukImport implements ToModel,WithHeadingRow
 {
     use Importable;
+
+    public function __construct($upt, $author)
+    {
+        $this->upt = $upt;
+        $this->author = $author;
+    }
+
     /**
     * @param array $row
     *
@@ -21,7 +28,7 @@ class IndukImport implements ToModel,WithHeadingRow
         if (!isset($row['nomor_sertifikat'])) {
             return null;
         }
-        $user = Auth::user()->id;
+        $user = $this->author;
 
         return new Parents([
             'auhtor' => $user,
@@ -31,6 +38,7 @@ class IndukImport implements ToModel,WithHeadingRow
             'certificate_number' => $row['nomor_sertifikat'],
             'certificate_date'=> \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_sertifikat']),
             'asset_value'=> $row['nilai_aset'],
+            'upt' => $this->upt
         ]);
     }
 }

@@ -16,6 +16,8 @@ export const TanahIndukAdmin = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+
+
     //format date into yyyy-mm-dd with leading zero
     const formatDate = (date) => {
         const d = new Date(date);
@@ -49,15 +51,16 @@ export const TanahIndukAdmin = () => {
         luas: "",
     });
 
+
     useEffect(() => {
         const fetchData = async () => {
             let token = localStorage.getItem("token");
             let authorId = localStorage.getItem("active_author_id");
-
+            console.log(authorId)
             try {
                 let res = await fetch(
                     apiUrl +
-                    "parent/all?page=" +
+                    `parent/${params.id}/all?p  age=` +
                     pageNum +
                     "&auhtor=" +
                     authorId +
@@ -118,10 +121,12 @@ export const TanahIndukAdmin = () => {
     };
 
     const importDataTanahInduk = () => {
+
         Swal.fire({
             title: "Import Data",
             text: "Upload file excel",
             input: "file",
+            html: "data uploading",
             inputAttributes: {
                 accept: ".xls,.xlsx,.csv, .xlx",
                 "aria-label": "Upload your file",
@@ -131,12 +136,15 @@ export const TanahIndukAdmin = () => {
             confirmButtonText: "Upload",
             showLoaderOnConfirm: true,
             preConfirm: (file) => {
+                let authorId = localStorage.getItem("active_author_id")
+
                 let token = localStorage.getItem("token");
                 let formData = new FormData();
                 formData.append("file", file);
                 formData.append("token", token);
+                console.log(formData.get(file)  )
 
-                return fetch(apiUrl + "import/file/parent", {
+                return fetch(apiUrl + `import/file/${params.id}/parent/${authorId}`, {
                     method: "POST",
                     body: formData,
                 }).then((response) => {
@@ -185,9 +193,9 @@ export const TanahIndukAdmin = () => {
                         <div className="d-flex">
                             <input
                                 className="form-control me-2 bg-none"
-                                style={{ width: "300px" }}
+                                style={{ width: "200px" }}
                                 type="search"
-                                placeholder="Search by Certificate Number"
+                                placeholder="Search"
                                 aria-label="Search"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}

@@ -181,9 +181,9 @@ export const TanahIndukUPT = () => {
                         <div className="d-flex">
                             <input
                                 className="form-control me-2 bg-none"
-                                style={{ width: "300px" }}
+                                style={{ width: "200px" }}
                                 type="search"
-                                placeholder="Search by Certificate Number"
+                                placeholder="Search"
                                 aria-label="Search"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
