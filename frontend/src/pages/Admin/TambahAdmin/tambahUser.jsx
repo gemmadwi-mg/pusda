@@ -84,7 +84,7 @@ export const TambahUser = () => {
 
     const fetchRole = async () => {
       try {
-        let res = await fetch("http://127.0.0.1:8000/api/admin/role", {
+        let res = await fetch(apiUrl + "admin/role", {
           method: "GET",
           headers: {
             "Content-type": "application/json; charset=UTF-8",
