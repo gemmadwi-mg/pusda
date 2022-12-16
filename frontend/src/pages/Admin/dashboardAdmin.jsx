@@ -183,7 +183,7 @@ export const DashboardAdmin = () => {
           </div>
           {emptyMsg === "" ? (
             <>
-              {dashboardData.map((item) => {
+              {dashboardData.slice(0, 7).map((item) => {
                 return (
                   <DashboardTableRow
                     key={item.id}
