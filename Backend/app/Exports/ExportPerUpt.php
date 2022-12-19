@@ -33,7 +33,6 @@ class ExportPerUpt implements FromCollection, WithMapping, WithHeadings
     public function map($invoice): array
     {
         return [
-            $invoice->parent->auhtor = Auth::user()->name,
             $invoice->parent->certificate_number,
             $invoice->parent->certificate_date,
             $invoice->parent->address,
@@ -62,7 +61,6 @@ class ExportPerUpt implements FromCollection, WithMapping, WithHeadings
     public function headings(): array
     {
         return [
-            'Nama Author',
             'Nomor Sertifikat',
             'Tanggal Sertifikat',
             'Alamat',

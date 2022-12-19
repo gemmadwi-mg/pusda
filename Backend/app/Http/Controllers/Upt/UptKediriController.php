@@ -20,8 +20,8 @@ class UptKediriController extends Controller
     public function index()
     {
         $data = Parents::orderBy('id','desc')
-        ->where('auhtor',Auth::user()->roles()->pluck('id'))
-        ->paginate(10);
+        ->where('auhtor', auth()->user()->roles()->pluck('id') )
+        ->get();
         return view('upt.upt_kediri.index',compact('data'));
     }
 

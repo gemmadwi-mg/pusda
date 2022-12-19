@@ -77,8 +77,8 @@
                                             <tbody>
                                                 @foreach($data  as $no => $n)
                                                 <tr >
-                                                    <td> {{ $no + $data->firstItem() }} </td>
-                                                    <td> {{$n->user->name}} </td>
+                                                    <td># </td>
+                                                    <td> {{Auth::user()->name}} </td>
                                                     <td>
                                                         <h5 class="m-0 font-weight-normal">
                                                             {{$n->certificate_number}}
@@ -106,7 +106,7 @@
                                         </table>
                                     </div> <!-- end .table-responsive-->
                             </div> <!-- end card-box-->
-                            {{$data->links('vendor.pagination.bootstrap-4')}}
+                            {{-- {{$data->links('vendor.pagination.bootstrap-4')}} --}}
                         </div>
                      </div>
 
