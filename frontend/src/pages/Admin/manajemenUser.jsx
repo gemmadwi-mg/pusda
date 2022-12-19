@@ -118,15 +118,6 @@ export const ManajemenUser = () => {
               Tambah User
             </Link>
           </div>
-          <div className="d-flex">
-            <input
-              className="form-control me-2 bg-none"
-              style={{ width: "200px" }}
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            ></input>
-          </div>
         </div>
         <div>
           {emptyMsg == "" ? (
