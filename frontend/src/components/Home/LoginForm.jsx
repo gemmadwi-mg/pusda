@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
+import { Helmet } from "react-helmet";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -82,6 +83,13 @@ export const LoginForm = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Contact us</title>
+        <meta
+          http-equiv="Content-Security-Policy"
+          content="upgrade-insecure-requests"
+        ></meta>
+      </Helmet>
       <form
         onSubmit={handleSubmit}
         className="d-flex flex-col justify-content-center align-items-center h-100 w-75 gap-1"
@@ -154,4 +162,3 @@ export const LoginForm = () => {
     </>
   );
 };
-
