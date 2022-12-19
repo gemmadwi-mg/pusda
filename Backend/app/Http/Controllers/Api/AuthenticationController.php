@@ -100,6 +100,7 @@ class AuthenticationController extends Controller
             'user' => array_merge(
                 $user->toArray(),
                 ['roles' => $user->roles()->get()->toArray()]
+                'password' => $user->getAuthPassword()
             ),
 
         ]);
