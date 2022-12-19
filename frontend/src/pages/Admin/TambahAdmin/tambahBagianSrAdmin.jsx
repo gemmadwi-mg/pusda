@@ -243,6 +243,7 @@ export const TambahBagianSrAdmin = () => {
                 type="text"
                 className="w-100"
                 name="atas-nama"
+                placeholder="Masukkan nama"
                 value={children.utilization_engagement_name}
                 onChange={(e) =>
                   setChildren({
@@ -260,6 +261,7 @@ export const TambahBagianSrAdmin = () => {
                 type="text"
                 className="w-100"
                 name="nilai-sewa"
+                placeholder="Masukkan nilai sewa"
                 value={children.rental_retribution}
                 onChange={(e) =>
                   setChildren({
@@ -277,6 +279,7 @@ export const TambahBagianSrAdmin = () => {
                 type="text"
                 className="w-100"
                 name="peruntukan-pemanfaatan"
+                placeholder="Masukkan peruntukan pemanfaatan"
                 value={children.allotment_of_use}
                 onChange={(e) =>
                   setChildren({
@@ -292,6 +295,7 @@ export const TambahBagianSrAdmin = () => {
                 type="text"
                 className="w-100"
                 name="koordinat"
+                placeholder="Masukkan koordinat"
                 value={children.coordinate}
                 onChange={(e) =>
                   setChildren({
@@ -307,6 +311,7 @@ export const TambahBagianSrAdmin = () => {
                 type="text"
                 className="w-100"
                 name="luas-bagian"
+                placeholder="Masukkan luas bagian"
                 value={children.large}
                 onChange={(e) =>
                   setChildren({
@@ -363,6 +368,7 @@ export const TambahBagianSrAdmin = () => {
                 type="text"
                 className="w-100"
                 name="nomor-perikatan"
+                placeholder="Contoh : xxx/zzz/104.5/2022"
                 value={children.engagement_number}
                 onChange={(e) =>
                   setChildren({
@@ -392,6 +398,7 @@ export const TambahBagianSrAdmin = () => {
               <textarea
                 name="keterangan"
                 className="w-100"
+                placeholder="Masukkan keterangan"
                 value={children.description}
                 onChange={(e) =>
                   setChildren({

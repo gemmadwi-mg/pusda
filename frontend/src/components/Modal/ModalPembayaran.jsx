@@ -158,6 +158,7 @@ export const ModalPembayaran = ({
                 type="text"
                 className="w-100"
                 name="nilai-sewa"
+                placeholder="Masukkan Tahun"
                 value={payment.year}
                 onChange={(e) =>
                   setPayment({
@@ -173,6 +174,7 @@ export const ModalPembayaran = ({
                 type="text"
                 className="w-100"
                 name="nilai-sewa"
+                placeholder="Masukkan jumlah pembayaran"
                 value={payment.payment_amount}
                 onChange={(e) =>
                   setPayment({

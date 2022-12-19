@@ -165,6 +165,7 @@ export const TambahBagianPppsUPT = () => {
                                 type="text"
                                 className="w-100"
                                 name="nilai-aset"
+                                placeholder="Masukkan nilai asset"
                                 value={children.assets_value}
                                 onChange={(e) =>
                                     setChildren({
@@ -182,6 +183,7 @@ export const TambahBagianPppsUPT = () => {
                                 type="text"
                                 className="w-100"
                                 name="peruntukan-pemanfaatan"
+                                placeholder="Masukkan peruntukan pemanfaatan"
                                 value={children.allotment_of_use}
                                 onChange={(e) =>
                                     setChildren({
@@ -197,6 +199,7 @@ export const TambahBagianPppsUPT = () => {
                                 type="text"
                                 className="w-100"
                                 name="luas-bagian"
+                                placeholder="Masukkan luas bagian"
                                 value={children.large}
                                 onChange={(e) =>
                                     setChildren({
@@ -212,6 +215,7 @@ export const TambahBagianPppsUPT = () => {
                                 type="text"
                                 className="w-100"
                                 name="kondisi"
+                                placeholder="Masukkan kondisi tanah"
                                 value={children.present_condition}
                                 onChange={(e) =>
                                     setChildren({
@@ -229,6 +233,7 @@ export const TambahBagianPppsUPT = () => {
                                 type="text"
                                 className="w-100"
                                 name="koordinat"
+                                placeholder="Masukkan koordinat"
                                 value={children.coordinate}
                                 onChange={(e) =>
                                     setChildren({
@@ -242,6 +247,7 @@ export const TambahBagianPppsUPT = () => {
                             <label htmlFor="keterangan">Keterangan</label>
                             <textarea
                                 name="keterangan"
+                                placeholder="Masukkan keterangan"
                                 className="w-100"
                                 value={children.description}
                                 onChange={(e) =>

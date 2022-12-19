@@ -43,12 +43,12 @@ export const TableBagianSr = ({iterator, upt, children}) => {
         {iterator}
       </div>
       <div className="col">
-        <p className="table-title p-0 m-0">NO PERIKATAN</p>
-        <p className="p-0 m-0">{children.engagement_number}</p>
-      </div>
-      <div className="col">
         <p className="table-title p-0 m-0">JENIS PERIKATAN</p>
         <p className="p-0 m-0">{mapType(children.utilization_engagement_type)}</p>
+      </div>
+      <div className="col">
+        <p className="table-title p-0 m-0">NO PERIKATAN</p>
+        <p className="p-0 m-0">{children.engagement_number}</p>
       </div>
       <div className="col">
         <p className="table-title p-0 m-0">PEMANFAATAN</p>

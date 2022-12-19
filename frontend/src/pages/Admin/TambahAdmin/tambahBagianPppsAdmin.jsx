@@ -159,6 +159,7 @@ export const TambahBagianPppsAdmin = () => {
                 type="text"
                 className="w-100"
                 name="peruntukan-pemanfaatan"
+                placeholder="Masukkan peruntukan pemanfaatan"
                 value={children.allotment_of_use}
                 onChange={(e) =>
                   setChildren({
@@ -174,6 +175,7 @@ export const TambahBagianPppsAdmin = () => {
                 type="text"
                 className="w-100"
                 name="luas-bagian"
+                placeholder="Masukan luas bagian"
                 value={children.large}
                 onChange={(e) =>
                   setChildren({
@@ -189,6 +191,7 @@ export const TambahBagianPppsAdmin = () => {
                 type="text"
                 className="w-100"
                 name="kondisi"
+                placeholder="Masukkan kondisi tanah"
                 value={children.present_condition}
                 onChange={(e) =>
                   setChildren({
@@ -206,6 +209,7 @@ export const TambahBagianPppsAdmin = () => {
                 type="text"
                 className="w-100"
                 name="koordinat"
+                placeholder="Masukkan koordinat"
                 value={children.coordinate}
                 onChange={(e) =>
                   setChildren({
@@ -220,6 +224,7 @@ export const TambahBagianPppsAdmin = () => {
               <textarea
                 name="keterangan"
                 className="w-100"
+                placeholder="Masukkan keterangan"
                 value={children.description}
                 onChange={(e) =>
                   setChildren({
