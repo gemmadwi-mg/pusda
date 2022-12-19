@@ -27,6 +27,7 @@ export const LoginForm = () => {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
+        referrerPolicy: "unsafe_url" 
       });
 
       let resJson = await res.json();
