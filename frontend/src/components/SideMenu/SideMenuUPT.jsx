@@ -4,6 +4,7 @@ import { SideMenuItem } from "../SideMenuItem";
 
 export const SideMenuUPT = () => {
   const userName = localStorage.getItem('user_name');
+  const userRoles = localStorage.getItem('user_roles');
   const userSlug = localStorage.getItem('user_slug');
 
     return (
@@ -19,7 +20,7 @@ export const SideMenuUPT = () => {
         </div>
         <h6 className="ps-4 font-semibold">DATA UPT</h6>
         <div className="side-menu-list d-flex flex-col p-0">
-          <SideMenuItem title={userName} id={"/upt/"+userSlug+"/upt"} />
+          <SideMenuItem title={userRoles} id={"/upt/"+userSlug+"/upt"} />
         </div>
       </div>
     );
