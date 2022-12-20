@@ -139,6 +139,7 @@ export const TambahIndukUPT = () => {
                             type="text"
                             className="w-100"
                             name="nama-jenis-barang"
+                            placeholder="Masukkan nama/jenis barang"
                             value={induk.item_name}
                             onChange={(e) =>
                                 setInduk({
@@ -154,6 +155,7 @@ export const TambahIndukUPT = () => {
                             type="text"
                             className="w-100"
                             name="nilai-aset"
+                            placeholder="Masukkan nilai aset"
                             value={induk.asset_value}
                             onChange={(e) =>
                                 setInduk({
@@ -171,6 +173,7 @@ export const TambahIndukUPT = () => {
                                 <input
                                     type="text"
                                     id="sertifikat-nomor"
+                                    placeholder="Ex : 1"
                                     style={{ width: "100px" }}
                                     value={induk.certificate_number}
                                     onChange={(e) =>
@@ -201,25 +204,12 @@ export const TambahIndukUPT = () => {
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="sertifikat-alamat">Alamat</label>
-                        <textarea
-                            name="sertifikat-alamat"
-                            className="w-100"
-                            value={induk.address}
-                            onChange={(e) =>
-                                setInduk({
-                                    ...induk,
-                                    address: e.target.value,
-                                })
-                            }
-                        ></textarea>
-                    </div>
-                    <div>
                         <label htmlFor="sertifikat-luas">Luas Induk</label>
                         <input
                             type="text"
                             className="w-100"
                             name="sertifikat-luas"
+                            placeholder="Masukkan luas"
                             value={induk.large}
                             onChange={(e) =>
                                 setInduk({
@@ -229,6 +219,22 @@ export const TambahIndukUPT = () => {
                             }
                         />
                     </div>
+                    <div>
+                        <label htmlFor="sertifikat-alamat">Alamat</label>
+                        <textarea
+                            name="sertifikat-alamat"
+                            className="w-100"
+                            placeholder="Masukkan alamat"
+                            value={induk.address}
+                            onChange={(e) =>
+                                setInduk({
+                                    ...induk,
+                                    address: e.target.value,
+                                })
+                            }
+                        ></textarea>
+                    </div>
+
                     {/* <div>
                         <label htmlFor="sertifikat-nilai">Nilai Aset</label>
                         <input

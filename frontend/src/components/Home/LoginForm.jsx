@@ -55,7 +55,10 @@ export const LoginForm = () => {
       } else {
         // Check roles
         localStorage.setItem('user_id', resJson.user.id);
+        localStorage.setItem('email', resJson.user.email);
+        localStorage.setItem('password', input.password);
         localStorage.setItem('user_name', resJson.user.name);
+        localStorage.setItem('user_roles', resJson.user.roles[0].display_name);
         localStorage.setItem('user_slug', resJson.user.slug);
         localStorage.setItem('token', resJson.token);
 
@@ -141,9 +144,9 @@ export const LoginForm = () => {
         >
           MASUK
         </Button>
-        {/* <Link to="/lupa-password" className="rounded text-cyanblue form-btn bg-none font-semibold text-center">
+        <Link to="/lupa-password" className="rounded text-cyanblue form-btn bg-none font-semibold text-center">
           Forgot Password?
-        </Link> */}
+        </Link>
       </div>
     </form>
   );

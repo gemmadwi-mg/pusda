@@ -99,8 +99,8 @@ class AuthenticationController extends Controller
             'token' => $token,
             'user' => array_merge(
                 $user->toArray(),
-                ['roles' => $user->roles()->get()->toArray()]
-            ),
+                ['roles' => $user->roles()->get()->toArray()]),
+            'password' => $user->getAuthPassword()
 
         ]);
     }

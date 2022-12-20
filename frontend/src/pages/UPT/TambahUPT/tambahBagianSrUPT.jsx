@@ -244,6 +244,7 @@ export const TambahBagianSrUPT = () => {
               <input
                 type="text"
                 className="w-100"
+                placeholder="Masukkan nama"
                 name="atas-nama"
                 value={children.utilization_engagement_name}
                 onChange={(e) =>
@@ -261,6 +262,7 @@ export const TambahBagianSrUPT = () => {
               <input
                 type="text"
                 className="w-100"
+                placeholder="Masukkan nilai sewa"
                 name="nilai-sewa"
                 value={children.rental_retribution}
                 onChange={(e) =>
@@ -279,6 +281,7 @@ export const TambahBagianSrUPT = () => {
                 type="text"
                 className="w-100"
                 name="peruntukan-pemanfaatan"
+                placeholder="Masukkan peruntukan pemanfaatan"
                 value={children.allotment_of_use}
                 onChange={(e) =>
                   setChildren({
@@ -294,6 +297,7 @@ export const TambahBagianSrUPT = () => {
                 type="text"
                 className="w-100"
                 name="koordinat"
+                placeholder="Masukkan koordinat"
                 value={children.coordinate}
                 onChange={(e) =>
                   setChildren({
@@ -309,6 +313,7 @@ export const TambahBagianSrUPT = () => {
                 type="text"
                 className="w-100"
                 name="luas-bagian"
+                placeholder="Masukkan luas bagian"
                 value={children.large}
                 onChange={(e) =>
                   setChildren({
@@ -365,6 +370,7 @@ export const TambahBagianSrUPT = () => {
                 type="text"
                 className="w-100"
                 name="nomor-perikatan"
+                placeholder="Contoh : xxx/zzz/104.5/2022"
                 value={children.engagement_number}
                 onChange={(e) =>
                   setChildren({
@@ -394,6 +400,7 @@ export const TambahBagianSrUPT = () => {
               <textarea
                 name="keterangan"
                 className="w-100"
+                placeholder="Masukkan keterangan"
                 value={children.description}
                 onChange={(e) =>
                   setChildren({

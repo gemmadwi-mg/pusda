@@ -88,7 +88,8 @@ export const TanahIndukUPT = () => {
                     ? resJson.data
                     : resJson.data.data;
 
-                if (resData.length == 0) {
+                if (resData.length === 0) {
+                    setTimeout(()=>Swal.close(), 500)
                     return setEmptyMsg("Tidak ada data.");
                 }
 
@@ -98,7 +99,15 @@ export const TanahIndukUPT = () => {
                 console.log(error);
             }
         };
-
+        Swal.fire({
+            title: "Memuat Data",
+            text : 'Mengambil dan memuat data',
+            allowEscapeKey : false,
+            allowOutsideClick: false,
+            didOpen(popup) {
+                Swal.showLoading()
+            }
+        })
         fetchData().catch(console.error);
     }, [params.id, triggerDeleted, pageNum, search]);
 
@@ -181,9 +190,9 @@ export const TanahIndukUPT = () => {
                         <div className="d-flex">
                             <input
                                 className="form-control me-2 bg-none"
-                                style={{ width: "300px" }}
+                                style={{ width: "200px" }}
                                 type="search"
-                                placeholder="Search by Certificate Number"
+                                placeholder="Search"
                                 aria-label="Search"
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
@@ -202,6 +211,9 @@ export const TanahIndukUPT = () => {
                             {emptyMsg == "" ? (
                                 <>
                                     {data.map((item, key) => {
+                                        if(key+1 === data.length){
+                                            setTimeout(()=>Swal.close(), 500)
+                                        }
                                         return (
                                             <UPTDashboardTableRow
                                                 iterator={startingPoint + key}

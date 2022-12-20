@@ -33,8 +33,16 @@ export const TableBagianPpps = ({iterator, upt, children}) => {
         <p className="p-0 m-0">{mapType(children.utilization_engagement_type)}</p>
       </div>
       <div className="col">
+        <p className="table-title p-0 m-0"></p>
+        <p className="p-0 m-0"></p>
+      </div>
+      <div className="col">
         <p className="table-title p-0 m-0">PEMANFAATAN</p>
         <p className="p-0 m-0">{children.allotment_of_use}</p>
+      </div>
+      <div className="col">
+        <p className="table-title p-0 m-0"></p>
+        <p className="p-0 m-0"></p>
       </div>
       <div className="col">
         <p className="table-title p-0 m-0">KONDISI SAAT INI</p>

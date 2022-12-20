@@ -7,6 +7,7 @@ import { ExportExcel } from "../../components/ExportExcel";
 export const DashboardUPT = () => {
     const apiUrl = process.env.REACT_APP_API_URL;
 
+    const userRoles = localStorage.getItem("user_roles");
     const userName = localStorage.getItem("user_name");
 
     const formatter = new Intl.NumberFormat("id-ID", {
@@ -166,7 +167,7 @@ export const DashboardUPT = () => {
                             {dashboardData.map((item) => {
                                 return (
                                     <DashboardTableRow
-                                        title={userName}
+                                        title={userRoles}
                                         dashboardItem={item}
                                     />
                                 );
