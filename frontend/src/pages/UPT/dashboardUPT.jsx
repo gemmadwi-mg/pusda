@@ -26,7 +26,7 @@ export const DashboardUPT = () => {
         total_tanah_retribusi: 0,
         total_rupiah_tanah_retribusi: 0
     });
-    const [filterYear, setFilterYear] = useState("2022");
+    const [filterYear, setFilterYear] = useState("2023");
     const [emptyMsg, setEmptyMsg] = useState("");
 
     useEffect(() => {
@@ -111,6 +111,11 @@ export const DashboardUPT = () => {
                     }}
                     className="h-100 rounded text-cyanblue px-3 py-1 font-semibold bg-white border-cyanblue"
                 >
+                    <option value="2027">2027</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
                     <option value="2022">2022</option>
                     <option value="2021">2021</option>
                     <option value="2020">2020</option>
@@ -178,58 +183,6 @@ export const DashboardUPT = () => {
                             <div class="text-center">{emptyMsg}</div>
                         </>
                     )}
-                </div>
-                <div
-                    className="row row-content col-footer border-none"
-                    style={{
-                        background: "#EDF9FB",
-                    }}
-                >
-                    <div className="col d-flex align-items-center justify-content-center">
-                        TOTAL KESELURUHAN
-                    </div>
-                    <div className="col d-flex align-items-center justify-content-center">
-                        {total.total_tanah_induk}
-                    </div>
-                    <div className="col d-flex flex-col align-items-center justify-content-center">
-                        <div className="row py-2">
-                            <div className="col">
-                                {total.total_tanah_pinjam_pakai}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col d-flex flex-col align-items-center justify-content-center">
-                        <div className="row py-2">
-                            <div className="col">
-                                {total.total_tanah_pakai_sendiri}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col d-flex flex-col align-items-center justify-content-center">
-                        <div className="row py-2">
-                            <div className="col">
-                                {total.total_tanah_sewa_sip_bmd}
-                            </div>
-                            <div className="col">
-                                {formatter.format(
-                                    total
-                                        .total_rupiah_tanah_sewa_sip_bmd
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col d-flex flex-col align-items-center justify-content-center">
-                        <div className="row py-2">
-                            <div className="col">
-                                {total.total_tanah_retribusi}
-                            </div>
-                            <div className="col">
-                                {formatter.format(
-                                    total.total_rupiah_tanah_retribusi
-                                )}
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </LayoutUPT>

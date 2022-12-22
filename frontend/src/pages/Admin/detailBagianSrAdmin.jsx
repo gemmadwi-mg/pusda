@@ -120,7 +120,6 @@ export const DetailBagianSrAdmin = () => {
 
                 let resData = resJson.data.data;
                 if (resData.length === 0) {
-                    setTimeout(()=> Swal.close())
                     return setEmptyMsg("Tidak ada data");
                 }
 
@@ -131,16 +130,6 @@ export const DetailBagianSrAdmin = () => {
                 console.log(error);
             }
         };
-
-        Swal.fire({
-            title: "Memuat Data",
-            text : 'Mengambil dan memuat data',
-            allowEscapeKey : false,
-            allowOutsideClick: false,
-            didOpen(popup) {
-                Swal.showLoading()
-            }
-        });
 
         fetchChildren().catch(console.error);
         fetchPayment().catch(console.error);
@@ -334,9 +323,6 @@ export const DetailBagianSrAdmin = () => {
                     <div className="table-informasi-pembayaran">
                         {emptyMsg === "" ? (
                             payment.map((item, key) => {
-                                if(key+1 === payment.length){
-                                    setTimeout(()=> Swal.close(), 500)
-                                }
                                 return (
                                     <TablePembayaran
                                         iterator={startingPoint + key}

@@ -23,7 +23,7 @@ export const DashboardAdmin = () => {
     total_tanah_retribusi: 0,
     total_rupiah_tanah_retribusi: 0,
   });
-  const [filterYear, setFilterYear] = useState("2022");
+  const [filterYear, setFilterYear] = useState("2023");
   const [emptyMsg, setEmptyMsg] = useState("");
 
   useEffect(() => {
@@ -130,6 +130,11 @@ export const DashboardAdmin = () => {
           }}
           className="h-100 rounded text-cyanblue px-3 py-1 font-semibold bg-white border-cyanblue"
         >
+          <option value="2027">2027</option>
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
           <option value="2022">2022</option>
           <option value="2021">2021</option>
           <option value="2020">2020</option>
@@ -234,7 +239,9 @@ export const DashboardAdmin = () => {
               <div className="col d-flex flex-col align-items-center justify-content-center">
                 <div className="row py-2">
                   <div className="col">{item.total_tanah_retribusi}</div>
-                  <div className="col">{formatter.format(item.total_rupiah_retribusi)}</div>
+                  <div className="col">
+                    {formatter.format(item.total_rupiah_retribusi)}
+                  </div>
                 </div>
               </div>
             </div>

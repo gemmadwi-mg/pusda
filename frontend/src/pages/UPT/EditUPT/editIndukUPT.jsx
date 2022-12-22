@@ -215,20 +215,6 @@ export const EditIndukUPT = () => {
             </div>
           </div>
           <div>
-            <label htmlFor="sertifikat-alamat">Alamat</label>
-            <textarea
-              name="sertifikat-alamat"
-              className="w-100"
-              value={induk.address}
-              onChange={(e) =>
-                setInduk({
-                  ...induk,
-                  address: e.target.value,
-                })
-              }
-            ></textarea>
-          </div>
-          <div>
             <label htmlFor="sertifikat-luas">Luas Induk</label>
             <input
               type="text"
@@ -243,6 +229,21 @@ export const EditIndukUPT = () => {
               }
             />
           </div>
+          <div>
+            <label htmlFor="sertifikat-alamat">Alamat</label>
+            <textarea
+              name="sertifikat-alamat"
+              className="w-100"
+              value={induk.address}
+              onChange={(e) =>
+                setInduk({
+                  ...induk,
+                  address: e.target.value,
+                })
+              }
+            ></textarea>
+          </div>
+
           {/* <div>
                         <label htmlFor="sertifikat-nilai">Nilai Aset</label>
                         <input

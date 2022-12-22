@@ -95,7 +95,6 @@ export const TanahIndukAdmin = () => {
                 ? resJson.data
                 : resJson.data.data;
             if (resData.length === 0) {
-                setTimeout(()=>Swal.close(), 200)
                 return setEmptyMsg("Tidak ada data.");
             }
 
@@ -108,15 +107,6 @@ export const TanahIndukAdmin = () => {
     };
 
     useEffect(() => {
-        Swal.fire({
-            title: "Memuat Data",
-            text : 'Mengambil dan memuat data',
-            allowEscapeKey : false,
-            allowOutsideClick: false,
-            didOpen(popup) {
-                Swal.showLoading()
-            }
-        });
         fetchData().catch(console.error)
     }, [params.id, triggerDeleted, pageNum, search]); // eslint-disable-line react-hooks/exhaustive-deps
 

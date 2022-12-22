@@ -130,12 +130,6 @@ export const DetailBagianPppsAdmin = () => {
                         style={{ paddingRight: "100px" }}
                     >
                         <div>
-                            <label htmlFor="nilai-asset">
-                                Nilai Asset (Rp/Tahun)
-                            </label>
-                            <h5>{formatter.format(children.assets_value)}</h5>
-                        </div>
-                        <div>
                             <label htmlFor="koordinat">Koordinat (LS BT)</label>
                             <h5>{children.coordinate}</h5>
                         </div>
