@@ -11,12 +11,14 @@ export const TambahIndukUPT = () => {
     const params = useParams();
 
     const [induk, setInduk] = useState({
+        auhtor: localStorage.getItem('active_author_id'),
         certificate_number: "",
         certificate_date: "",
         address: "",
         large: "",
         asset_value: "",
         item_name: "",
+        upt: params.id
     });
 
     const [message, setMessage] = useState([]);

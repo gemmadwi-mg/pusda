@@ -58,7 +58,7 @@ export const TanahIndukAdmin = () => {
         try {
             let res = await fetch(
                 apiUrl +
-                `parent/${params.id}/all?p  age=` +
+                `parent/all?page=` +
                 pageNum +
                 "&auhtor=" +
                 authorId +
