@@ -7,6 +7,8 @@ import { ExportExcel } from "../../components/ExportExcel";
 export const DashboardAdmin = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({length: currentYear - 1945 + 6}, (v, k) => k + 1945).reverse();
   const formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -23,7 +25,7 @@ export const DashboardAdmin = () => {
     total_tanah_retribusi: 0,
     total_rupiah_tanah_retribusi: 0,
   });
-  const [filterYear, setFilterYear] = useState("2023");
+  const [filterYear, setFilterYear] = useState(currentYear);
   const [emptyMsg, setEmptyMsg] = useState("");
 
   useEffect(() => {
@@ -125,21 +127,16 @@ export const DashboardAdmin = () => {
       <div className="d-flex justify-content-between px-3 py-3">
         <select
           value={filterYear}
+          id="year-select"
           onChange={(e) => {
             setFilterYear(e.target.value);
           }}
           className="h-100 rounded text-cyanblue px-3 py-1 font-semibold bg-white border-cyanblue"
         >
-          <option value="2027">2027</option>
-          <option value="2026">2026</option>
-          <option value="2025">2025</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-          <option value="2022">2022</option>
-          <option value="2021">2021</option>
-          <option value="2020">2020</option>
-          <option value="2019">2019</option>
-        </select>
+            {years.map((year) => (
+              <option value={year}>{year}</option>
+            ))}
+          </select>
         <div className="d-flex gap-2 align-items-center">
           <ExportExcel excelData={exportData} fileName="Semua Data UPT" />
           {/* <div onClick={() => exportData()} className="bg-cyanblue px-3 py-1 font-semibold text-white rounded primary-btn">
