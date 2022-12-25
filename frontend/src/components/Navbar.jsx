@@ -33,32 +33,32 @@ export const Navbar = () => {
         setPageTitle('PUSDA JATIM');
         break;
 
-      case "kediri":
+      case "upt-psda-kediri":
         localStorage.setItem('active_author_id', 2);
         setPageTitle('UPT PUSDA WS Brantas di Kediri');
         break;
 
-      case "lumajang":
+      case "upt-psda-lumajang":
         localStorage.setItem('active_author_id', 3);
         setPageTitle('UPT PUSDA WS Bondoyudo di Lumajang');
         break;
 
-      case "bondowoso":
+      case "upt-psda-bondowoso":
         localStorage.setItem('active_author_id', 4);
         setPageTitle('UPT PUSDA WS Sampean Setail di Bondowoso');
         break;
 
-      case "pasuruan":
+      case "upt-psda-pasuruan":
         localStorage.setItem('active_author_id', 5);
         setPageTitle('UPT PUSDA WS Welang Pekalen di Pasuruan');
         break;
 
-      case "bojonegoro":
+      case "upt-psda-bojonegoro":
         localStorage.setItem('active_author_id', 6);
         setPageTitle('UPT PUSDA WS Bengawan Solo di Bojonegoro');
         break;
 
-      case "pamekasan":
+      case "upt-psda-pamekasan":
         localStorage.setItem('active_author_id', 7);
         setPageTitle('UPT PUSDA WS Kepulauan Madura di Pamekasan');
         break;

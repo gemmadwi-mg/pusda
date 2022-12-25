@@ -17,12 +17,12 @@ export const SideMenuAdmin = () => {
         </div>
         <h6 className="ps-4 font-semibold">DATA UPT</h6>
         <div className="side-menu-list d-flex flex-col p-0">
-          <SideMenuItem title="UPT KEDIRI" id="/upt/kediri/admin" />
-          <SideMenuItem title="UPT LUMAJANG" id="/upt/lumajang/admin" />
-          <SideMenuItem title="UPT BONDOWOSO" id="/upt/bondowoso/admin" />
-          <SideMenuItem title="UPT PASURUAN" id="/upt/pasuruan/admin" />
-          <SideMenuItem title="UPT BOJONEGORO" id="/upt/bojonegoro/admin" />
-          <SideMenuItem title="UPT PAMEKASAN" id="/upt/pamekasan/admin" />
+          <SideMenuItem title="UPT KEDIRI" id="/upt/upt-psda-kediri/admin" />
+          <SideMenuItem title="UPT LUMAJANG" id="/upt/upt-psda-lumajang/admin" />
+          <SideMenuItem title="UPT BONDOWOSO" id="/upt/upt-psda-bondowoso/admin" />
+          <SideMenuItem title="UPT PASURUAN" id="/upt/upt-psda-pasuruan/admin" />
+          <SideMenuItem title="UPT BOJONEGORO" id="/upt/upt-psda-bojonegoro/admin" />
+          <SideMenuItem title="UPT PAMEKASAN" id="/upt/upt-psda-pamekasan/admin" />
         </div>
       </div>
     );
