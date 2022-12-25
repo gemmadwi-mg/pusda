@@ -111,11 +111,13 @@ export const TanahIndukUPT = () => {
         }
     };
 
-    const importDataTanahIndukUPT = () => {
+    const importDataTanahInduk = () => {
+
         Swal.fire({
             title: "Import Data",
             text: "Upload file excel",
             input: "file",
+            html: "data uploading",
             inputAttributes: {
                 accept: ".xls,.xlsx,.csv, .xlx",
                 "aria-label": "Upload your file",
@@ -125,12 +127,15 @@ export const TanahIndukUPT = () => {
             confirmButtonText: "Upload",
             showLoaderOnConfirm: true,
             preConfirm: (file) => {
+                let authorId = localStorage.getItem("active_author_id")
+
                 let token = localStorage.getItem("token");
                 let formData = new FormData();
                 formData.append("file", file);
                 formData.append("token", token);
+                console.log(formData.get(file)  )
 
-                return fetch(apiUrl + "import/file/parent", {
+                return fetch(apiUrl + `import/file/${params.id}/parent/${authorId}`, {
                     method: "POST",
                     body: formData,
                 }).then((response) => {
@@ -149,7 +154,6 @@ export const TanahIndukUPT = () => {
                     title: "Success!",
                     text: "Data berhasil diimport",
                     icon: "success",
-                    timer: 2000,
                 });
 
                 setTimeout(() => {
@@ -171,7 +175,7 @@ export const TanahIndukUPT = () => {
                 <>
                     <div className="d-flex flex-row justify-content-between px-3 py-3">
                         <div
-                            onClick={importDataTanahIndukUPT}
+                            onClick={importDataTanahInduk}
                             className="secondary-btn d-flex align-items-center"
                             style={{ padding: "0 15px" }}
                         >
