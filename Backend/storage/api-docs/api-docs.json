@@ -588,30 +588,6 @@
                 }
             }
         },
-        "/api/password/email": {
-            "post": {
-                "tags": [
-                    "Authentication"
-                ],
-                "operationId": "passdEmail",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "Email",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "default": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
         "/api/password/reset": {
             "post": {
                 "tags": [
