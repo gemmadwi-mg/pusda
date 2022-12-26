@@ -3,17 +3,12 @@ import { Button } from "react-bootstrap";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { ModalEmail } from "../Modal/ModalLupaKataSandi/ModalEmail";
 
 export const LoginForm = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
 
   // password visibility
   const [showPassword, setShowPassword] = useState(false);
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const navigate = useNavigate();
   // const [message, setMessage] = useState([]);
@@ -30,7 +25,7 @@ export const LoginForm = () => {
         method: "POST",
         body: JSON.stringify(input),
         headers: {
-          "Content-type": "application/json; charset=UTF-8",
+          'Content-type': 'application/json; charset=UTF-8',
         },
       });
 
@@ -39,7 +34,8 @@ export const LoginForm = () => {
       if (res.status != 200) {
         let message = resJson.message;
 
-        if (!Array.isArray(message)) message = [resJson.message];
+        if (!Array.isArray(message))
+          message = [resJson.message];
 
         // Jika ingin menggunakan sweetalert2 untuk menampilkan pesan error login
         let messageList = "";
@@ -58,30 +54,30 @@ export const LoginForm = () => {
         // return setMessage(message);
       } else {
         // Check roles
-        localStorage.setItem("user_id", resJson.user.id);
-        localStorage.setItem("email", resJson.user.email);
-        localStorage.setItem("password", input.password);
-        localStorage.setItem("user_name", resJson.user.name);
-        localStorage.setItem("user_roles", resJson.user.roles[0].display_name);
-        localStorage.setItem("user_slug", resJson.user.slug);
-        localStorage.setItem("token", resJson.token);
+        localStorage.setItem('user_id', resJson.user.id);
+        localStorage.setItem('email', resJson.user.email);
+        localStorage.setItem('password', input.password);
+        localStorage.setItem('user_name', resJson.user.name);
+        localStorage.setItem('user_roles', resJson.user.roles[0].display_name);
+        localStorage.setItem('user_slug', resJson.user.slug);
+        localStorage.setItem('token', resJson.token);
 
         Swal.fire({
-          title: "Berhasil Login",
-          icon: "success",
+          title: 'Berhasil Login',
+          icon: 'success',
           text: `${resJson.message} ${resJson.user.name}`,
           timer: 1000,
           // showConfirmButton: false,
           // backdrop: false,
           // position: 'top',
-        });
+        })
 
         let roles = resJson.user.roles;
-        if (roles.filter((e) => e.name === "admin").length > 0) {
-          return navigate("/dashboard/admin");
+        if (roles.filter(e => e.name === 'admin').length > 0) {
+          return navigate('/dashboard/admin');
         }
 
-        return navigate("/dashboard/upt");
+        return navigate('/dashboard/upt');
       }
     } catch (error) {
       console.log(error);
@@ -89,15 +85,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="d-flex flex-col justify-content-center align-items-center h-100 w-75 gap-1"
-    >
-      <ModalEmail
-        show={show}
-        handleClose={handleClose}
-        handleShow={handleShow}
-      />
+    <form onSubmit={handleSubmit} className="d-flex flex-col justify-content-center align-items-center h-100 w-75 gap-1">
       <div className="form-group w-100">
         <label htmlFor="email">Email</label>
         <input
@@ -134,12 +122,10 @@ export const LoginForm = () => {
           required
         />
         <div className="position-absolute top-icon-eye end-0">
-          <div
-            className="btn btn-none"
-            onClick={() => setShowPassword(!showPassword)}
-          >
+          <div className="btn btn-none" onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? <FiEye /> : <FiEyeOff />}
           </div>
+
         </div>
       </div>
 
@@ -154,16 +140,13 @@ export const LoginForm = () => {
         <Button
           type="submit"
           className="rounded bg-cyanblue text-light form-btn mt-2 font-semibold text-center"
-          // loading={isLoading}
+        // loading={isLoading}
         >
           MASUK
         </Button>
-        <div
-                className="rounded text-cyanblue form-btn bg-none font-semibold text-center"
-                onClick={handleShow}
-            >
-                Lupa Kata Sandi?
-            </div>
+        <Link to="/lupa-password" className="rounded text-cyanblue form-btn bg-none font-semibold text-center">
+          Lupa Kata Sandi?
+        </Link>
       </div>
     </form>
   );
