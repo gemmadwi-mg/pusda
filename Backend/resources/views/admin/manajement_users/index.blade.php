@@ -114,7 +114,7 @@
                                         </table>
                                     </div> <!-- end .table-responsive-->
                             </div> <!-- end card-box-->
-                            {{$data->links('vendor.pagination.bootstrap-4')}}
+                            {{-- {{$data->links('vendor.pagination.bootstrap-4')}} --}}
                         </div>
                     </div>
                     </div> <!-- container -->

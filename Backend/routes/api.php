@@ -32,7 +32,7 @@ Route::post('login', [AuthenticationController::class, 'login']);
 
 // Reset Password
 Route::post('password/reset', [ForgotController::class, 'reset']);
-Route::post('password/email', [ForgotController::class, 'forgot']);
+// Route::post('password/email', [ForgotController::class, 'forgot']);
 
 
 
