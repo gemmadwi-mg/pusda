@@ -166,6 +166,7 @@ export const TambahUser = () => {
               type="text"
               className="w-100"
               name="nama-user"
+              placeholder="Masukkan Nama"
               value={user.name}
               onChange={(e) =>
                 setUser({
@@ -208,6 +209,7 @@ export const TambahUser = () => {
               type="text"
               className="w-100"
               name="email"
+              placeholder="Masukkan Email"
               value={user.email}
               onChange={(e) =>
                 setUser({
@@ -223,6 +225,7 @@ export const TambahUser = () => {
               type="text"
               className="w-100"
               name="katasandi"
+              placeholder="Masukkan Kata Sandi"
               value={user.password}
               onChange={(e) =>
                 setUser({
@@ -238,6 +241,7 @@ export const TambahUser = () => {
               type="text"
               className="w-100"
               name="konfirmasi"
+              placeholder="Masukkan Kata Sandi"
               value={user.password_confirmation}
               onChange={(e) =>
                 setUser({
