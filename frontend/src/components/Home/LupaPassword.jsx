@@ -46,7 +46,7 @@ export const LupaPasswordForm = () => {
 
         if (!Array.isArray(message)) message = [resJson.message];
 
-        // Jika ingin menggunakan sweetalert2 untuk menampilkan pesan error login
+        // Jika ingin menggunakan sweetalert2 untuk menampilkan pesan error \
         let messageList = "";
         message.forEach((item) => {
           messageList += "<li>" + item + "</li>";
@@ -61,15 +61,14 @@ export const LupaPasswordForm = () => {
         });
 
         // return setMessage(message);
-      } else {
+      }
         // return setMessage([resJson.status]);
         Swal.fire({
           icon: "success",
           title: "Berhasil Mengubah Kata Sandi",
           text: resJson.message,
-          timer: 1000,
+        //   timer: 5000,
         });
-      }
       return navigate("/");
     } catch (error) {
       console.log(error);
