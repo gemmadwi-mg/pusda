@@ -61,13 +61,21 @@ class ForgotController extends Controller
         // Find the user by email
         $user = User::where('email', $request->email)->first();
 
+        if($user == null){
+            return response()->json([
+                'status' => false,
+                'message' => 'Email tidak ditemukan!',
+            ], 404);
+        }
+
         // Update the user's password
         $user->password = Hash::make($request->password);
         $user->save();
 
         // Return a success response
         return response()->json([
-            'message' => 'Password reset successful',
+            'status' => true,
+            'message' => 'Kata sandi berhasil diubah!',
         ], 200);
     }
 
