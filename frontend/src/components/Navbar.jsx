@@ -67,7 +67,7 @@ export const Navbar = () => {
         break;
 
       default:
-        setPageTitle('UPT-UPT JATIM');
+        setPageTitle('UPT PU-SDA JAWA TIMUR');
     }
   }, [id]);
 
